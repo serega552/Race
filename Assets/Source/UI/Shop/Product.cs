@@ -15,7 +15,7 @@ public abstract class Product : MonoBehaviour
 
     private Button _showButton;
 
-    public string Description => _descriptionTranslation;
+    public string Description { get; private set; }
     public bool IsSelected => _isSelected;
     public int Price => _price;
     public bool IsBought { get; private set; } = false;
