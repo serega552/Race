@@ -5,6 +5,7 @@ public class PauseWindow : Window
 {
     [SerializeField] private Button _openButton;
     [SerializeField] private Button _closeButton;
+    [SerializeField] private UpLineWindow _upLineWindow;
 
     private bool _isPause = false;
 
@@ -28,6 +29,7 @@ public class PauseWindow : Window
     public override void Open()
     {
         base.Open();
+        _upLineWindow.OpenWithoutSound();
         Time.timeScale = 0f;
         AudioManager.Instance.Pause("Music");
     }
@@ -35,6 +37,7 @@ public class PauseWindow : Window
     public override void Close()
     {
         base.Close();
+        _upLineWindow.CloseWithoutSound();
         Time.timeScale = 1f;
         AudioManager.Instance.UnPause("Music");
     }

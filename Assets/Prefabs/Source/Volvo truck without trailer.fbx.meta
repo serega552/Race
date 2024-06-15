@@ -1,59 +1,9 @@
 fileFormatVersion: 2
-guid: 5bdd1adeef005ad4a884fb9c5d47e211
+guid: 23c594ad9a02a3847a6670360ec3d9b0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: 2100000, guid: a5642873e71afd847b0c3e08a3ae884b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: back lights
-    second: {fileID: 2100000, guid: c85490313cd00eb468e29d97a61b69b4, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: body
-    second: {fileID: 2100000, guid: 65ff6ab227f858745a72ef5296f6986e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: body plus
-    second: {fileID: 2100000, guid: f8ae9ffef02b14a43a0dd974aa8d2319, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: fog lights
-    second: {fileID: 2100000, guid: c9707cafafff44e458e47365a5405a75, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: front lights
-    second: {fileID: 2100000, guid: 88db3cd238f08b44797a0a946010a3b0, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: glass
-    second: {fileID: 2100000, guid: 2a292c11b44d0bd40a8bdda59d6f14fd, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: metallic
-    second: {fileID: 2100000, guid: 08e31ffe30eb32a4d843f476efa1d8a7, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: metallik.001
-    second: {fileID: 2100000, guid: 08e31ffe30eb32a4d843f476efa1d8a7, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: wheels
-    second: {fileID: 2100000, guid: 978d9f8f2baa60040a28d0431d467086, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

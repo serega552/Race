@@ -7,22 +7,19 @@ public class EndStateGame
     private CarMovement _movement;
     private ScoreCounter _scoreCounter;
     private ScoreBank _scoreBank;
+    private UpLineWindow _upLineWindow;
 
-    public EndStateGame(CarMovement movement, EndGameWindow end, Spawner spawner, ScoreCounter scoreCounter, ScoreBank scoreBank)
+    public EndStateGame(CarMovement movement, EndGameWindow end, Spawner spawner, ScoreCounter scoreCounter, ScoreBank scoreBank, UpLineWindow upLineWindow)
     {
         _movement = movement;
         _endWindow = end;
         _spawner = spawner;
         _scoreCounter = scoreCounter;
         _scoreBank = scoreBank;
+        _upLineWindow = upLineWindow;
     }
 
     public event Action OnEndGame;
-
-    public void Enable()
-    {
-        _movement.OnEndGame += End;
-    }
 
     public void Disable()
     {
@@ -42,5 +39,6 @@ public class EndStateGame
         _movement.ResetCar();
         _scoreCounter.StopCounter();
         _scoreBank.UpdateScore();
+        _upLineWindow.OpenWithoutSound();   
     }
 }

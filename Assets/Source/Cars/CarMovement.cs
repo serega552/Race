@@ -20,6 +20,8 @@ public class CarMovement : MonoBehaviour
     private bool _isMove = false;
     private float _currentSpeed;
     private ParticleSystem _explotion;
+    private float _verticalInput;
+    private float _horizontalInput;
 
     public event Action OnEndGame;
 
@@ -59,6 +61,12 @@ public class CarMovement : MonoBehaviour
         MobileMove();
         DesktopMove();
 
+        _currentSpeed = _verticalInput * _speed;
+        transform.position += transform.forward * _currentSpeed * Time.deltaTime;
+
+        if (_currentSpeed != 0)
+            transform.Rotate(Vector3.up, _horizontalInput * _steeringAngle);
+
         if (Input.GetKey(KeyCode.Space))
         {
             _currentSpeed = Mathf.Lerp(_currentSpeed, 0, Time.deltaTime * 2);
@@ -72,43 +80,23 @@ public class CarMovement : MonoBehaviour
 
     private void DesktopMove()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        _currentSpeed = verticalInput * _speed;
-        transform.position += transform.forward * _currentSpeed * Time.deltaTime;
-
-        if (_currentSpeed != 0)
-            transform.Rotate(Vector3.up, horizontalInput * _steeringAngle);
+        _horizontalInput = Input.GetAxis("Horizontal");
+        _verticalInput = Input.GetAxis("Vertical");
     }
 
     private void MobileMove()
     {
-        float horizontalInput = 0;
-        float verticalInput = 0;
-
         if (_leftButton.IsHold)
-            horizontalInput = -1f;
+            _horizontalInput = -1f;
 
         if (_rightButton.IsHold)
-            horizontalInput = 1f;
+            _horizontalInput = 1f;
 
         if (_upButton.IsHold)
-            verticalInput = 1f;
+            _verticalInput = 1f;
 
         if (_downButton.IsHold)
-            verticalInput = -1f;
-
-        _currentSpeed = verticalInput * _speed ;
-        transform.position += transform.forward * _currentSpeed * Time.deltaTime;
-
-        if (_currentSpeed != 0)
-            transform.Rotate(Vector3.up, horizontalInput * _steeringAngle);
-
-        for (int i = 0; i < _wheels.Length; i++)
-        {
-            _wheels[i].Rotate(Vector3.right * _currentSpeed * Time.deltaTime * _wheelRotationSpeed);
-        }
+            _verticalInput = -1f;
     }
 
     private void Crash()

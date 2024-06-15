@@ -6,8 +6,9 @@ public class StartStateGame
     private Spawner _spawner;
     private Bank _bank;
     private ScoreCounter _scoreCounter;
+    private UpLineWindow _upLineWindow;
 
-    public StartStateGame(CarMovement movement, HudWindow hud, MenuWindow menu, Spawner spawner, Bank bank, ScoreCounter scoreCounter)
+    public StartStateGame(CarMovement movement, HudWindow hud, MenuWindow menu, Spawner spawner, Bank bank, ScoreCounter scoreCounter, UpLineWindow upLineWindow)
     {
         _movement = movement;
         _hudWindow = hud;
@@ -15,6 +16,7 @@ public class StartStateGame
         _spawner = spawner;
         _bank = bank;
         _scoreCounter = scoreCounter;
+        _upLineWindow = upLineWindow;
     }
 
     private void Start()
@@ -24,6 +26,7 @@ public class StartStateGame
 
         _menuWindow.CloseWithoutSound();
         _hudWindow.OpenWithoutSound();
+        _upLineWindow.CloseWithoutSound();
         _movement.StartMove();
         _spawner.StartGame();
         _bank.ResetMoneyForGame();

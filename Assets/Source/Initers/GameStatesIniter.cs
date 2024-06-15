@@ -12,6 +12,7 @@ public class GameStatesIniter : MonoBehaviour
     [SerializeField] private Bank _bank;
     [SerializeField] private ScoreBank _scoreBank;
     [SerializeField] private ScoreCounter _scoreCounter;
+    [SerializeField] private UpLineWindow _upLineWindow;
 
     private ResurrectStateGame _resurrectStateGame;
     private RestartStateGame _restartStateGame;
@@ -30,7 +31,7 @@ public class GameStatesIniter : MonoBehaviour
         _resurrectStateGame.Enable();
         _restartStateGame.Enable();
         _startStateGame.Enable();
-        _endStateGame.Enable();
+        _endStateGame.ChangeCarMovemenent(_carMovement);
     }
 
     private void OnDisable()
@@ -48,9 +49,9 @@ public class GameStatesIniter : MonoBehaviour
         _carMovement = carMovement;
 
         _restartStateGame = new RestartStateGame();
-        _endStateGame = new EndStateGame(_carMovement, _endGameWindow, _spawner, _scoreCounter, _scoreBank);
+        _endStateGame = new EndStateGame(_carMovement, _endGameWindow, _spawner, _scoreCounter, _scoreBank, _upLineWindow);
         _resurrectStateGame = new ResurrectStateGame();
-        _startStateGame = new StartStateGame(_carMovement, _hudWindow, _menuWindow, _spawner, _bank, _scoreCounter);
+        _startStateGame = new StartStateGame(_carMovement, _hudWindow, _menuWindow, _spawner, _bank, _scoreCounter, _upLineWindow);
     }
 
     private void RefreshInfo(CarMovement movement)
