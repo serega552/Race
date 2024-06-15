@@ -31,7 +31,6 @@ public class GameStatesIniter : MonoBehaviour
         _resurrectStateGame.Enable();
         _restartStateGame.Enable();
         _startStateGame.Enable();
-        _endStateGame.ChangeCarMovemenent(_carMovement);
     }
 
     private void OnDisable()
