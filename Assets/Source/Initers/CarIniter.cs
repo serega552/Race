@@ -11,10 +11,6 @@ public class CarIniter : MonoBehaviour
 
     private CarMovement _carMovement;
 
-    private void Awake()
-    {
-    }
-
     private void OnEnable()
     {
         _skinSelecter.OnChangingSkin += Init;
@@ -27,6 +23,8 @@ public class CarIniter : MonoBehaviour
 
     public void Init(CarMovement carMovement)
     {
+        Debug.Log(carMovement);
+
         _carMovement = carMovement;
 
         _cameraMover.GetPlayerTransform(_carMovement.transform);

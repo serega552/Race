@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 
 public class ShopSkins : Shop
 {
@@ -8,7 +9,7 @@ public class ShopSkins : Shop
     private Skin _selectedSkin;
     private SkinSelecter _selecter;
 
-    private void Start()
+    private void Awake()
     {
         _selecter = GetComponent<SkinSelecter>();
     }

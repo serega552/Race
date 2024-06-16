@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using YG;
 
 public class ScoreBank : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class ScoreBank : MonoBehaviour
     private void Start()
     {
         _scoreCounter = GetComponent<ScoreCounter>();
+        _recordScore = YandexGame.savesData.RecordScore;
+        UpdateUI();
     }
 
     public void UpdateScore()
@@ -21,7 +24,10 @@ public class ScoreBank : MonoBehaviour
         _score = _scoreCounter.GetScore();
 
         if(_score > _recordScore)
+        {
             _recordScore = _score;
+            Save();
+        }
 
         ConvertToMoney();
         UpdateUI();
@@ -38,5 +44,11 @@ public class ScoreBank : MonoBehaviour
         {
              text.text = _recordScore.ToString();
         }
+    }
+
+    private void Save()
+    {
+        YandexGame.savesData.RecordScore = _recordScore;
+        YandexGame.SaveProgress();
     }
 }

@@ -1,13 +1,20 @@
 using System;
 using UnityEngine;
+using YG;
 
 public class Bank : MonoBehaviour
 {
     public event Action OnBuy;
     public event Action OnUpdateText;
 
-    public int Money { get; private set; } = 500;
+    public int Money { get; private set; }
     public int MoneyForGame { get; private set; }
+
+    private void Awake()
+    {
+        Money = YandexGame.savesData.Money;
+        OnUpdateText?.Invoke();
+    }
 
     public void TakeMoney(int money)
     {
@@ -17,9 +24,10 @@ public class Bank : MonoBehaviour
             AudioManager.Instance.Play("Buy");
             OnBuy?.Invoke();
             OnUpdateText?.Invoke();
+
+            Save();
         }
     }
-
 
     public bool TryTakeMoney(int value)
     {
@@ -33,18 +41,25 @@ public class Bank : MonoBehaviour
     {
         Money += money;
         OnUpdateText?.Invoke();
+
+        Save();
     }
     
     public void GiveMoneyForGame(int money)
     {
         MoneyForGame += money;
-        Money += money;
-        OnUpdateText?.Invoke();
+        GiveMoney(money);
     }
 
     public void ResetMoneyForGame()
     {
         MoneyForGame = 0;
         OnUpdateText?.Invoke();
+    }
+
+    private void Save()
+    {
+        YandexGame.savesData.Money = Money;
+        YandexGame.SaveProgress();
     }
 }
