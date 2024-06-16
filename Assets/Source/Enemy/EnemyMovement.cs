@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody))]
@@ -13,11 +14,13 @@ public class EnemyMovement : MonoBehaviour
     private float _currentSpeed;
     private bool _isMoving = true;
     private ParticleSystem _explotion;
+    private Rigidbody _rigidbody;
 
     public event Action OnCrash;
 
     private void Awake()
     {
+        _rigidbody = GetComponent<Rigidbody>();
         _explotion = GetComponentInChildren<ParticleSystem>();
     }
 
@@ -52,9 +55,9 @@ public class EnemyMovement : MonoBehaviour
         if (_isMoving)
         {
             _currentSpeed = _speed * Time.deltaTime;
-            transform.position += transform.forward * _currentSpeed * Time.deltaTime;
+            _rigidbody.velocity += _rigidbody.transform.forward * _currentSpeed * Time.deltaTime;
 
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, (_carMovement.transform.position - transform.position), _steeringAngle, 0.0F); ;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, (_carMovement.transform.position - transform.position), _steeringAngle, 0.0F); 
             Quaternion rotation = Quaternion.LookRotation(newDir);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, _steeringAngle * Time.deltaTime);
 

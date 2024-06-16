@@ -39,11 +39,11 @@ public class Spawner : MonoBehaviour
 
         var screenEdges = new Vector3[]
         {
-        new Vector3(-5.5f, -5.5f, _zPosition),      // left bottom
-        new Vector3(5.5f, -5f, _zPosition),   // middle bottom
+        new Vector3(-10f, -10f, _zPosition),      // left bottom
+        new Vector3(10f, -10f, _zPosition),   // middle bottom
 
-        new Vector3(-5.5f, 5f, _zPosition),      // left top
-        new Vector3(5.5f, 5.5f, _zPosition),   // middle top
+        new Vector3(-10f, 10f, _zPosition),      // left top
+        new Vector3(10f, 10f, _zPosition),   // middle top
         };
 
         int random = Random.Range(1, screenEdges.Length);
@@ -59,22 +59,13 @@ public class Spawner : MonoBehaviour
         _enemies.Add(enemy.GetComponent<EnemyMovement>());
 
         _scoreCounter.AddEnemies(_enemies);
-
-        if(_enemies.Count > 10)
-        {
-            for(int i = 0;  i < _enemies.Count; i++)
-            {
-                if (_enemies[i] != null && _enemies[i].gameObject.activeSelf == false)
-                    Destroy(_enemies[i].gameObject);
-            }
-        }
     }
 
     public void DestroyEnemy()
     {
         for(int i = 0; i < _enemies.Count; i++)
         {
-            Destroy(_enemies[i].gameObject);
+            Destroy(_enemies[i]!.gameObject);
         }
 
         _enemies.Clear();
