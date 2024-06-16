@@ -1,7 +1,6 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+using YG;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CarMovement : MonoBehaviour
@@ -22,12 +21,15 @@ public class CarMovement : MonoBehaviour
     private ParticleSystem _explotion;
     private float _verticalInput;
     private float _horizontalInput;
+    private bool _isMobile = false;
 
     public event Action OnEndGame;
 
     private void Awake()
     {
         _explotion = GetComponentInChildren<ParticleSystem>();
+
+        _isMobile = YandexGame.EnvironmentData.isMobile;
     }
 
     private void FixedUpdate()
@@ -58,8 +60,10 @@ public class CarMovement : MonoBehaviour
 
     private void Move()
     {
-        MobileMove();
-        DesktopMove();
+        if (_isMobile)
+            MobileMove();
+        else
+            DesktopMove();
 
         _currentSpeed = _verticalInput * _speed;
         transform.position += transform.forward * _currentSpeed * Time.deltaTime;
@@ -88,15 +92,17 @@ public class CarMovement : MonoBehaviour
     {
         if (_leftButton.IsHold)
             _horizontalInput = -1f;
-
-        if (_rightButton.IsHold)
+        else if (_rightButton.IsHold)
             _horizontalInput = 1f;
+        else
+            _horizontalInput = 0f;
 
         if (_upButton.IsHold)
             _verticalInput = 1f;
-
-        if (_downButton.IsHold)
+        else if (_downButton.IsHold)
             _verticalInput = -1f;
+        else
+            _verticalInput = 0f;
     }
 
     private void Crash()

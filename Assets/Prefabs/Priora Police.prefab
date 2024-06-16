@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e99d9dec806515f43a4be9a9a6a928a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 1
+  _speed: 700
   _steeringAngle: 3
   _carMovement: {fileID: 0}
   _wheels:
