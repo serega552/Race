@@ -1,6 +1,6 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class EndGameWindow : Window
 {
@@ -27,6 +27,7 @@ public class EndGameWindow : Window
 
     private void CloseWindows()
     {
+        YandexGame.FullscreenShow();
         CloseWithoutSound();
         _hudWindow.CloseWithoutSound();
         _menuWindow.OpenWithoutSound();
