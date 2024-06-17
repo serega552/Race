@@ -83,6 +83,7 @@ public class CarMovement : MonoBehaviour
     {
         _canPlay = false;
         _isMove = false;
+        AudioManager.Instance.ResetPitch("StartCar");
         OnEndGame?.Invoke();
     }
 
@@ -93,16 +94,10 @@ public class CarMovement : MonoBehaviour
         else
             DesktopMove();
 
-        if (_verticalInput > 0)
-        {
-            AudioManager.Instance.Play("Acceleration");
-            AudioManager.Instance.Stop("StopCar");
-        }
-        else if(_verticalInput < 0)
-        {
-            AudioManager.Instance.Play("StopCar");
-            AudioManager.Instance.Stop("Acceleration");
-        }
+        if(_verticalInput != 0)
+            AudioManager.Instance.ChangePitch("StartCar", 0.2f);
+        else
+            AudioManager.Instance.ChangePitch("StartCar", -1.5f);
 
         _currentSpeed = _verticalInput * _speed;
 
