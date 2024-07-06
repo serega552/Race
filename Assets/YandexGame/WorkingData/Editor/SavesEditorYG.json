@@ -1,16 +1,19 @@
 {
-    "idSave": 517,
+    "idSave": 554,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
-    "Money": 500,
-    "RecordScore": 0,
+    "Money": 799,
+    "RecordScore": 50,
     "BoughtSkins": [
         {
-            "instanceID": 25054
+            "instanceID": 31830
+        },
+        {
+            "instanceID": 32064
         }
     ],
     "SelectedSkin": {
-        "instanceID": 25054
+        "instanceID": 32064
     }
 }
