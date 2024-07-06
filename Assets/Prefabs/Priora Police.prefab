@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e99d9dec806515f43a4be9a9a6a928a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 950
+  _speed: 1
   _steeringAngle: 3
   _carMovement: {fileID: 0}
   _wheels:
@@ -353,9 +353,6 @@ MonoBehaviour:
   - {fileID: 1320185952195689487}
   - {fileID: 6892689192645240770}
   _wheelRotationSpeed: 100
-  _wheelEffects:
-  - {fileID: 970548123878055762}
-  - {fileID: 6460246423411619429}
 --- !u!1 &1961369631267137285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,11 +1623,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 434340, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
   m_PrefabInstance: {fileID: 970548123858515328}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &970548123878055762 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19819218, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
-  m_PrefabInstance: {fileID: 970548123858515328}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6460246423425359031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1796,11 +1788,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
---- !u!198 &6460246423411619429 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19819218, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
-  m_PrefabInstance: {fileID: 6460246423425359031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6460246423425727507 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 434340, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}

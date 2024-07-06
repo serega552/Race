@@ -75,7 +75,6 @@ public class AudioManager : MonoBehaviour
                 s.pitch = 2.5f;
             else if (s.source.pitch <= 0.8f)
                 s.pitch = 0.8f;
-            Debug.Log(s.source.pitch + " " + s.pitch);
         }
     }
 
