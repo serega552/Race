@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -61,5 +62,30 @@ public class AudioManager : MonoBehaviour
 
         if (s != null)
             s.source.UnPause();
+    }
+
+    public void ChangePitch(string sound, float count)
+    {
+        Sound s = Array.Find(_sounds, item => item.name == sound);
+
+        if (s != null)
+        {
+            s.source.pitch = Mathf.Clamp(s.pitch += count * Time.deltaTime, 0.8f, 2.5f);
+            if (s.source.pitch >= 2.5f)
+                s.pitch = 2.5f;
+            else if (s.source.pitch <= 0.8f)
+                s.pitch = 0.8f;
+        }
+    }
+
+    public void ResetPitch(string sound)
+    {
+        Sound s = Array.Find(_sounds, item => item.name == sound);
+
+        if (s != null)
+        {
+            s.source.pitch = 1f;
+            s.pitch = 1f;
+        }
     }
 }
