@@ -23,6 +23,11 @@ public class MenuWindow : Window
         _startButton.onClick.RemoveListener(StartGame);
     }
 
+    public override void OpenWithoutSound()
+    {
+        base.OpenWithoutSound();
+    }
+
     private void StartGame()
     {
         OnStart?.Invoke();

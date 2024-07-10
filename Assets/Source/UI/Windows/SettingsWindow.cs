@@ -12,14 +12,14 @@ public class SettingsWindow : Window
         _closeButton.onClick.AddListener(Close);
     }
 
-    private void Awake()
-    {
-        CloseWithoutSound();
-    }
-
     private void OnDisable()
     {
         _openSettingsButton.onClick.RemoveListener(Open);
         _closeButton.onClick.RemoveListener(Close);
+    }
+
+    private void Awake()
+    {
+        CloseWithoutSound();
     }
 }

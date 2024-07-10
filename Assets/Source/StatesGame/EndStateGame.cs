@@ -39,6 +39,9 @@ public class EndStateGame
         _movement.ResetCar();
         _scoreCounter.StopCounter();
         _scoreBank.UpdateScore();
-        _upLineWindow.OpenWithoutSound();   
+        _upLineWindow.OpenWithoutSound();
+
+        AudioManager.Instance.SlowStop("Music");
+        AudioManager.Instance.SlowPlay("MenuMusic");
     }
 }

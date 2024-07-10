@@ -19,6 +19,11 @@ public class GameStatesIniter : MonoBehaviour
     private StartStateGame _startStateGame;
     private EndStateGame _endStateGame;
 
+    private void Start()
+    {
+        AudioManager.Instance.SlowPlay("MenuMusic");
+    }
+
     private void Awake()
     {
         Init(_carMovement);
