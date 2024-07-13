@@ -12,9 +12,11 @@ public abstract class Product : MonoBehaviour
     [SerializeField] private string _descriptionTranslation;
     [SerializeField] private bool _isSelected;
     [SerializeField] private TMP_Text _priceText;
+    [SerializeField] private int _id;
 
     private Button _showButton;
 
+    public int Id => _id;
     public string Description { get; private set; }
     public bool IsSelected => _isSelected;
     public int Price => _price;

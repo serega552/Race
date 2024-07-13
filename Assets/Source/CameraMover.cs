@@ -1,19 +1,23 @@
+using System.Collections;
 using UnityEngine;
 
 public class CameraMover : MonoBehaviour
 {
+    private readonly int MenuState = Animator.StringToHash("MenuCamera");
+
     [SerializeField] private Vector3 _offSet;
     [SerializeField] private Quaternion _rotation = Quaternion.Euler(44f, -151f, 0f);
     [SerializeField] private float _speed = 5f;
 
+    private Animator _animator;
     private Transform _car;
-    private bool _isMove = true;
-    private Vector3 _startPosition = new Vector3(-1.213f, -34.5f, 17.892f);
+    private bool _isMove = false;
+    private WaitForSeconds _waitEndGame = new WaitForSeconds(1f);
+    private Coroutine _startEndGameCoroutine;
 
-    private void Awake()
+    private void Start()
     {
-        _startPosition = transform.position;
-
+        _animator = GetComponent<Animator>();
         SetStartPosition();
     }
 
@@ -24,6 +28,8 @@ public class CameraMover : MonoBehaviour
 
     public void StartMove()
     {
+        _animator.cullingMode = AnimatorCullingMode.CullCompletely;
+        transform.rotation = _rotation;
         _isMove = true;
     }
 
@@ -35,6 +41,7 @@ public class CameraMover : MonoBehaviour
     public void EndMove()
     {
         _isMove = false;
+        _startEndGameCoroutine = StartCoroutine(EndTime());
     }
 
     public void GetPlayerTransform(Transform transform)
@@ -44,7 +51,8 @@ public class CameraMover : MonoBehaviour
 
     private void SetStartPosition()
     {
-        transform.position = _startPosition;
+        _animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+        _animator.Play(MenuState);
     }
 
     private void Move()
@@ -56,5 +64,12 @@ public class CameraMover : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, newCamPosition, _speed * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, newCamRotation, _speed * Time.deltaTime);
         }
+    }
+
+    private IEnumerator EndTime()
+    {
+        yield return _waitEndGame;
+        SetStartPosition();
+        StopCoroutine(_startEndGameCoroutine);
     }
 }

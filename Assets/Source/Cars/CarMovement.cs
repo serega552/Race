@@ -15,7 +15,8 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private ControlButton _rightButton;
     [SerializeField] private ControlButton _upButton;
     [SerializeField] private ControlButton _downButton;
-    [SerializeField] private List<ParticleSystem> _wheelEffects;
+    [SerializeField] private ParticleSystem[] _wheelEffects;
+    [SerializeField] private ParticleSystem _waterParticle;
 
     private Vector3 _startPosition;
     private Vector3 _startSpawnPosition = new Vector3(0f, 0f, 0f);
@@ -61,16 +62,23 @@ public class CarMovement : MonoBehaviour
         _startPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
         Ray ray = new Ray(_startPosition, transform.up * -1);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 20f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f))
         {
             if (hit.collider.TryGetComponent(out Block block))
                 _isMove = true;
+
+            if (hit.collider.TryGetComponent(out WaterBlock waterBlock))
+            {
+                Instantiate(_waterParticle, transform.position, waterBlock.transform.localRotation);
+                EndMove();
+            }
         }
         else
         {
             _isMove = false;
         }
-        Debug.DrawRay(_startPosition, transform.up * -1, Color.red);     
+
+        Debug.DrawRay(_startPosition, transform.up * -1 * 1f, Color.red);     
     }
 
     public void ResetCar()
@@ -85,6 +93,10 @@ public class CarMovement : MonoBehaviour
         _isMove = false;
         AudioManager.Instance.ResetPitch("StartCar");
         OnEndGame?.Invoke();
+        Invoke("ResetCar", 1f);
+
+        _wheelEffects[0].Stop();
+        _wheelEffects[1].Stop();
     }
 
     private void Move()
@@ -115,12 +127,12 @@ public class CarMovement : MonoBehaviour
             _wheels[i].Rotate(Vector3.right * _currentSpeed * Time.deltaTime * _wheelRotationSpeed);
         }
 
-        if(_currentSpeed != 0)
+        if(_verticalInput != 0)
         {
             _wheelEffects[0].Play();
             _wheelEffects[1].Play();
         }
-        else
+        else 
         {
             _wheelEffects[0].Stop();
             _wheelEffects[1].Stop();

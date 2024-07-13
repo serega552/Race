@@ -1,4 +1,5 @@
 using System;
+using YG;
 
 public class EndStateGame
 {
@@ -8,8 +9,11 @@ public class EndStateGame
     private ScoreCounter _scoreCounter;
     private ScoreBank _scoreBank;
     private UpLineWindow _upLineWindow;
+    private CameraMover _cameraMover;
+    private VideoAd _videoAd;
+    private LeaderboardYG _leaderboardYG;
 
-    public EndStateGame(CarMovement movement, EndGameWindow end, Spawner spawner, ScoreCounter scoreCounter, ScoreBank scoreBank, UpLineWindow upLineWindow)
+    public EndStateGame(CarMovement movement, EndGameWindow end, Spawner spawner, ScoreCounter scoreCounter, ScoreBank scoreBank, UpLineWindow upLineWindow, CameraMover cameraMover, VideoAd videoAd, LeaderboardYG leaderboardYG)
     {
         _movement = movement;
         _endWindow = end;
@@ -17,6 +21,9 @@ public class EndStateGame
         _scoreCounter = scoreCounter;
         _scoreBank = scoreBank;
         _upLineWindow = upLineWindow;
+        _cameraMover = cameraMover;
+        _videoAd = videoAd;
+        _leaderboardYG = leaderboardYG;
     }
 
     public event Action OnEndGame;
@@ -36,10 +43,14 @@ public class EndStateGame
     {
         _endWindow.OpenWithoutSound();
         _spawner.EndGame();
-        _movement.ResetCar();
         _scoreCounter.StopCounter();
         _scoreBank.UpdateScore();
         _upLineWindow.OpenWithoutSound();
+        _cameraMover.EndMove();
+        _videoAd.RefreshAdButtons();
+        YandexGame.NewLeaderboardScores("Leaderboard", Convert.ToInt32(YandexGame.savesData.RecordScore));
+        _leaderboardYG.NewScore(Convert.ToInt32(YandexGame.savesData.RecordScore));
+        _leaderboardYG.UpdateLB();
 
         AudioManager.Instance.SlowStop("Music");
         AudioManager.Instance.SlowPlay("MenuMusic");

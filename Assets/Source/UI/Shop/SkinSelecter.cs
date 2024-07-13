@@ -14,9 +14,13 @@ public class SkinSelecter : MonoBehaviour
 
     public event Action<CarMovement> OnChangingSkin;
 
-    private void Start()
+    public void InitFirstSkin()
     {
-        Load();
+        _selectedSkin = _firstSkin;
+        _selectedSkin.Unlock();
+        _selectedSkin.ChangeStatus();
+        AddSkin(_selectedSkin);
+        InitSkin();
     }
 
     public void AddSkin(Skin skin)
@@ -31,7 +35,9 @@ public class SkinSelecter : MonoBehaviour
     {
         if (skin != _selectedSkin)
         {
-            _selectedSkin.ChangeStatus();
+            if(_selectedSkin != null)
+                _selectedSkin.ChangeStatus();
+
             _selectedSkin = skin;
 
             _selectedSkin.ChangeStatus();
@@ -55,48 +61,15 @@ public class SkinSelecter : MonoBehaviour
         Save();
     }
 
-    private void Load()
-    {
-        foreach (var skin in YandexGame.savesData.BoughtSkins)
-        {
-            _boughtSkins.Add(skin);
-        }
-
-        _selectedSkin = YandexGame.savesData.SelectedSkin;
-
-        if (_boughtSkins.Count == 0)
-        {
-            _selectedSkin = _firstSkin;
-            _firstSkin.ChangeStatus();
-            _firstSkin.Unlock();
-            AddSkin(_firstSkin);
-            InitSkin();
-        }
-        else
-        {
-            foreach (Skin skin in _boughtSkins)
-            {
-                skin.LoadProgress(false, true);
-
-                if (skin == _selectedSkin)
-                    skin.LoadProgress(true, true);
-            }
-        }
-
-        if (_selectedSkin == null)
-        {
-            _selectedSkin = _firstSkin;
-            _selectedSkin.ChangeStatus();
-            _firstSkin.Unlock();
-        }
-
-        InitSkin();
-    }
-
     private void Save()
     {
-        YandexGame.savesData.BoughtSkins = _boughtSkins;
-        YandexGame.savesData.SelectedSkin = _selectedSkin;
+        for (int i = 0; i < _boughtSkins.Count; i++)
+        {
+            if (YandexGame.savesData.BoughtSkins.Contains(_boughtSkins[i].Id) == false)
+                YandexGame.savesData.BoughtSkins.Add(_boughtSkins[i].Id);
+        }
+
+        YandexGame.savesData.SelectedSkin = _selectedSkin.Id;
         YandexGame.SaveProgress();
     }
 }

@@ -12,8 +12,18 @@ public class Bank : MonoBehaviour
 
     private void Awake()
     {
-        Money = YandexGame.savesData.Money;
-        OnUpdateText?.Invoke();
+        if (YandexGame.SDKEnabled)
+            Load();
+    }
+
+    private void OnEnable()
+    {
+        YandexGame.GetDataEvent += Load;
+    }
+
+    private void OnDisable()
+    {
+        YandexGame.GetDataEvent -= Load;
     }
 
     public void TakeMoney(int money)
@@ -49,6 +59,8 @@ public class Bank : MonoBehaviour
     {
         MoneyForGame += money;
         GiveMoney(money);
+
+        OnUpdateText?.Invoke();
     }
 
     public void ResetMoneyForGame()
@@ -57,9 +69,21 @@ public class Bank : MonoBehaviour
         OnUpdateText?.Invoke();
     }
 
+    public void MoneyMultiplyAd()
+    {
+        GiveMoney(MoneyForGame);
+        MoneyForGame *= 2;
+    }
+
     private void Save()
     {
         YandexGame.savesData.Money = Money;
         YandexGame.SaveProgress();
+    }
+
+    private void Load()
+    {
+        Money = YandexGame.savesData.Money;
+        OnUpdateText?.Invoke();
     }
 }

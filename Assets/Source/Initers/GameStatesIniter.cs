@@ -1,5 +1,5 @@
-using UnityEditor;
 using UnityEngine;
+using YG;
 
 public class GameStatesIniter : MonoBehaviour
 {
@@ -13,6 +13,9 @@ public class GameStatesIniter : MonoBehaviour
     [SerializeField] private ScoreBank _scoreBank;
     [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private UpLineWindow _upLineWindow;
+    [SerializeField] private CameraMover _camera;
+    [SerializeField] private VideoAd _videoAd;
+    [SerializeField] private LeaderboardYG _leaderboardYG;
 
     private ResurrectStateGame _resurrectStateGame;
     private RestartStateGame _restartStateGame;
@@ -53,9 +56,9 @@ public class GameStatesIniter : MonoBehaviour
         _carMovement = carMovement;
 
         _restartStateGame = new RestartStateGame();
-        _endStateGame = new EndStateGame(_carMovement, _endGameWindow, _spawner, _scoreCounter, _scoreBank, _upLineWindow);
+        _endStateGame = new EndStateGame(_carMovement, _endGameWindow, _spawner, _scoreCounter, _scoreBank, _upLineWindow, _camera, _videoAd, _leaderboardYG);
         _resurrectStateGame = new ResurrectStateGame();
-        _startStateGame = new StartStateGame(_carMovement, _hudWindow, _menuWindow, _spawner, _bank, _scoreCounter, _upLineWindow);
+        _startStateGame = new StartStateGame(_carMovement, _hudWindow, _menuWindow, _spawner, _bank, _scoreCounter, _upLineWindow, _camera);
     }
 
     private void RefreshInfo(CarMovement movement)

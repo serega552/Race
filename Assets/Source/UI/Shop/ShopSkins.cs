@@ -4,7 +4,7 @@ using YG;
 
 public class ShopSkins : Shop
 {
-    [SerializeField] private List<Skin> _skinForSale;
+    [SerializeField] private List<Skin> _skinsForSale;
 
     private Skin _selectedSkin;
     private SkinSelecter _selecter;
@@ -19,7 +19,7 @@ public class ShopSkins : Shop
         BuyButton.onClick.AddListener(TryBuyProduct);
         SelectButton.onClick.AddListener(SelectProduct);
 
-        foreach (var skin in _skinForSale)
+        foreach (var skin in _skinsForSale)
         {
             skin.OnSelected += ShowInfoProduct;
         }
@@ -30,7 +30,7 @@ public class ShopSkins : Shop
         BuyButton.onClick.RemoveListener(TryBuyProduct);
         SelectButton.onClick.RemoveListener(SelectProduct);
 
-        foreach (var skin in _skinForSale)
+        foreach (var skin in _skinsForSale)
         {
             skin.OnSelected -= ShowInfoProduct;
         }
@@ -42,7 +42,7 @@ public class ShopSkins : Shop
         _selectedSkin.Unlock();
         _selecter.AddSkin(_selectedSkin);
         _selecter.SelectSkin(_selectedSkin);
-        _skinForSale.Remove(_selectedSkin);
+        _skinsForSale.Remove(_selectedSkin);
     }
 
     public override void ShowInfoProduct(Product skin)
@@ -76,12 +76,37 @@ public class ShopSkins : Shop
             BankMoney.TakeMoney(_selectedSkin.Price);
             BuyProduct();
         }
-        else
-            ThrowErrorBuySkin();
     }
 
-    private void ThrowErrorBuySkin()
+    public void Load()
     {
-        Debug.Log("ErrorBuy");
+        List<int> boughtSkinsId = YandexGame.savesData.BoughtSkins;
+        int selectedSkinId = YandexGame.savesData.SelectedSkin;
+
+        if (boughtSkinsId.Count != 0)
+        {
+            for (int i = 0; i < _skinsForSale.Count; i++)
+            {
+                for (int j = 0; j < boughtSkinsId.Count; j++)
+                {
+                    if (_skinsForSale[i].Id == boughtSkinsId[j])
+                    {
+                        _selectedSkin = _skinsForSale[i];
+                        base.BuyProduct();
+                        _selectedSkin.Unlock();
+                        _selecter.AddSkin(_selectedSkin);
+                    }
+
+                    if (_skinsForSale[i].Id == selectedSkinId)
+                    {
+                        _selecter.SelectSkin(_selectedSkin);
+                    }
+                }
+            }
+        }
+        else
+        {
+            _selecter.InitFirstSkin();
+        }
     }
 }

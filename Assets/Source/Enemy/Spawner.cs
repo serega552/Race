@@ -14,6 +14,8 @@ public class Spawner : MonoBehaviour
     private bool _canPlay = true;
     private CarMovement _movement;
     private List<EnemyMovement> _enemies = new List<EnemyMovement>();
+    private WaitForSeconds _waitStartSpawn = new WaitForSeconds(4f);
+    private WaitForSeconds _waitSpawnEnemies = new WaitForSeconds(2.5f);
 
     public void Init(CarMovement movement)
     {
@@ -73,10 +75,12 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator TimeSpawn()
     {
+        yield return _waitStartSpawn;
+
         while (_canPlay)
         {
             SpawnCar();
-            yield return new WaitForSeconds(2.5f);
+            yield return _waitSpawnEnemies;
         }
 
         yield return null;

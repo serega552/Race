@@ -23,7 +23,7 @@ public abstract class Shop : MonoBehaviour
 
     public GameObject ModelSkin { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
         _buyButton.gameObject.SetActive(false);
         _selectButton.gameObject.SetActive(false);

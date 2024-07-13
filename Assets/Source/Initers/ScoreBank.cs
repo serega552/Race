@@ -6,13 +6,14 @@ using YG;
 public class ScoreBank : MonoBehaviour
 {
     [SerializeField] private List<TMP_Text> _scoreTexts = new List<TMP_Text>();
+    [SerializeField] private TMP_Text _scoreForGame;
     [SerializeField] private Bank _bank;
 
     private ScoreCounter _scoreCounter;
     private int _score;
     private int _recordScore;
 
-    private void Start()
+    private void Awake()
     {
         _scoreCounter = GetComponent<ScoreCounter>();
         _recordScore = YandexGame.savesData.RecordScore;
@@ -35,7 +36,7 @@ public class ScoreBank : MonoBehaviour
 
     private void ConvertToMoney()
     {
-        _bank.GiveMoneyForGame(_score);
+        _bank.GiveMoneyForGame(_score + _scoreCounter.MoneyForGame);
     }
 
     private void UpdateUI()
@@ -44,6 +45,8 @@ public class ScoreBank : MonoBehaviour
         {
              text.text = _recordScore.ToString();
         }
+
+        _scoreForGame.text = _scoreCounter.GetScore().ToString();
     }
 
     private void Save()

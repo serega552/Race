@@ -11,8 +11,8 @@ namespace YG
         public bool promptDone;
         public int Money = 500;
         public int RecordScore = 0;
-        public List<Skin> BoughtSkins;
-        public Skin SelectedSkin;
+        public List<int> BoughtSkins = new List<int>();
+        public int SelectedSkin;
 
         public SavesYG()
         {

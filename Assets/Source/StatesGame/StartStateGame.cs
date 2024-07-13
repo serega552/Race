@@ -7,8 +7,9 @@ public class StartStateGame
     private Bank _bank;
     private ScoreCounter _scoreCounter;
     private UpLineWindow _upLineWindow;
+    private CameraMover _cameraMover;
 
-    public StartStateGame(CarMovement movement, HudWindow hud, MenuWindow menu, Spawner spawner, Bank bank, ScoreCounter scoreCounter, UpLineWindow upLineWindow)
+    public StartStateGame(CarMovement movement, HudWindow hud, MenuWindow menu, Spawner spawner, Bank bank, ScoreCounter scoreCounter, UpLineWindow upLineWindow, CameraMover cameraMover)
     {
         _movement = movement;
         _hudWindow = hud;
@@ -17,6 +18,7 @@ public class StartStateGame
         _bank = bank;
         _scoreCounter = scoreCounter;
         _upLineWindow = upLineWindow;
+        _cameraMover = cameraMover;
     }
 
     private void Start()
@@ -25,6 +27,7 @@ public class StartStateGame
         AudioManager.Instance.SlowPlay("Music");
         AudioManager.Instance.SlowStop("MenuMusic");
 
+        _cameraMover.StartMove();
         _menuWindow.CloseWithoutSound();
         _hudWindow.OpenWithoutSound();
         _upLineWindow.CloseWithoutSound();
