@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -48,6 +49,44 @@ public class AudioManager : MonoBehaviour
             s.source.Stop();
     }
 
+    public void SlowStop(string sound)
+    {
+        Sound s = Array.Find(_sounds, item => item.name == sound);
+
+        if (s != null)
+            StartCoroutine(StopTime(s));
+    }
+
+    public void SlowPlay(string sound)
+    {
+        Sound s = Array.Find(_sounds, item => item.name == sound);
+
+        if (s != null)
+            StartCoroutine(PlayTime(s));
+    }
+
+    public IEnumerator StopTime(Sound sound)
+    {
+        while (sound.source.volume > 0.02f)
+        {
+            sound.source.volume -= 0.05f;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        sound.source.Stop();
+    }
+
+    public IEnumerator PlayTime(Sound sound)
+    {
+        sound.source.Play();
+
+        while (sound.source.volume < sound.volume)
+        {
+            sound.source.volume += 0.1f;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     public void Pause(string sound)
     {
         Sound s = Array.Find(_sounds, item => item.name == sound);
@@ -86,6 +125,25 @@ public class AudioManager : MonoBehaviour
         {
             s.source.pitch = 1f;
             s.pitch = 1f;
+        }
+    }
+
+    public void ChangeValue(string sound, float value)
+    {
+        Sound s = Array.Find(_sounds, item => item.name == sound);
+
+        if (s != null)
+        {
+            s.source.volume = value;
+        }
+    }
+
+    public void ChangeSounds(float value)
+    {
+        foreach (var sound in _sounds)
+        {
+            if (sound.name != "Music" && sound.name != "MenuMusic")
+                sound.volume = value;
         }
     }
 }
