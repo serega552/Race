@@ -5,12 +5,23 @@ using YG;
 
 public class EndGameWindow : Window
 {
+    private readonly int OpenState = Animator.StringToHash("OpenEndWindowAnim");
+    private readonly int IdleState = Animator.StringToHash("Idle");
+
     [SerializeField] private Button _closeEndWindow;
     [SerializeField] private MenuWindow _menuWindow;
     [SerializeField] private Button _rewardButton;
+    [SerializeField] private UpLineWindow _upLine;
 
     private HudWindow _hudWindow;
-    private WaitForSeconds _waitEndGame = new WaitForSeconds(1f);
+    private WaitForSeconds _waitEndGame = new WaitForSeconds(0.005f);
+    private Coroutine _openTimerCoroutine;
+    private Animator _animator;
+
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     private void Awake()
     {
@@ -33,7 +44,7 @@ public class EndGameWindow : Window
     public override void OpenWithoutSound()
     {
         RefreshAdButton();
-        StartCoroutine(EndTime());
+        _openTimerCoroutine = StartCoroutine(EndTime());
     }
 
     private void RefreshAdButton()
@@ -54,15 +65,29 @@ public class EndGameWindow : Window
 
     private IEnumerator EndTime()
     {
-        yield return _waitEndGame;
+        float value = 0;
+        _animator.Play(OpenState);
+
+        while (value <= 0.95f)
+        {
+            yield return _waitEndGame;
+            value += 0.01f;
+            ControlOpenWithoutSound(value);
+        }
+
         base.OpenWithoutSound();
+        value = 0;
+        StopCoroutine(_openTimerCoroutine);
     }
 
     private void CloseWindows()
     {
+        _animator.Play(IdleState);
         YandexGame.FullscreenShow();
         CloseWithoutSound();
         _hudWindow.CloseWithoutSound();
         _menuWindow.OpenWithoutSound();
+        _upLine.OpenWithoutSound();
+        AudioManager.Instance.SlowPlay("MenuMusic");
     }
 }

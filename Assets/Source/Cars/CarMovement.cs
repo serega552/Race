@@ -30,10 +30,12 @@ public class CarMovement : MonoBehaviour
     private bool _isMobile = false;
     private Rigidbody _rigidbody;
 
-    public event Action OnEndGame;
+    public event Action OnEndMove;
 
     private void Awake()
     {
+        _startSpawnPosition = transform.position;
+
         _rigidbody = GetComponent<Rigidbody>();
         _explotion = GetComponentInChildren<ParticleSystem>();
 
@@ -89,14 +91,21 @@ public class CarMovement : MonoBehaviour
 
     public void EndMove()
     {
+        AudioManager.Instance.Stop("StartCar");
         _canPlay = false;
         _isMove = false;
-        AudioManager.Instance.ResetPitch("StartCar");
-        OnEndGame?.Invoke();
-        Invoke("ResetCar", 1f);
-
         _wheelEffects[0].Stop();
         _wheelEffects[1].Stop();
+
+        OnEndMove?.Invoke();
+    }
+
+    public void Resurrect()
+    {
+        ResetCar();
+        _canPlay = true;
+        _isMove = true;
+        AudioManager.Instance.Play("StartCar");
     }
 
     private void Move()

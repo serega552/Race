@@ -28,6 +28,11 @@ public class Spawner : MonoBehaviour
         _startTimeSpawnCoroutine = StartCoroutine(TimeSpawn());
     }
 
+    public void ResetEnemy()
+    {
+        DestroyEnemy();
+    }
+
     public void EndGame()
     {
         _canPlay = false;

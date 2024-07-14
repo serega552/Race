@@ -1,0 +1,2 @@
+public class MobileControlWindow : Window
+{}

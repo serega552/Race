@@ -47,6 +47,11 @@ public class EnemyMovement : MonoBehaviour
         {
             Die();
             OnCrash?.Invoke();
+        } 
+        if (collision.collider.TryGetComponent(out WaterBlock block))
+        {
+            Die();
+            OnCrash?.Invoke();
         }
     }
 

@@ -49,4 +49,11 @@ public class Window : MonoBehaviour
         _canvasGroup.blocksRaycasts = false;
         _canvasGroup.alpha = 0f;
     }
+
+    public virtual void ControlOpenWithoutSound(float value)
+    {
+        _canvasGroup.alpha = value;
+        _canvasGroup.blocksRaycasts = true;
+        _canvasGroup.interactable = true;
+    }
 }

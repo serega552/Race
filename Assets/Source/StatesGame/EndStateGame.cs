@@ -8,35 +8,35 @@ public class EndStateGame
     private CarMovement _movement;
     private ScoreCounter _scoreCounter;
     private ScoreBank _scoreBank;
-    private UpLineWindow _upLineWindow;
     private CameraMover _cameraMover;
     private VideoAd _videoAd;
     private LeaderboardYG _leaderboardYG;
+    private ResurrectMenu _resurrectMenu;
 
-    public EndStateGame(CarMovement movement, EndGameWindow end, Spawner spawner, ScoreCounter scoreCounter, ScoreBank scoreBank, UpLineWindow upLineWindow, CameraMover cameraMover, VideoAd videoAd, LeaderboardYG leaderboardYG)
+    public EndStateGame(CarMovement movement, EndGameWindow end, Spawner spawner, ScoreCounter scoreCounter, ScoreBank scoreBank, CameraMover cameraMover, VideoAd videoAd, LeaderboardYG leaderboardYG, ResurrectMenu resurrect)
     {
         _movement = movement;
         _endWindow = end;
         _spawner = spawner;
         _scoreCounter = scoreCounter;
         _scoreBank = scoreBank;
-        _upLineWindow = upLineWindow;
         _cameraMover = cameraMover;
         _videoAd = videoAd;
         _leaderboardYG = leaderboardYG;
+        _resurrectMenu = resurrect;
     }
 
     public event Action OnEndGame;
 
     public void Disable()
     {
-        _movement.OnEndGame -= End;
+        _resurrectMenu.OnEndGame -= End;
     }
 
-    public void ChangeCarMovemenent(CarMovement movement)
+    public void ChangeCarMovement(CarMovement movement)
     {
         _movement = movement;
-        _movement.OnEndGame += End;
+        _resurrectMenu.OnEndGame += End;
     }
 
     private void End()
@@ -45,7 +45,7 @@ public class EndStateGame
         _spawner.EndGame();
         _scoreCounter.StopCounter();
         _scoreBank.UpdateScore();
-        _upLineWindow.OpenWithoutSound();
+        _movement.ResetCar();
         _cameraMover.EndMove();
         _videoAd.RefreshAdButtons();
         YandexGame.NewLeaderboardScores("Leaderboard", Convert.ToInt32(YandexGame.savesData.RecordScore));
@@ -53,6 +53,5 @@ public class EndStateGame
         _leaderboardYG.UpdateLB();
 
         AudioManager.Instance.SlowStop("Music");
-        AudioManager.Instance.SlowPlay("MenuMusic");
     }
 }

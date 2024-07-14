@@ -37,7 +37,7 @@ public class StartStateGame
         _scoreCounter.StartCounter();
     }
 
-    public void ChangeCarMovemenent(CarMovement movement)
+    public void ChangeCarMovement(CarMovement movement)
     {
         _movement = movement;
     }
