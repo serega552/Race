@@ -32,7 +32,7 @@ public class ScoreCounter : MonoBehaviour
         StopCoroutine(_startTimeCoroutine);
     }
 
-    public void AddMoneyCrash()
+    public void AddMoneyCrash(Transform transform)
     {
         _moneyForGame += _moneyForCrash;
         UpdateUI();

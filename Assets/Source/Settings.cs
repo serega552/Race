@@ -21,10 +21,21 @@ public class Settings : MonoBehaviour
     private void ChangeMusicValue(float value)
     {
         AudioManager.Instance.ChangeValue("Music", value);
+        AudioManager.Instance.ChangeValue("MenuMusic", value);
     }
 
     private void ChangeSoundValue(float value)
     {
         AudioManager.Instance.ChangeSounds(value);
+    }
+
+    private void Load()
+    {
+
+    }
+
+    private void Save()
+    {
+
     }
 }

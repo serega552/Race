@@ -27,12 +27,12 @@ public class BankView : MonoBehaviour
     {
         foreach (TMP_Text money in _moneyText)
         {
-            money.text = _bank.Money.ToString();
+            money.text = $"{_bank.Money}$";
         }
 
         foreach (TMP_Text money in _moneyForGameText)
         {
-            money.text = _bank.MoneyForGame.ToString();
+            money.text = $"{_bank.MoneyForGame}$";
         }
     }
 }

@@ -1,10 +1,14 @@
-using System.Collections;
 using UnityEngine;
+using YG;
 
 public class CameraMover : MonoBehaviour
 {
     private readonly int MenuState = Animator.StringToHash("MenuCamera");
 
+    [SerializeField] private ControlButton _leftButton;
+    [SerializeField] private ControlButton _rightButton;
+    [SerializeField] private ControlButton _upButton;
+    [SerializeField] private ControlButton _downButton;
     [SerializeField] private Vector3 _offSet;
     [SerializeField] private Quaternion _rotation;
     [SerializeField] private float _speed = 5f;
@@ -14,11 +18,17 @@ public class CameraMover : MonoBehaviour
     private bool _isMove = false;
     private float _verticalInput;
     private float _horizontalInput;
+    private bool _isMobile = false;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
         SetStartPosition();
+    }
+
+    private void Awake()
+    {
+        _isMobile = YandexGame.EnvironmentData.isMobile;
     }
 
     private void FixedUpdate()
@@ -51,10 +61,34 @@ public class CameraMover : MonoBehaviour
 
     public void ControlCamera()
     {
-        _horizontalInput = Input.GetAxis("Horizontal");
-        _verticalInput = Input.GetAxis("Vertical");      
+        if (_isMobile)
+            MobileControl();
+        else
+            DesktopControl();
     }
 
+    private void DesktopControl()
+    {
+        _horizontalInput = Input.GetAxis("Horizontal");
+        _verticalInput = Input.GetAxis("Vertical");
+    }
+
+    private void MobileControl()
+    {
+        if (_leftButton.IsHold)
+            _horizontalInput = -1f;
+        else if (_rightButton.IsHold)
+            _horizontalInput = 1f;
+        else
+            _horizontalInput = 0f;
+
+        if (_upButton.IsHold)
+            _verticalInput = 1f;
+        else if (_downButton.IsHold)
+            _verticalInput = -1f;
+        else
+            _verticalInput = 0f;
+    }
     private void SetStartPosition()
     {
         _animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;

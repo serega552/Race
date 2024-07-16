@@ -26,8 +26,6 @@ public class VideoAd : MonoBehaviour
 
     private void Rewarded(int id)
     {
-        Debug.Log(id);
-
         if (id == 1)
             _bank.GiveMoney(200);
         else if (id == 2)

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using YG;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -18,6 +17,7 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private ParticleSystem[] _wheelEffects;
     [SerializeField] private ParticleSystem _waterParticle;
 
+    private List<ParticleSystem> _waterParticles = new List<ParticleSystem>();
     private Vector3 _startPosition;
     private Vector3 _startSpawnPosition = new Vector3(0f, 0f, 0f);
     private Quaternion _startRotation = new Quaternion(0f, 0f, 0f, 0f);
@@ -47,14 +47,15 @@ public class CarMovement : MonoBehaviour
         if (_isMove && _canPlay)
             Move();
 
-        if(_canPlay)
+        if (_canPlay)
             CheckGround();
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.collider.TryGetComponent(out EnemyMovement enemy))
+        if (collision.collider.TryGetComponent(out EnemyMovement enemy) && _canPlay)
         {
+            enemy.Die();
             Crash();
         }
     }
@@ -69,9 +70,10 @@ public class CarMovement : MonoBehaviour
             if (hit.collider.TryGetComponent(out Block block))
                 _isMove = true;
 
-            if (hit.collider.TryGetComponent(out WaterBlock waterBlock))
+            if (hit.collider.TryGetComponent(out WaterBlock waterBlock) && _canPlay)
             {
-                Instantiate(_waterParticle, transform.position, waterBlock.transform.localRotation);
+                var particle = Instantiate(_waterParticle, transform.position, waterBlock.transform.localRotation);
+                _waterParticles.Add(particle);
                 EndMove();
             }
         }
@@ -80,19 +82,26 @@ public class CarMovement : MonoBehaviour
             _isMove = false;
         }
 
-        Debug.DrawRay(_startPosition, transform.up * -1 * 1f, Color.red);     
+        Debug.DrawRay(_startPosition, transform.up * -1 * 1f, Color.red);
     }
 
     public void ResetCar()
     {
         transform.position = _startSpawnPosition;
         transform.rotation = _startRotation;
+
+        foreach(var particle in _waterParticles)
+        {
+            Destroy(particle.gameObject);
+        }
+
+        _waterParticles.Clear();
     }
 
     public void EndMove()
     {
-        AudioManager.Instance.Stop("StartCar");
         _canPlay = false;
+        AudioManager.Instance.Stop("StartCar");
         _isMove = false;
         _wheelEffects[0].Stop();
         _wheelEffects[1].Stop();
@@ -102,9 +111,9 @@ public class CarMovement : MonoBehaviour
 
     public void Resurrect()
     {
-        ResetCar();
         _canPlay = true;
         _isMove = true;
+        ResetCar();
         AudioManager.Instance.Play("StartCar");
     }
 
@@ -115,7 +124,7 @@ public class CarMovement : MonoBehaviour
         else
             DesktopMove();
 
-        if(_verticalInput != 0)
+        if (_verticalInput != 0)
             AudioManager.Instance.ChangePitch("StartCar", 0.2f);
         else
             AudioManager.Instance.ChangePitch("StartCar", -1.5f);
@@ -136,12 +145,12 @@ public class CarMovement : MonoBehaviour
             _wheels[i].Rotate(Vector3.right * _currentSpeed * Time.deltaTime * _wheelRotationSpeed);
         }
 
-        if(_verticalInput != 0)
+        if (_verticalInput != 0)
         {
             _wheelEffects[0].Play();
             _wheelEffects[1].Play();
         }
-        else 
+        else
         {
             _wheelEffects[0].Stop();
             _wheelEffects[1].Stop();
@@ -173,8 +182,12 @@ public class CarMovement : MonoBehaviour
 
     private void Crash()
     {
-        EndMove();
-        _explotion.Play();
+        if (_canPlay)
+        {
+            _canPlay = false;
+            EndMove();
+            _explotion.Play();
+        }
     }
 
     public void StartMove()

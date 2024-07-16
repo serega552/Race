@@ -52,6 +52,6 @@ public class EndStateGame
         _leaderboardYG.NewScore(Convert.ToInt32(YandexGame.savesData.RecordScore));
         _leaderboardYG.UpdateLB();
 
-        AudioManager.Instance.SlowStop("Music");
+        AudioManager.Instance.SlowPause("Music");
     }
 }

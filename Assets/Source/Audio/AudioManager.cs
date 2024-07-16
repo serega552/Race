@@ -49,13 +49,21 @@ public class AudioManager : MonoBehaviour
             s.source.Stop();
     }
 
-    public void SlowStop(string sound)
+    public void SlowPause(string sound)
     {
         Sound s = Array.Find(_sounds, item => item.name == sound);
 
         if (s != null)
-            StartCoroutine(StopTime(s));
-    }
+            StartCoroutine(PauseTime(s));
+    } 
+    
+    public void SlowUnPause(string sound)
+    {
+        Sound s = Array.Find(_sounds, item => item.name == sound);
+
+        if (s != null)
+            StartCoroutine(UnpauseTime(s));
+    } 
 
     public void SlowPlay(string sound)
     {
@@ -65,7 +73,7 @@ public class AudioManager : MonoBehaviour
             StartCoroutine(PlayTime(s));
     }
 
-    public IEnumerator StopTime(Sound sound)
+    public IEnumerator PauseTime(Sound sound)
     {
         while (sound.source.volume > 0.02f)
         {
@@ -73,11 +81,23 @@ public class AudioManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-        sound.source.Stop();
+        sound.source.Pause();
+    }
+
+    public IEnumerator UnpauseTime(Sound sound)
+    {
+        sound.source.UnPause();
+
+        while (sound.source.volume < sound.volume)
+        {
+            sound.source.volume += 0.1f;
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     public IEnumerator PlayTime(Sound sound)
     {
+        sound.source.Stop();
         sound.source.Play();
 
         while (sound.source.volume < sound.volume)
@@ -135,6 +155,7 @@ public class AudioManager : MonoBehaviour
         if (s != null)
         {
             s.source.volume = value;
+            s.volume = value;
         }
     }
 
@@ -143,7 +164,7 @@ public class AudioManager : MonoBehaviour
         foreach (var sound in _sounds)
         {
             if (sound.name != "Music" && sound.name != "MenuMusic")
-                sound.volume = value;
+                sound.source.volume = value;
         }
     }
 }

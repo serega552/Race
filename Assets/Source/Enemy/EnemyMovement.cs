@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody))]
@@ -13,15 +12,13 @@ public class EnemyMovement : MonoBehaviour
 
     private float _currentSpeed;
     private bool _isMoving = true;
-    private ParticleSystem _explotion;
     private Rigidbody _rigidbody;
 
-    public event Action OnCrash;
+    public event Action<Transform> OnCrash;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _explotion = GetComponentInChildren<ParticleSystem>();
     }
 
     private void FixedUpdate()
@@ -37,21 +34,20 @@ public class EnemyMovement : MonoBehaviour
     public void Die()
     {
         _isMoving = false;
-        _explotion.Play();
-        Invoke("TurnOffCar", 0.7f);
+        TurnOffCar();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.TryGetComponent(out EnemyMovement enemy))
         {
+            OnCrash?.Invoke(transform);
             Die();
-            OnCrash?.Invoke();
         } 
         if (collision.collider.TryGetComponent(out WaterBlock block))
         {
             Die();
-            OnCrash?.Invoke();
+            OnCrash?.Invoke(transform);
         }
     }
 

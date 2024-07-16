@@ -58,7 +58,7 @@ public class GameStatesIniter : MonoBehaviour
 
         _restartStateGame = new RestartStateGame();
         _endStateGame = new EndStateGame(_carMovement, _endGameWindow, _spawner, _scoreCounter, _scoreBank, _camera, _videoAd, _leaderboardYG, _resurrectMenu);
-        _resurrectStateGame = new ResurrectStateGame(_resurrectMenu, _carMovement);
+        _resurrectStateGame = new ResurrectStateGame(_resurrectMenu, _carMovement, _spawner);
         _startStateGame = new StartStateGame(_carMovement, _hudWindow, _menuWindow, _spawner, _bank, _scoreCounter, _upLineWindow, _camera);
     }
 

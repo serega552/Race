@@ -25,7 +25,7 @@ public class StartStateGame
     {
         AudioManager.Instance.Play("StartGame");
         AudioManager.Instance.SlowPlay("Music");
-        AudioManager.Instance.SlowStop("MenuMusic");
+        AudioManager.Instance.SlowPause("MenuMusic");
 
         _cameraMover.StartMove();
         _menuWindow.CloseWithoutSound();

@@ -73,6 +73,7 @@ public class Bank : MonoBehaviour
     {
         GiveMoney(MoneyForGame);
         MoneyForGame *= 2;
+        OnUpdateText?.Invoke();
     }
 
     private void Save()

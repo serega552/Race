@@ -43,10 +43,10 @@ public class ResurrectMenu : MonoBehaviour
     public void Resurrect()
     {
         OnResurrect?.Invoke();
+        StopCoroutine(_openTimerCoroutine);
         _animator.Play(IdleState);
         _resurrectWindow.Close();
         _controlWindow.OpenWithoutSound();
-        Time.timeScale = 1f;
     }
 
     public void OpenWindow()
@@ -80,6 +80,8 @@ public class ResurrectMenu : MonoBehaviour
 
     private void ExitWindow()
     {
+        StopCoroutine(_openTimerCoroutine);
+
         _animator.Play(IdleState);
         _resurrectWindow.Close();
         _controlWindow.OpenWithoutSound();

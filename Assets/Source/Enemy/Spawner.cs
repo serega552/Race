@@ -9,12 +9,15 @@ public class Spawner : MonoBehaviour
     [SerializeField] private GameObject _enemy;
     [SerializeField] private GameObject _container;
     [SerializeField] private ScoreCounter _scoreCounter;
+    [SerializeField] private Transform[] _spawnPosition;
+    [SerializeField] private ParticleSystem _crashParticle;
 
+    private List<ParticleSystem> _crashParticles = new List<ParticleSystem>();
     private Coroutine _startTimeSpawnCoroutine;
     private bool _canPlay = true;
     private CarMovement _movement;
     private List<EnemyMovement> _enemies = new List<EnemyMovement>();
-    private WaitForSeconds _waitStartSpawn = new WaitForSeconds(4f);
+    private WaitForSeconds _waitStartSpawn = new WaitForSeconds(1f);
     private WaitForSeconds _waitSpawnEnemies = new WaitForSeconds(2.5f);
 
     public void Init(CarMovement movement)
@@ -46,36 +49,96 @@ public class Spawner : MonoBehaviour
 
         var screenEdges = new Vector3[]
         {
-        new Vector3(-10f, -10f, _zPosition),      // left bottom
-        new Vector3(10f, -10f, _zPosition),   // middle bottom
+        new Vector3(-10f, -10f, _zPosition),
+        new Vector3(10f, -10f, _zPosition),
 
-        new Vector3(-10f, 10f, _zPosition),      // left top
-        new Vector3(10f, 10f, _zPosition),   // middle top
+        new Vector3(-10f, 10f, _zPosition),
+        new Vector3(10f, 10f, _zPosition),
+
+        new Vector3(10f, -10f, _zPosition),
+        new Vector3(-10f, -10f, _zPosition),
         };
 
         int random = Random.Range(1, screenEdges.Length);
 
         positionInGlobalSpace = _camera.ViewportToWorldPoint(screenEdges[random]);
         positionInGlobalSpace = new Vector3(positionInGlobalSpace.x, 0, positionInGlobalSpace.z);
-        var enemy = Instantiate(_enemy);
 
-        enemy.GetComponent<EnemyMovement>().GetCarMovement(_movement);
-        enemy.transform.SetParent(_container.transform);
-        enemy.transform.position = positionInGlobalSpace;
-        enemy.name = screenEdges[random].ToString();
-        _enemies.Add(enemy.GetComponent<EnemyMovement>());
+        if (CheckCollision(positionInGlobalSpace))
+        {
+            var enemy = Instantiate(_enemy);
 
-        _scoreCounter.AddEnemies(_enemies);
+            enemy.GetComponent<EnemyMovement>().GetCarMovement(_movement);
+            enemy.transform.SetParent(_container.transform);
+            enemy.transform.position = positionInGlobalSpace;
+            enemy.name = screenEdges[random].ToString();
+            EnemyMovement enemy1 = enemy.GetComponent<EnemyMovement>();
+            _enemies.Add(enemy1);
+
+            enemy1.OnCrash += SpawnCrashParticle;
+            _scoreCounter.AddEnemies(_enemies);
+        }
+        else
+        {
+            int random2 = Random.Range(0, _spawnPosition.Length);
+            positionInGlobalSpace = _spawnPosition[random2].position;
+            positionInGlobalSpace = new Vector3(positionInGlobalSpace.x, 0, positionInGlobalSpace.z);
+
+            var enemy = Instantiate(_enemy);
+
+            enemy.GetComponent<EnemyMovement>().GetCarMovement(_movement);
+            enemy.transform.SetParent(_container.transform);
+            enemy.transform.position = positionInGlobalSpace;
+            enemy.name = screenEdges[random].ToString();
+            EnemyMovement enemy1 = enemy.GetComponent<EnemyMovement>();
+            _enemies.Add(enemy1);
+
+            enemy1.OnCrash += SpawnCrashParticle;
+            _scoreCounter.AddEnemies(_enemies);
+        }
     }
 
     public void DestroyEnemy()
     {
-        for(int i = 0; i < _enemies.Count; i++)
+        for (int i = 0; i < _enemies.Count; i++)
         {
-            Destroy(_enemies[i]!.gameObject);
+            _enemies[i].OnCrash -= SpawnCrashParticle;
+            Destroy(_enemies[i].gameObject);
+        }
+        
+        for (int i = 0; i < _crashParticles.Count; i++)
+        {
+            Destroy(_crashParticles[i].gameObject);
         }
 
+        _crashParticles.Clear();
         _enemies.Clear();
+    }
+
+    private void SpawnCrashParticle(Transform transform)
+    {
+        var particle = Instantiate(_crashParticle, transform);
+        particle.transform.SetParent(_container.transform);
+        particle.Play();
+        _crashParticles.Add(particle);   
+    }
+
+    private bool CheckCollision(Vector3 position)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(position, 0.5f);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.GetComponent<Block>())
+            {
+                return true;
+            }
+
+            if (hitCollider.gameObject.GetComponent<WaterBlock>())
+            {
+                return false;
+            }
+        }
+        return false;
     }
 
     private IEnumerator TimeSpawn()

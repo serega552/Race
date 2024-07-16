@@ -57,7 +57,6 @@ public abstract class Shop : MonoBehaviour
             Destroy(ModelSkin);
 
         ModelSkin = Instantiate(skin.GetPrefab(), _placeSkin);
-
         SetPositionModel();
     }
 
@@ -69,7 +68,7 @@ public abstract class Shop : MonoBehaviour
 
     private void SetPositionModel()
     {
-        Vector3 position = new Vector3(_placeSkin.position.x, _placeSkin.position.y, _placeSkin.position.z);
+        Vector3 position = new Vector3(_placeSkin.position.x, ModelSkin.transform.position.y, _placeSkin.position.z);
         ModelSkin.transform.position = position;
     }
 }
