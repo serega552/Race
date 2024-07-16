@@ -14,6 +14,12 @@ public class PauseWindow : Window
         CloseWithoutSound();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyUp(KeyCode.Escape))
+            TogglePause();
+    }
+
     private void OnEnable()
     {
         _openButton.onClick.AddListener(TogglePause);
@@ -32,6 +38,7 @@ public class PauseWindow : Window
         _upLineWindow.OpenWithoutSound();
         Time.timeScale = 0f;
         AudioManager.Instance.Pause("Music");
+        AudioManager.Instance.Pause("StartCar");
     }
 
     public override void Close()
@@ -40,6 +47,7 @@ public class PauseWindow : Window
         _upLineWindow.CloseWithoutSound();
         Time.timeScale = 1f;
         AudioManager.Instance.UnPause("Music");
+        AudioManager.Instance.UnPause("StartCar");
     }
 
     private void TogglePause()

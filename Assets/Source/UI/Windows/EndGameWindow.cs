@@ -13,6 +13,7 @@ public class EndGameWindow : Window
     [SerializeField] private Button _rewardButton;
     [SerializeField] private UpLineWindow _upLine;
 
+    private ParticleSystem _rewardParticle;
     private HudWindow _hudWindow;
     private WaitForSeconds _waitEndGame = new WaitForSeconds(0.005f);
     private Coroutine _openTimerCoroutine;
@@ -27,6 +28,7 @@ public class EndGameWindow : Window
     {
         CloseWithoutSound();
         _hudWindow = GetComponentInParent<HudWindow>();
+        _rewardParticle = GetComponentInChildren<ParticleSystem>();
     }
 
     private void OnEnable()
@@ -60,6 +62,7 @@ public class EndGameWindow : Window
     private void RewardAd()
     {
         YandexGame.RewVideoShow(5);
+        _rewardParticle.Play();
         _rewardButton.gameObject.SetActive(false);
     }
 

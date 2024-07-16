@@ -1,10 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class Settings : MonoBehaviour
 {
     [SerializeField] private Slider _soundSlider;
     [SerializeField] private Slider _musicSlider;
+
+    private void Start()
+    {
+        Load();
+    }
 
     private void OnEnable()
     {
@@ -29,13 +35,20 @@ public class Settings : MonoBehaviour
         AudioManager.Instance.ChangeSounds(value);
     }
 
-    private void Load()
+    public void Save()
     {
-
+        YandexGame.savesData.SoundValue = _soundSlider.value;
+        YandexGame.savesData.MusicValue = _musicSlider.value;
+        YandexGame.SaveProgress();
     }
 
-    private void Save()
+    public void Load()
     {
+        _soundSlider.value = YandexGame.savesData.SoundValue;
+        _musicSlider.value = YandexGame.savesData.MusicValue;
 
+        AudioManager.Instance.ChangeSounds(_soundSlider.value);
+        AudioManager.Instance.ChangeValue("Music", _musicSlider.value);
+        AudioManager.Instance.ChangeValue("MenuMusic", _musicSlider.value);
     }
 }

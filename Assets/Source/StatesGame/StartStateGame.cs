@@ -23,7 +23,6 @@ public class StartStateGame
 
     private void Start()
     {
-        AudioManager.Instance.Play("StartGame");
         AudioManager.Instance.SlowPlay("Music");
         AudioManager.Instance.SlowPause("MenuMusic");
 

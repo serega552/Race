@@ -6,6 +6,14 @@ public class SettingsWindow : Window
     [SerializeField] private Button _openSettingsButton;
     [SerializeField] private Button _closeButton;
 
+    private Settings _settings;
+
+    private void Awake()
+    {
+        _settings = GetComponent<Settings>();
+        CloseWithoutSound();
+    }
+
     private void OnEnable()
     {
         _openSettingsButton.onClick.AddListener(Open);
@@ -18,8 +26,14 @@ public class SettingsWindow : Window
         _closeButton.onClick.RemoveListener(Close);
     }
 
-    private void Awake()
+    public override void Open()
     {
-        CloseWithoutSound();
+        base.Open();
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        _settings.Save();
     }
 }

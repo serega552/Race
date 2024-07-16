@@ -114,7 +114,7 @@ public class CarMovement : MonoBehaviour
         _canPlay = true;
         _isMove = true;
         ResetCar();
-        AudioManager.Instance.Play("StartCar");
+        AudioManager.Instance.SlowPlay("StartCar");
     }
 
     private void Move()
@@ -194,7 +194,7 @@ public class CarMovement : MonoBehaviour
     {
         _canPlay = true;
         _isMove = true;
-        AudioManager.Instance.Play("StartCar");
+        AudioManager.Instance.SlowPlay("StartCar");
     }
 }
 

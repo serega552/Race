@@ -13,6 +13,8 @@ namespace YG
         public int RecordScore = 0;
         public List<int> BoughtSkins = new List<int>();
         public int SelectedSkin;
+        public float MusicValue = 0.3f;
+        public float SoundValue = 0.5f;
 
         public SavesYG()
         {

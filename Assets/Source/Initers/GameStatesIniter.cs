@@ -17,6 +17,7 @@ public class GameStatesIniter : MonoBehaviour
     [SerializeField] private VideoAd _videoAd;
     [SerializeField] private LeaderboardYG _leaderboardYG;
     [SerializeField] private ResurrectMenu _resurrectMenu;
+    [SerializeField] private MobileControlWindow _controlWindow;
 
     private ResurrectStateGame _resurrectStateGame;
     private RestartStateGame _restartStateGame;
@@ -31,6 +32,11 @@ public class GameStatesIniter : MonoBehaviour
     private void Awake()
     {
         Init(_carMovement);
+
+        if (YandexGame.EnvironmentData.isMobile)
+            _controlWindow.OpenWithoutSound();
+        else;
+            _controlWindow.CloseWithoutSound();
     }
 
     private void OnEnable()
