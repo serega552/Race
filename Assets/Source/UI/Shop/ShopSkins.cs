@@ -48,7 +48,7 @@ public class ShopSkins : Shop
     public override void ShowInfoProduct(Product skin)
     {
         _selectedSkin = skin.GetComponent<Skin>();
-        Description.text = _selectedSkin.Description;
+        Description.text = Lean.Localization.LeanLocalization.GetTranslationText(_selectedSkin.Description);
 
         if (_selectedSkin.IsBought)
         {

@@ -1,8 +1,11 @@
-/*using UnityEngine;
+using UnityEngine;
 using Agava.WebUtility;
 
 public class TestFocus : MonoBehaviour
 {
+    [SerializeField] private PauseWindow _pause;
+    [SerializeField] private ResurrectMenu _resurrectMenu;
+
     private void OnEnable()
     {
         Application.focusChanged += OnInBackgroundChangeApp;
@@ -16,14 +19,20 @@ public class TestFocus : MonoBehaviour
 
     private void OnInBackgroundChangeApp(bool inApp)
     {
-        MuteAudio(!inApp);
-        PauseGame(!inApp);
+        if (_pause.IsPause == false && _resurrectMenu.IsPause == false)
+        {
+            MuteAudio(!inApp);
+            PauseGame(!inApp);
+        }
     }
 
     private void OnInBackgroundChangeWeb(bool isBackgrond)
     {
-        MuteAudio(isBackgrond);
-        PauseGame(isBackgrond);
+        if (_pause.IsPause == false && _resurrectMenu.IsPause == false)
+        {
+            MuteAudio(isBackgrond);
+            PauseGame(isBackgrond);
+        }
     }
 
     private void MuteAudio(bool value)
@@ -36,4 +45,3 @@ public class TestFocus : MonoBehaviour
         Time.timeScale = value ? 0 : 1;
     }
 }
-*/

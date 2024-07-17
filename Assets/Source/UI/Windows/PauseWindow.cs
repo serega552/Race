@@ -6,8 +6,14 @@ public class PauseWindow : Window
     [SerializeField] private Button _openButton;
     [SerializeField] private Button _closeButton;
     [SerializeField] private UpLineWindow _upLineWindow;
+    [SerializeField] private ResurrectMenu _resurrectMenu;
+    [SerializeField] private MenuWindow _menu;
+    [SerializeField] private EndGameWindow _endScreen;
+    [SerializeField] private SettingsWindow _settings;
 
     private bool _isPause = false;
+
+    public bool IsPause => _isPause;
 
     private void Start()
     {
@@ -16,7 +22,7 @@ public class PauseWindow : Window
 
     private void Update()
     {
-        if(Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape) && _resurrectMenu.IsPause == false && _menu.IsMenuOpen == false && _endScreen.IsEndScreenOpen == false && _settings.IsSettingsOpen == false)
             TogglePause();
     }
 

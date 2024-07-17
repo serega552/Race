@@ -15,6 +15,7 @@ public class ResurrectStateGame
 
     public void ChangeCarMovement(CarMovement movement)
     {
+        _movement.OnEndMove -= OpenResurrectWindow;
         _movement = movement;
         _movement.OnEndMove += OpenResurrectWindow;
     }

@@ -17,10 +17,8 @@ public class GameStatesIniter : MonoBehaviour
     [SerializeField] private VideoAd _videoAd;
     [SerializeField] private LeaderboardYG _leaderboardYG;
     [SerializeField] private ResurrectMenu _resurrectMenu;
-    [SerializeField] private MobileControlWindow _controlWindow;
 
     private ResurrectStateGame _resurrectStateGame;
-    private RestartStateGame _restartStateGame;
     private StartStateGame _startStateGame;
     private EndStateGame _endStateGame;
 
@@ -32,11 +30,6 @@ public class GameStatesIniter : MonoBehaviour
     private void Awake()
     {
         Init(_carMovement);
-
-        if (YandexGame.EnvironmentData.isMobile)
-            _controlWindow.OpenWithoutSound();
-        else;
-            _controlWindow.CloseWithoutSound();
     }
 
     private void OnEnable()
@@ -44,8 +37,8 @@ public class GameStatesIniter : MonoBehaviour
         _skinSelecter.OnChangingSkin += RefreshInfo;
 
         _resurrectStateGame.Enable();
-        _restartStateGame.Enable();
         _startStateGame.Enable();
+        _endStateGame.Enable();
     }
 
     private void OnDisable()
@@ -53,7 +46,6 @@ public class GameStatesIniter : MonoBehaviour
         _skinSelecter.OnChangingSkin -= RefreshInfo;
 
         _resurrectStateGame.Disable();
-        _restartStateGame.Disable();
         _startStateGame.Disable();
         _endStateGame.Disable();
     }
@@ -62,7 +54,6 @@ public class GameStatesIniter : MonoBehaviour
     {
         _carMovement = carMovement;
 
-        _restartStateGame = new RestartStateGame();
         _endStateGame = new EndStateGame(_carMovement, _endGameWindow, _spawner, _scoreCounter, _scoreBank, _camera, _videoAd, _leaderboardYG, _resurrectMenu);
         _resurrectStateGame = new ResurrectStateGame(_resurrectMenu, _carMovement, _spawner);
         _startStateGame = new StartStateGame(_carMovement, _hudWindow, _menuWindow, _spawner, _bank, _scoreCounter, _upLineWindow, _camera);

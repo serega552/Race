@@ -28,6 +28,11 @@ public class EndStateGame
 
     public event Action OnEndGame;
 
+    public void Enable()
+    {
+        _resurrectMenu.OnEndGame += End;
+    }
+
     public void Disable()
     {
         _resurrectMenu.OnEndGame -= End;
@@ -36,7 +41,6 @@ public class EndStateGame
     public void ChangeCarMovement(CarMovement movement)
     {
         _movement = movement;
-        _resurrectMenu.OnEndGame += End;
     }
 
     private void End()

@@ -17,7 +17,7 @@ public abstract class Product : MonoBehaviour
     private Button _showButton;
 
     public int Id => _id;
-    public string Description { get; private set; }
+    public string Description => _descriptionTranslation;
     public bool IsSelected => _isSelected;
     public int Price => _price;
     public bool IsBought { get; private set; } = false;
@@ -26,10 +26,9 @@ public abstract class Product : MonoBehaviour
 
     private void Awake()
     {
-        _descriptionTranslation = Lean.Localization.LeanLocalization.GetTranslationText(_descriptionTranslation);
         _showButton = GetComponent<Button>();
         _showButton.onClick.AddListener(ShowInfo);
-        _buyFlag.gameObject.SetActive(IsBought);
+        _buyFlag.gameObject.SetActive(!IsBought);
     }
 
     private void OnDisable()
@@ -40,7 +39,7 @@ public abstract class Product : MonoBehaviour
     public void Unlock()
     {
         IsBought = true;
-        _buyFlag.gameObject.SetActive(IsBought);
+        _buyFlag.gameObject.SetActive(!IsBought);
     }
 
     public void ShowInfo()

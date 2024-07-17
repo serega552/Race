@@ -164,7 +164,10 @@ public class AudioManager : MonoBehaviour
         foreach (var sound in _sounds)
         {
             if (sound.name != "Music" && sound.name != "MenuMusic")
+            {
                 sound.source.volume = value;
+                sound.volume = value;
+            }
         }
     }
 }

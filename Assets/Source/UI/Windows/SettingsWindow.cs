@@ -7,6 +7,9 @@ public class SettingsWindow : Window
     [SerializeField] private Button _closeButton;
 
     private Settings _settings;
+    private bool _isSettingsOpen = false;
+
+    public bool IsSettingsOpen => _isSettingsOpen;
 
     private void Awake()
     {
@@ -29,11 +32,13 @@ public class SettingsWindow : Window
     public override void Open()
     {
         base.Open();
+        _isSettingsOpen = true;
     }
 
     public override void Close()
     {
         base.Close();
+        _isSettingsOpen = false;
         _settings.Save();
     }
 }

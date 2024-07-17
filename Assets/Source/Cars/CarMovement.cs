@@ -87,6 +87,11 @@ public class CarMovement : MonoBehaviour
 
     public void ResetCar()
     {
+        _currentSpeed = 0;
+        _verticalInput = 0;
+        _horizontalInput = 0;
+        _rigidbody.velocity = new Vector3();
+
         transform.position = _startSpawnPosition;
         transform.rotation = _startRotation;
 
@@ -103,8 +108,6 @@ public class CarMovement : MonoBehaviour
         _canPlay = false;
         AudioManager.Instance.Stop("StartCar");
         _isMove = false;
-        _wheelEffects[0].Stop();
-        _wheelEffects[1].Stop();
 
         OnEndMove?.Invoke();
     }
@@ -145,15 +148,10 @@ public class CarMovement : MonoBehaviour
             _wheels[i].Rotate(Vector3.right * _currentSpeed * Time.deltaTime * _wheelRotationSpeed);
         }
 
-        if (_verticalInput != 0)
+        if (_currentSpeed != 0)
         {
             _wheelEffects[0].Play();
             _wheelEffects[1].Play();
-        }
-        else
-        {
-            _wheelEffects[0].Stop();
-            _wheelEffects[1].Stop();
         }
     }
 
@@ -192,6 +190,8 @@ public class CarMovement : MonoBehaviour
 
     public void StartMove()
     {
+        _wheelEffects[0].Play();
+        _wheelEffects[1].Play();
         _canPlay = true;
         _isMove = true;
         AudioManager.Instance.SlowPlay("StartCar");

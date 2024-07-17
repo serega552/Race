@@ -18,6 +18,9 @@ public class EndGameWindow : Window
     private WaitForSeconds _waitEndGame = new WaitForSeconds(0.005f);
     private Coroutine _openTimerCoroutine;
     private Animator _animator;
+    private bool _isEndScreenOpen = false;
+
+    public bool IsEndScreenOpen => _isEndScreenOpen;
 
     private void Start()
     {
@@ -46,6 +49,7 @@ public class EndGameWindow : Window
     public override void OpenWithoutSound()
     {
         RefreshAdButton();
+        _isEndScreenOpen = true;
         _openTimerCoroutine = StartCoroutine(EndTime());
     }
 
@@ -85,6 +89,8 @@ public class EndGameWindow : Window
 
     private void CloseWindows()
     {
+        StopCoroutine(_openTimerCoroutine);
+        _isEndScreenOpen = false;
         _animator.Play(IdleState);
         YandexGame.FullscreenShow();
         CloseWithoutSound();

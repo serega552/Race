@@ -6,7 +6,11 @@ public class MenuWindow : Window
 {
     [SerializeField] private Button _startButton;
 
+    private bool _isMenuOpen = true;
+
     public event Action OnStart;
+
+    public bool IsMenuOpen => _isMenuOpen;
 
     private void Awake()
     {
@@ -26,6 +30,13 @@ public class MenuWindow : Window
     public override void OpenWithoutSound()
     {
         base.OpenWithoutSound();
+        _isMenuOpen = true;
+    }
+
+    public override void CloseWithoutSound()
+    {
+        base.CloseWithoutSound();
+        _isMenuOpen = false;
     }
 
     private void StartGame()

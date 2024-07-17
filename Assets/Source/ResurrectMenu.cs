@@ -18,6 +18,9 @@ public class ResurrectMenu : MonoBehaviour
     private Animator _animator;
     private WaitForSeconds _waitTime = new WaitForSeconds(0.01f);
     private Coroutine _openTimerCoroutine;
+    private bool _isPause;
+
+    public bool IsPause => _isPause;
 
     public event Action OnResurrect;
     public event Action OnEndGame;
@@ -47,6 +50,7 @@ public class ResurrectMenu : MonoBehaviour
         _animator.Play(IdleState);
         _resurrectWindow.Close();
         _controlWindow.OpenWithoutSound();
+        _isPause = false;
     }
 
     public void OpenWindow()
@@ -59,6 +63,7 @@ public class ResurrectMenu : MonoBehaviour
     {
         float value = 0;
         _animator.Play(ResurrectWIndowAnim);
+        
 
         while (value <= 0.95f)
         {
@@ -68,9 +73,10 @@ public class ResurrectMenu : MonoBehaviour
         }
 
         _resurrectWindow.OpenWithoutSound();
-        Time.timeScale = 0f;
+        _isPause = true;
         value = 0;
         StopCoroutine(_openTimerCoroutine);
+        Time.timeScale = 0f;
     }
 
     private void ShowResurrectAd()
@@ -86,6 +92,7 @@ public class ResurrectMenu : MonoBehaviour
         _resurrectWindow.Close();
         _controlWindow.OpenWithoutSound();
         OnEndGame?.Invoke();
+        _isPause = false;
         Time.timeScale = 1f;
     }
 }
