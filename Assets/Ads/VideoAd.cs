@@ -6,6 +6,7 @@ public class VideoAd : MonoBehaviour
     [SerializeField] private Bank _bank;
     [SerializeField] private MoneyRewardButton _moneyReward;
     [SerializeField] private ResurrectMenu _resurrectMenu;
+    [SerializeField] private BonusRewarder _bonusRewarder;
 
     private void OnEnable()
     {
@@ -38,5 +39,7 @@ public class VideoAd : MonoBehaviour
             _bank.MoneyMultiplyAd();
         else if (id == 6)
             _resurrectMenu.Resurrect();
+        else if (id == 7)
+            _bonusRewarder.GiveReward();
     }
 }

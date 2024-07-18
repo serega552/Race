@@ -15,6 +15,7 @@ namespace YG
         public int SelectedSkin;
         public float MusicValue = 0.3f;
         public float SoundValue = 0.5f;
+        public int CountWatchedBonusAd = 0;
 
         public SavesYG()
         {

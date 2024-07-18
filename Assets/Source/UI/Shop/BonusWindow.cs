@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopWindow : Window
+class BonusWindow : Window
 {
     [SerializeField] private Button _openButton;
     [SerializeField] private Button _closeButton;
@@ -20,6 +20,6 @@ public class ShopWindow : Window
     private void OnDisable()
     {
         _openButton.onClick.RemoveListener(Open);
-        _closeButton.onClick.RemoveListener(Close);
+        _closeButton.onClick.AddListener(Close);
     }
 }
