@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using YG;
 
@@ -8,6 +7,7 @@ public class ShopSkins : Shop
     [SerializeField] private List<Skin> _skinsForSale;
     [SerializeField] private BonusWindow _bonusWindow;
     [SerializeField] private BonusRewarder _bonusRewarder;
+    [SerializeField] private Skin _bonusSkin;
 
     private Skin _selectedSkin;
     private SkinSelecter _selecter;
@@ -119,11 +119,14 @@ public class ShopSkins : Shop
         else
         {
             _selecter.InitFirstSkin();
+            base.BuyProduct();
         }
     }
 
     private void TryBuyBonusProduct()
     {
+        _selectedSkin = _bonusSkin;
         BuyProduct();
+        ShowInfoProduct(_bonusSkin);
     }
 }

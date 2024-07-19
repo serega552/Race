@@ -57,5 +57,6 @@ public class EndStateGame
         _leaderboardYG.UpdateLB();
 
         AudioManager.Instance.SlowPause("Music");
+        AudioManager.Instance.SlowPause("Sirena");
     }
 }
