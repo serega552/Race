@@ -34,6 +34,7 @@ public class LeaderboardWindow : Window
         }
         else
         {
+            base.CloseWithoutSound();
             YandexGame.AuthDialog(); 
         }
     }

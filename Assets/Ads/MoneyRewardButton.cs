@@ -15,6 +15,8 @@ public class MoneyRewardButton : MonoBehaviour
     private int _muchMoney = 3000;
     private int _rewardMoney = 200;
     private int _id;
+    private int _countWatch = 0;
+    private int _maxCountWatch = 3;
 
     private void Awake()
     {
@@ -36,25 +38,25 @@ public class MoneyRewardButton : MonoBehaviour
         int chance = Random.Range(0, 100);
         int money = YandexGame.savesData.Money;
 
-        if (money <= _moneyTight && chance <= 30)
+        if (money <= _moneyTight && chance <= 30 && _countWatch <= _maxCountWatch)
         {
             _id = 1;
             RefreshAmountPrice(_rewardMoney);
             _rewardButton.gameObject.SetActive(true);
         }
-        else if(money <= _moneyNormal && chance <= 20)
+        else if(money <= _moneyNormal && chance <= 20 && _countWatch <= _maxCountWatch)
         {
             _id = 2;
             RefreshAmountPrice(_rewardMoney * 3);
             _rewardButton.gameObject.SetActive(true);
         }
-        else if(money <= _muchMoney && chance <= 20)
+        else if(money <= _muchMoney && chance <= 20 && _countWatch <= _maxCountWatch)
         {
             _id = 3;
             RefreshAmountPrice(_rewardMoney * 5);
             _rewardButton.gameObject.SetActive(true);
         }
-        else if(money >= _muchMoney && chance <= 20)
+        else if(money >= _muchMoney && chance <= 20 && _countWatch <= _maxCountWatch)
         {
             _id = 4;
             RefreshAmountPrice(_rewardMoney * 8);
@@ -74,6 +76,7 @@ public class MoneyRewardButton : MonoBehaviour
 
     private void OnButtonClick()
     {
+        _countWatch++;
         YandexGame.RewVideoShow(_id);
         _rewardButton.gameObject.SetActive(false);
     }

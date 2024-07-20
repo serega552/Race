@@ -9,12 +9,14 @@ namespace YG
         public bool isFirstSession = true;
         public string language = "ru";
         public bool promptDone;
-        public int Money = 500;
+        public int Money = 0;
         public int RecordScore = 0;
         public List<int> BoughtSkins = new List<int>();
         public int SelectedSkin;
         public float MusicValue = 0.3f;
         public float SoundValue = 0.5f;
+        public int CountWatchedBonusAd = 0;
+        public bool IsBonusUse = false;
 
         public SavesYG()
         {

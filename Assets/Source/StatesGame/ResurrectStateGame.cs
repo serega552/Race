@@ -36,6 +36,7 @@ public class ResurrectStateGame
         _movement.Resurrect();
         _spawner.ResetEnemy();
         AudioManager.Instance.SlowUnPause("Music");
+        AudioManager.Instance.SlowUnPause("Sirena");
 
         Time.timeScale = 1f;
     }
@@ -44,5 +45,6 @@ public class ResurrectStateGame
     {
         _resurrect.OpenWindow();
         AudioManager.Instance.SlowPause("Music");
+        AudioManager.Instance.SlowPause("Sirena");
     }
 }

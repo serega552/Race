@@ -3,16 +3,16 @@ using UnityEngine;
 public class Skin : Product
 {
     [SerializeField] private CarMovement _movement;
-    [SerializeField] private GameObject _prefabSkin;
+    [SerializeField] private Sprite _carSprite;
 
     public CarMovement GetView()
     {
         return _movement;
     }
 
-    public GameObject GetPrefab()
+    public Sprite GetSprite()
     {
-        return _prefabSkin;
+        return _carSprite;
     }
 
     public void TurnOffSkin()

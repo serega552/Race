@@ -12,10 +12,12 @@ public abstract class Product : MonoBehaviour
     [SerializeField] private string _descriptionTranslation;
     [SerializeField] private bool _isSelected;
     [SerializeField] private TMP_Text _priceText;
+    [SerializeField] private bool _isBonusSkin = false;
     [SerializeField] private int _id;
 
     private Button _showButton;
 
+    public bool IsBonusSkin => _isBonusSkin;
     public int Id => _id;
     public string Description => _descriptionTranslation;
     public bool IsSelected => _isSelected;
@@ -45,7 +47,10 @@ public abstract class Product : MonoBehaviour
     public void ShowInfo()
     {
         OnSelected?.Invoke(this);
-        _priceText.text = $"{_price}";
+        if (_isBonusSkin)
+            _priceText.text = Lean.Localization.LeanLocalization.GetTranslationText("Shop/BonusButton");
+        else
+            _priceText.text = $"{_price}";
     }
 
     public void TurnOnProduct()

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public abstract class Shop : MonoBehaviour
 {
-    [SerializeField] private Transform _placeSkin;
+    [SerializeField] private Image _placeSkin;
     [SerializeField] private Bank _bank;
     [SerializeField] private Button _buyButton;
     [SerializeField] private Button _selectButton;
@@ -16,12 +16,10 @@ public abstract class Shop : MonoBehaviour
     public event Action OnChangingSkin;
 
     public Bank BankMoney => _bank;
-    public Transform PlaceSkin => _placeSkin;
+    public Image PlaceSkin => _placeSkin;
     public Button BuyButton => _buyButton;
     public Button SelectButton => _selectButton;
     public TMP_Text Description => _description;
-
-    public GameObject ModelSkin { get; private set; }
 
     private void Awake()
     {
@@ -35,29 +33,15 @@ public abstract class Shop : MonoBehaviour
         OnChangingSkin?.Invoke();
     }
 
-    public void TurnOffModel()
-    {
-        ModelSkin?.SetActive(false);
-    }
-
-    virtual public void TurnOnModel()
-    {
-        ModelSkin?.SetActive(true);
-    }
-
     virtual public void BuyProduct()
     {
         _buyButton.gameObject.SetActive(false);
         _selectButton.gameObject.SetActive(true);
     }
 
-    public void SpawnSkin(Skin skin)
+    public void SetSkin(Skin skin)
     {
-        if (ModelSkin != null)
-            Destroy(ModelSkin);
-
-        ModelSkin = Instantiate(skin.GetPrefab(), _placeSkin);
-        SetPositionModel();
+        _placeSkin.sprite = skin.GetSprite();
     }
 
     public abstract void ShowInfoProduct(Product skin);
@@ -65,10 +49,4 @@ public abstract class Shop : MonoBehaviour
     public abstract void SelectProduct();
 
     public abstract void TryBuyProduct();
-
-    private void SetPositionModel()
-    {
-        Vector3 position = new Vector3(_placeSkin.position.x, ModelSkin.transform.position.y, _placeSkin.position.z);
-        ModelSkin.transform.position = position;
-    }
 }

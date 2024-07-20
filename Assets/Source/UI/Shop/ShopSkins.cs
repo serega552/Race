@@ -5,18 +5,24 @@ using YG;
 public class ShopSkins : Shop
 {
     [SerializeField] private List<Skin> _skinsForSale;
+    [SerializeField] private BonusWindow _bonusWindow;
+    [SerializeField] private BonusRewarder _bonusRewarder;
+    [SerializeField] private Skin _bonusSkin;
 
     private Skin _selectedSkin;
     private SkinSelecter _selecter;
+    private ShopWindow _shopWindow;
 
     private void Awake()
     {
         _selecter = GetComponent<SkinSelecter>();
+        _shopWindow = GetComponentInParent<ShopWindow>();
     }
 
     private void OnEnable()
     {
         BuyButton.onClick.AddListener(TryBuyProduct);
+        _bonusRewarder.BuyButton.onClick.AddListener(TryBuyBonusProduct);
         SelectButton.onClick.AddListener(SelectProduct);
 
         foreach (var skin in _skinsForSale)
@@ -28,6 +34,7 @@ public class ShopSkins : Shop
     private void OnDisable()
     {
         BuyButton.onClick.RemoveListener(TryBuyProduct);
+        _bonusRewarder.BuyButton.onClick.RemoveListener(TryBuyBonusProduct);
         SelectButton.onClick.RemoveListener(SelectProduct);
 
         foreach (var skin in _skinsForSale)
@@ -61,7 +68,7 @@ public class ShopSkins : Shop
             SelectButton.gameObject.SetActive(false);
         }
 
-        SpawnSkin(_selectedSkin);
+        SetSkin(_selectedSkin);
     }
 
     public override void SelectProduct()
@@ -71,10 +78,15 @@ public class ShopSkins : Shop
 
     public override void TryBuyProduct()
     {
-        if (BankMoney.TryTakeMoney(_selectedSkin.Price))
+        if (_selectedSkin.IsBonusSkin == false && BankMoney.TryTakeMoney(_selectedSkin.Price))
         {
             BankMoney.TakeMoney(_selectedSkin.Price);
             BuyProduct();
+        }
+        else if (_selectedSkin.IsBonusSkin)
+        {
+            _shopWindow.CloseWithoutSound();
+            _bonusWindow.Open();
         }
     }
 
@@ -107,6 +119,14 @@ public class ShopSkins : Shop
         else
         {
             _selecter.InitFirstSkin();
+            base.BuyProduct();
         }
+    }
+
+    private void TryBuyBonusProduct()
+    {
+        _selectedSkin = _bonusSkin;
+        BuyProduct();
+        ShowInfoProduct(_bonusSkin);
     }
 }
