@@ -9,7 +9,7 @@ namespace YG
         public bool isFirstSession = true;
         public string language = "ru";
         public bool promptDone;
-        public int Money = 500000;
+        public int Money = 0;
         public int RecordScore = 0;
         public List<int> BoughtSkins = new List<int>();
         public int SelectedSkin;

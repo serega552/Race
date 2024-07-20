@@ -45,6 +45,8 @@ public class ResurrectMenu : MonoBehaviour
 
     public void Resurrect()
     {
+        Debug.Log(2);
+
         OnResurrect?.Invoke();
         StopCoroutine(_openTimerCoroutine);
         _animator.Play(IdleState);
@@ -81,7 +83,14 @@ public class ResurrectMenu : MonoBehaviour
 
     private void ShowResurrectAd()
     {
+        YandexGame.CloseVideoEvent += ErrorAd;
         YandexGame.RewVideoShow(_id);
+    }
+
+    private void ErrorAd()
+    {
+        Time.timeScale = 0f;
+        YandexGame.CloseVideoEvent -= ErrorAd;
     }
 
     private void ExitWindow()

@@ -94,10 +94,10 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BorderColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.9716981, g: 0.9671146, b: 0.9673483, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DistTiling: {r: 0, g: 0, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MoveDirection: {r: 0, g: 0, b: 0, a: 0}
     - _Tiling: {r: -0.06, g: -0.06, b: -0.06, a: -0.06}
-    - _WaterColor: {r: 0, g: 0.4392331, b: 0.6698113, a: 1}
+    - _WaterColor: {r: 0.14978641, g: 0.5599696, b: 0.9622642, a: 1}
   m_BuildTextureStacks: []

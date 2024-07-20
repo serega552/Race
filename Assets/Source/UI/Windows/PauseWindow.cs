@@ -45,6 +45,7 @@ public class PauseWindow : Window
         Time.timeScale = 0f;
         AudioManager.Instance.Pause("Music");
         AudioManager.Instance.Pause("StartCar");
+        AudioManager.Instance.Pause("Sirena");
     }
 
     public override void Close()
@@ -54,6 +55,7 @@ public class PauseWindow : Window
         Time.timeScale = 1f;
         AudioManager.Instance.UnPause("Music");
         AudioManager.Instance.UnPause("StartCar");
+        AudioManager.Instance.UnPause("Sirena");
     }
 
     private void TogglePause()

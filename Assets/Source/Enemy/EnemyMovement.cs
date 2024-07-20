@@ -39,16 +39,23 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.collider.TryGetComponent(out WaterBlock block))
+        {
+            Debug.Log(1);
+            OnCrash?.Invoke(transform);
+            Die();
+        }
+
         if (collision.collider.TryGetComponent(out EnemyMovement enemy))
         {
             OnCrash?.Invoke(transform);
             Die();
         } 
-        if (collision.collider.TryGetComponent(out WaterBlock block))
-        {
-            Die();
-            OnCrash?.Invoke(transform);
-        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        
     }
 
     private void Move()

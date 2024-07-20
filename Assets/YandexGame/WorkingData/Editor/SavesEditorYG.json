@@ -1,22 +1,16 @@
 {
-    "idSave": 61,
+    "idSave": 1,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
-    "Money": 430810,
-    "RecordScore": 29,
+    "Money": 0,
+    "RecordScore": 0,
     "BoughtSkins": [
-        8,
-        4,
-        2,
-        5,
-        1,
-        6,
-        3
+        8
     ],
-    "SelectedSkin": 3,
-    "MusicValue": 0.7636184692382813,
-    "SoundValue": 0.499866783618927,
+    "SelectedSkin": 8,
+    "MusicValue": 0.30000001192092898,
+    "SoundValue": 0.5,
     "CountWatchedBonusAd": 0,
     "IsBonusUse": false
 }

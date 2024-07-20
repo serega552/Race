@@ -96,6 +96,9 @@ public class Spawner : MonoBehaviour
             enemy1.OnCrash += SpawnCrashParticle;
             _scoreCounter.AddEnemies(_enemies);
         }
+
+        if(_enemies.Count > 10)
+            DestroyEnemyInGame();
     }
 
     public void DestroyEnemy()
@@ -105,7 +108,7 @@ public class Spawner : MonoBehaviour
             _enemies[i].OnCrash -= SpawnCrashParticle;
             Destroy(_enemies[i].gameObject);
         }
-        
+
         for (int i = 0; i < _crashParticles.Count; i++)
         {
             Destroy(_crashParticles[i].gameObject);
@@ -115,12 +118,25 @@ public class Spawner : MonoBehaviour
         _enemies.Clear();
     }
 
+    private void DestroyEnemyInGame()
+    {
+        for (int i = 0; i < _enemies.Count; i++)
+        {
+            if (_enemies[i].gameObject.activeSelf == false)
+            {
+                _enemies[i].OnCrash -= SpawnCrashParticle;
+                Destroy(_enemies[i].gameObject);
+                _enemies.Remove(_enemies[i]);
+            }
+        }
+    }
+
     private void SpawnCrashParticle(Transform transform)
     {
         var particle = Instantiate(_crashParticle, transform);
         particle.transform.SetParent(_container.transform);
         particle.Play();
-        _crashParticles.Add(particle);   
+        _crashParticles.Add(particle);
     }
 
     private bool CheckCollision(Vector3 position)
