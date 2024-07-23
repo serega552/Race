@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using YG;
 
 public class LeaderboardWindow : Window
 {
@@ -27,16 +26,8 @@ public class LeaderboardWindow : Window
 
     public override void Open()
     {
-        if (YandexGame.auth)
-        {
-            base.Open();
-            _upLineWindow.CloseWithoutSound();
-        }
-        else
-        {
-            base.CloseWithoutSound();
-            YandexGame.AuthDialog(); 
-        }
+        base.Open();
+        _upLineWindow.CloseWithoutSound();
     }
 
     public override void Close()

@@ -59,7 +59,47 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 37910a29e88f3634ca6d38d6e1930f1c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2659464637859092583}
+    - targetCorrespondingSourceObject: {fileID: 2396531204372100925, guid: 37910a29e88f3634ca6d38d6e1930f1c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7306245110357322410}
+    - targetCorrespondingSourceObject: {fileID: 2822310051104261301, guid: 37910a29e88f3634ca6d38d6e1930f1c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3328919297679937288}
   m_SourcePrefab: {fileID: 100100000, guid: 37910a29e88f3634ca6d38d6e1930f1c, type: 3}
+--- !u!1 &1818545059251442003 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2396531204372100925, guid: 37910a29e88f3634ca6d38d6e1930f1c, type: 3}
+  m_PrefabInstance: {fileID: 4070961002240648814}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7306245110357322410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818545059251442003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090b06ce5907e0541a284a0340a4e02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2257474941795443419 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2822310051104261301, guid: 37910a29e88f3634ca6d38d6e1930f1c, type: 3}
+  m_PrefabInstance: {fileID: 4070961002240648814}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3328919297679937288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2257474941795443419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090b06ce5907e0541a284a0340a4e02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3800928854097828671 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 37910a29e88f3634ca6d38d6e1930f1c, type: 3}

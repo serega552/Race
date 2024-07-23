@@ -66,7 +66,6 @@ public class ResurrectMenu : MonoBehaviour
         float value = 0;
         _animator.Play(ResurrectWIndowAnim);
         
-
         while (value <= 0.95f)
         {
             yield return _waitTime;
