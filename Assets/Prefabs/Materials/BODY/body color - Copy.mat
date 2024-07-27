@@ -109,9 +109,9 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.508
     - _GlossyReflections: 1
-    - _HighIntensity: 1.5
+    - _HighIntensity: 1.96
     - _LightScalar: 1
-    - _LowIntensity: 1
+    - _LowIntensity: 1.3
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1

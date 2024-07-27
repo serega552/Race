@@ -3,7 +3,52 @@ guid: 1a88e49040a8528478b73ac25db0f3e2
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body
+    second: {fileID: 2100000, guid: 16783418a8fdd4b41a2f9198af0d72e9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body plus
+    second: {fileID: 2100000, guid: a5642873e71afd847b0c3e08a3ae884b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: dho
+    second: {fileID: 2100000, guid: 746134742f1f39b458ef45cbb415d4e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: front lights
+    second: {fileID: 2100000, guid: 88db3cd238f08b44797a0a946010a3b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gabarits
+    second: {fileID: 2100000, guid: 1befa7ee71d6f6b46b9de8c2dabe6a30, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: glass
+    second: {fileID: 2100000, guid: 528e4b848527c5a46b436a0e4e40a11c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal
+    second: {fileID: 2100000, guid: 08e31ffe30eb32a4d843f476efa1d8a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: stops
+    second: {fileID: 2100000, guid: e6d1dfe6442e78749af6bb65f0e1074d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wheels
+    second: {fileID: 2100000, guid: 978d9f8f2baa60040a28d0431d467086, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

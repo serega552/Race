@@ -3,7 +3,32 @@ guid: 789400e05cdcdc846b2379b82f14c5c7
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body
+    second: {fileID: 2100000, guid: 8d4719b4e96132e4fbe3a5b2ded00c60, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body plus
+    second: {fileID: 2100000, guid: 1c94b523fb93b5d41b38be5ee322d3b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal lid
+    second: {fileID: 2100000, guid: 0b5191494c1cf6b4b9698091c236b5b9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pillow
+    second: {fileID: 2100000, guid: 69036900e11cb5f44951cf1e7d9a1192, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wood
+    second: {fileID: 2100000, guid: 5031b310adbe5be4fb9b36f8b5c816cc, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
