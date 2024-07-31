@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CollectMoney 1
   m_EditorClassIdentifier: 
   _descritionTranslation: Tasks/CollectMoney
-  _amountMaxCollect: 150
-  _amountReward: 100
+  _amountMaxCollect: 500
+  _amountReward: 250
   _resourceType: 0
   _taskType: 0
