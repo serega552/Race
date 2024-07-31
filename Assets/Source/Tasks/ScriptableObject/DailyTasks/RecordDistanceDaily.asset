@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 374b1cbcc196ab447bbcfb605e5f3b44, type: 3}
-  m_Name: CollectMoney
+  m_Name: RecordDistanceDaily
   m_EditorClassIdentifier: 
-  _descritionTranslation: Tasks/CollectMoney
+  _descritionTranslation: Tasks/RecordDistance
   _amountMaxCollect: 150
-  _amountReward: 100
+  _amountReward: 250
   _resourceType: 0
-  _taskType: 0
+  _taskType: 1

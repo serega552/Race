@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -15,6 +16,7 @@ public class TaskView : MonoBehaviour
     private float _amountProgress;
     private Task _task;
     private Slider _amountCompleted;
+    private TaskWindow _window;
 
     public event Action<TaskView> OnComplete;
 
@@ -29,12 +31,16 @@ public class TaskView : MonoBehaviour
 
     private void OnDisable()
     {
+        _startExecution.onClick.RemoveListener(_window.Close);
         _takeReward.onClick.RemoveListener(TakeReward);
         TaskCounter.OnExecute -= ExecuteTask;
     }
 
     public void Init()
     {
+        _window = GetComponentInParent<TaskWindow>();
+        _startExecution.onClick.AddListener(_window.Close);
+        
         _amountCompleted = GetComponentInChildren<Slider>();
         _amountCompleted.minValue = 0;
         _amountCompleted.maxValue = _task.AmountMaxCollect;
@@ -79,7 +85,11 @@ public class TaskView : MonoBehaviour
     {
         if (_task.TaskType == name)
         {
-            _amountProgress += amount;
+            if (name != TaskType.RecordDistance.ToString())
+                _amountProgress += amount;
+            else
+                _amountProgress = amount;
+
             Save();
             UpdateUI();
 
@@ -90,7 +100,7 @@ public class TaskView : MonoBehaviour
 
     private void UpdateUI()
     {
-        _amountRewardText.text = $"{_task.AmountReward}";
+        _amountRewardText.text = $"{_task.AmountReward}$";
         _descriptionText.text = $"{Lean.Localization.LeanLocalization.GetTranslationText(_task.Description)}: {_task.AmountMaxCollect}";
         _amountCompleted.value = _amountProgress;
         _amountCompleted.value = _amountProgress;

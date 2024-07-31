@@ -32,6 +32,9 @@ public class ScoreBank : MonoBehaviour
 
         ConvertToMoney();
         UpdateUI();
+
+        TaskCounter.IncereaseProgress(_score, TaskType.RecordDistance.ToString());
+        TaskCounter.IncereaseProgress(_score, TaskType.SumDistance.ToString());
     }
 
     private void ConvertToMoney()

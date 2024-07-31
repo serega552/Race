@@ -17,7 +17,8 @@ namespace YG
         public float SoundValue = 0.5f;
         public int CountWatchedBonusAd = 0;
         public bool IsBonusUse = false;
-        public List<float> AmountDailyProgreses;
+        public List<float> AmountDailyProgreses = new List<float>();
+        public int StartDailyTime;
 
         public SavesYG()
         {

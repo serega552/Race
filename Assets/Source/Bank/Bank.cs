@@ -19,11 +19,13 @@ public class Bank : MonoBehaviour
     private void OnEnable()
     {
         YandexGame.GetDataEvent += Load;
+        AwardGiver.OnReward += GiveReward;
     }
 
     private void OnDisable()
     {
         YandexGame.GetDataEvent -= Load;
+        AwardGiver.OnReward -= GiveReward;
     }
 
     public void TakeMoney(int money)
@@ -41,11 +43,11 @@ public class Bank : MonoBehaviour
 
     public bool TryTakeMoney(int value)
     {
-        if(Money >= value)
+        if (Money >= value)
             return true;
-        else 
-            return false; 
-    } 
+        else
+            return false;
+    }
 
     public void GiveMoney(int money)
     {
@@ -54,12 +56,13 @@ public class Bank : MonoBehaviour
 
         Save();
     }
-    
+
     public void GiveMoneyForGame(int money)
     {
         MoneyForGame += money;
         GiveMoney(money);
 
+        TaskCounter.IncereaseProgress(money, TaskType.CollectMoney.ToString());
         OnUpdateText?.Invoke();
     }
 
@@ -74,6 +77,17 @@ public class Bank : MonoBehaviour
         GiveMoney(MoneyForGame);
         MoneyForGame *= 2;
         OnUpdateText?.Invoke();
+    }
+
+    private void GiveReward(string name, int amount)
+    {
+        Debug.Log(1);
+
+        if (name == ResourceType.Money.ToString())
+        {
+            Debug.Log(2);
+            GiveMoney(amount);
+        }
     }
 
     private void Save()
