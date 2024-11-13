@@ -15,8 +15,6 @@ namespace UI.Shop
         [SerializeField] private Button _selectButton;
         [SerializeField] private TMP_Text _description;
 
-        private CarMovement _movement;
-
         public event Action OnChangingSkin;
 
         public Bank BankMoney => _bank;
@@ -29,12 +27,6 @@ namespace UI.Shop
         {
             _buyButton.gameObject.SetActive(false);
             _selectButton.gameObject.SetActive(false);
-        }
-
-        public void GetCarMovement(CarMovement movement)
-        {
-            _movement = movement;
-            OnChangingSkin?.Invoke();
         }
 
         virtual public void BuyProduct()

@@ -91,6 +91,7 @@ namespace Cars
             else
                 _verticalInput = 0f;
         }
+
         private void SetStartPosition()
         {
             _animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
@@ -110,7 +111,6 @@ namespace Cars
 
                 if (_verticalInput != 0)
                     newCamPosition = new Vector3(_car.position.x + _offSet.x, _car.position.y + _offSet.y + _verticalInput * 2, _car.position.z + _offSet.z + -_verticalInput * 2);
-
 
                 transform.position = Vector3.Lerp(transform.position, newCamPosition, _speed * Time.deltaTime);
                 transform.rotation = Quaternion.Lerp(transform.rotation, newCamRotation, _speed * Time.deltaTime);
