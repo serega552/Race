@@ -44,7 +44,6 @@ namespace Enemy
         {
             if (collision.collider.TryGetComponent(out WaterBlock block))
             {
-                Debug.Log(1);
                 OnCrash?.Invoke(transform);
                 Die();
             }
@@ -54,11 +53,6 @@ namespace Enemy
                 OnCrash?.Invoke(transform);
                 Die();
             }
-        }
-
-        private void OnCollisionStay(Collision collision)
-        {
-
         }
 
         private void Move()

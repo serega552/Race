@@ -2,6 +2,5 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class WaterBlock : MonoBehaviour
-    { }
+    public class WaterBlock : MonoBehaviour { }
 }

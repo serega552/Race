@@ -48,8 +48,6 @@ namespace ResurrectSystem
 
         public void Resurrect()
         {
-            Debug.Log(2);
-
             OnResurrect?.Invoke();
             StopCoroutine(_openTimerCoroutine);
             _animator.Play(IdleState);
