@@ -2,30 +2,33 @@ using System;
 using UnityEngine;
 using YG;
 
-public class TaskTimeInspector : MonoBehaviour
+namespace Tasks
 {
-    private int _startDailyTime;
-
-    public event Action OnGoneDailyTime;
-
-    public void Load()
+    public class TaskTimeInspector : MonoBehaviour
     {
-        _startDailyTime = YandexGame.savesData.StartDailyTime;
-    }
+        private int _startDailyTime;
 
-    public void RefreshTime()
-    {
-        if (_startDailyTime != DateTime.Now.Day)
+        public event Action OnGoneDailyTime;
+
+        public void Load()
         {
-            _startDailyTime = DateTime.Now.Day;
-            OnGoneDailyTime?.Invoke();
-            Save();
+            _startDailyTime = YandexGame.savesData.StartDailyTime;
         }
-    }
 
-    private void Save()
-    {
-        YandexGame.savesData.StartDailyTime = _startDailyTime;
-        YandexGame.SaveProgress();
+        public void RefreshTime()
+        {
+            if (_startDailyTime != DateTime.Now.Day)
+            {
+                _startDailyTime = DateTime.Now.Day;
+                OnGoneDailyTime?.Invoke();
+                Save();
+            }
+        }
+
+        private void Save()
+        {
+            YandexGame.savesData.StartDailyTime = _startDailyTime;
+            YandexGame.SaveProgress();
+        }
     }
 }

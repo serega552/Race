@@ -1,25 +1,28 @@
 using UnityEngine;
 using YG;
 
-public class LanguageAuthorize : MonoBehaviour
+namespace Initers
 {
-    public void Start()
+    public class LanguageAuthorize : MonoBehaviour
     {
-        if (YandexGame.EnvironmentData.language == "ru")
+        public void Start()
         {
-            Lean.Localization.LeanLocalization.SetCurrentLanguageAll("Russian");
-        }
-        else if (YandexGame.EnvironmentData.language == "en")
-        {
-            Lean.Localization.LeanLocalization.SetCurrentLanguageAll("English");
-        }
-        else if (YandexGame.EnvironmentData.language == "tr")
-        {
-            Lean.Localization.LeanLocalization.SetCurrentLanguageAll("Turkish");
-        }
-        else
-        {
-            Lean.Localization.LeanLocalization.SetCurrentLanguageAll("English");
+            if (YandexGame.EnvironmentData.language == "ru")
+            {
+                Lean.Localization.LeanLocalization.SetCurrentLanguageAll("Russian");
+            }
+            else if (YandexGame.EnvironmentData.language == "en")
+            {
+                Lean.Localization.LeanLocalization.SetCurrentLanguageAll("English");
+            }
+            else if (YandexGame.EnvironmentData.language == "tr")
+            {
+                Lean.Localization.LeanLocalization.SetCurrentLanguageAll("Turkish");
+            }
+            else
+            {
+                Lean.Localization.LeanLocalization.SetCurrentLanguageAll("English");
+            }
         }
     }
 }

@@ -1,44 +1,48 @@
+using SettingsGame;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsWindow : Window
+namespace UI.Windows
 {
-    [SerializeField] private Button _openSettingsButton;
-    [SerializeField] private Button _closeButton;
-
-    private Settings _settings;
-    private bool _isSettingsOpen = false;
-
-    public bool IsSettingsOpen => _isSettingsOpen;
-
-    private void Awake()
+    public class SettingsWindow : Window
     {
-        _settings = GetComponent<Settings>();
-        CloseWithoutSound();
-    }
+        [SerializeField] private Button _openSettingsButton;
+        [SerializeField] private Button _closeButton;
 
-    private void OnEnable()
-    {
-        _openSettingsButton.onClick.AddListener(Open);
-        _closeButton.onClick.AddListener(Close);
-    }
+        private Settings _settings;
+        private bool _isSettingsOpen = false;
 
-    private void OnDisable()
-    {
-        _openSettingsButton.onClick.RemoveListener(Open);
-        _closeButton.onClick.RemoveListener(Close);
-    }
+        public bool IsSettingsOpen => _isSettingsOpen;
 
-    public override void Open()
-    {
-        base.Open();
-        _isSettingsOpen = true;
-    }
+        private void Awake()
+        {
+            _settings = GetComponent<Settings>();
+            CloseWithoutSound();
+        }
 
-    public override void Close()
-    {
-        base.Close();
-        _isSettingsOpen = false;
-        _settings.Save();
+        private void OnEnable()
+        {
+            _openSettingsButton.onClick.AddListener(Open);
+            _closeButton.onClick.AddListener(Close);
+        }
+
+        private void OnDisable()
+        {
+            _openSettingsButton.onClick.RemoveListener(Open);
+            _closeButton.onClick.RemoveListener(Close);
+        }
+
+        public override void Open()
+        {
+            base.Open();
+            _isSettingsOpen = true;
+        }
+
+        public override void Close()
+        {
+            base.Close();
+            _isSettingsOpen = false;
+            _settings.Save();
+        }
     }
 }

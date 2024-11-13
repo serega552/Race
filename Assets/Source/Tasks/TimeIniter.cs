@@ -1,13 +1,15 @@
 using UnityEngine;
-using YG;
 
-public class TimeIniter : MonoBehaviour
+namespace Tasks
 {
-    [SerializeField] private TaskTimeInspector _taskInspector;
-
-    private void Start()
+    public class TimeIniter : MonoBehaviour
     {
-        _taskInspector.Load();
-        _taskInspector.RefreshTime();
+        [SerializeField] private TaskTimeInspector _taskInspector;
+
+        private void Start()
+        {
+            _taskInspector.Load();
+            _taskInspector.RefreshTime();
+        }
     }
 }

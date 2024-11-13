@@ -1,200 +1,206 @@
+using Blocks;
+using Enemy;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using YG;
 
-[RequireComponent(typeof(Rigidbody))]
-public class CarMovement : MonoBehaviour
+namespace Cars
 {
-    [SerializeField] private float _speed = 10.0f;
-    [SerializeField] private float _steeringAngle = 4.0f;
-    [SerializeField] private Transform[] _wheels;
-    [SerializeField] private float _wheelRotationSpeed = 100.0f;
-    [SerializeField] private ControlButton _leftButton;
-    [SerializeField] private ControlButton _rightButton;
-    [SerializeField] private ControlButton _upButton;
-    [SerializeField] private ControlButton _downButton;
-    [SerializeField] private ParticleSystem[] _wheelEffects;
-    [SerializeField] private ParticleSystem _waterParticle;
+    [RequireComponent(typeof(Rigidbody))]
 
-    private List<ParticleSystem> _waterParticles = new List<ParticleSystem>();
-    private Vector3 _startPosition;
-    private Vector3 _startSpawnPosition = new Vector3(0f, 0f, 0f);
-    private Quaternion _startRotation = new Quaternion(0f, 0f, 0f, 0f);
-    private bool _isMove = false;
-    private bool _canPlay = false;
-    private float _currentSpeed;
-    private ParticleSystem _explotion;
-    private float _verticalInput;
-    private float _horizontalInput;
-    private bool _isMobile = false;
-    private Rigidbody _rigidbody;
-
-    public event Action OnEndMove;
-
-    private void Awake()
+    public class CarMovement : MonoBehaviour
     {
-        _startSpawnPosition = transform.position;
+        [SerializeField] private float _speed = 10.0f;
+        [SerializeField] private float _steeringAngle = 4.0f;
+        [SerializeField] private Transform[] _wheels;
+        [SerializeField] private float _wheelRotationSpeed = 100.0f;
+        [SerializeField] private ControlButton _leftButton;
+        [SerializeField] private ControlButton _rightButton;
+        [SerializeField] private ControlButton _upButton;
+        [SerializeField] private ControlButton _downButton;
+        [SerializeField] private ParticleSystem[] _wheelEffects;
+        [SerializeField] private ParticleSystem _waterParticle;
 
-        _rigidbody = GetComponent<Rigidbody>();
-        _explotion = GetComponentInChildren<ParticleSystem>();
+        private List<ParticleSystem> _waterParticles = new List<ParticleSystem>();
+        private Vector3 _startPosition;
+        private Vector3 _startSpawnPosition = new Vector3(0f, 0f, 0f);
+        private Quaternion _startRotation = new Quaternion(0f, 0f, 0f, 0f);
+        private bool _isMove = false;
+        private bool _canPlay = false;
+        private float _currentSpeed;
+        private ParticleSystem _explotion;
+        private float _verticalInput;
+        private float _horizontalInput;
+        private bool _isMobile = false;
+        private Rigidbody _rigidbody;
 
-        _isMobile = YandexGame.EnvironmentData.isMobile;
-    }
+        public event Action OnEndMove;
 
-    private void FixedUpdate()
-    {
-        if (_isMove && _canPlay)
-            Move();
-
-        if (_canPlay)
-            CheckGround();
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.collider.TryGetComponent(out EnemyMovement enemy) && _canPlay)
+        private void Awake()
         {
-            enemy.Die();
-            Crash();
+            _startSpawnPosition = transform.position;
+
+            _rigidbody = GetComponent<Rigidbody>();
+            _explotion = GetComponentInChildren<ParticleSystem>();
+
+            _isMobile = YandexGame.EnvironmentData.isMobile;
         }
-    }
 
-    private void CheckGround()
-    {
-        _startPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-        Ray ray = new Ray(_startPosition, transform.up * -1);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 1f))
+        private void FixedUpdate()
         {
-            if (hit.collider.TryGetComponent(out Block block))
-                _isMove = true;
+            if (_isMove && _canPlay)
+                Move();
 
-            if (hit.collider.TryGetComponent(out WaterBlock waterBlock) && _canPlay)
+            if (_canPlay)
+                CheckGround();
+        }
+
+        private void OnCollisionStay(Collision collision)
+        {
+            if (collision.collider.TryGetComponent(out EnemyMovement enemy) && _canPlay)
             {
-                var particle = Instantiate(_waterParticle, transform.position, waterBlock.transform.localRotation);
-                _waterParticles.Add(particle);
-                EndMove();
+                enemy.Die();
+                Crash();
             }
         }
-        else
+
+        private void CheckGround()
         {
+            _startPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            Ray ray = new Ray(_startPosition, transform.up * -1);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 1f))
+            {
+                if (hit.collider.TryGetComponent(out Block block))
+                    _isMove = true;
+
+                if (hit.collider.TryGetComponent(out WaterBlock waterBlock) && _canPlay)
+                {
+                    var particle = Instantiate(_waterParticle, transform.position, waterBlock.transform.localRotation);
+                    _waterParticles.Add(particle);
+                    EndMove();
+                }
+            }
+            else
+            {
+                _isMove = false;
+            }
+
+            Debug.DrawRay(_startPosition, transform.up * -1 * 1f, Color.red);
+        }
+
+        public void ResetCar()
+        {
+            _currentSpeed = 0;
+            _verticalInput = 0;
+            _horizontalInput = 0;
+            _rigidbody.velocity = new Vector3();
+
+            transform.position = _startSpawnPosition;
+            transform.rotation = _startRotation;
+
+            foreach (var particle in _waterParticles)
+            {
+                Destroy(particle.gameObject);
+            }
+
+            _waterParticles.Clear();
+        }
+
+        public void EndMove()
+        {
+            _canPlay = false;
+            AudioManager.Instance.Stop("StartCar");
             _isMove = false;
+
+            OnEndMove?.Invoke();
         }
 
-        Debug.DrawRay(_startPosition, transform.up * -1 * 1f, Color.red);
-    }
-
-    public void ResetCar()
-    {
-        _currentSpeed = 0;
-        _verticalInput = 0;
-        _horizontalInput = 0;
-        _rigidbody.velocity = new Vector3();
-
-        transform.position = _startSpawnPosition;
-        transform.rotation = _startRotation;
-
-        foreach(var particle in _waterParticles)
+        public void Resurrect()
         {
-            Destroy(particle.gameObject);
+            _canPlay = true;
+            _isMove = true;
+            ResetCar();
+            AudioManager.Instance.SlowPlay("StartCar");
         }
 
-        _waterParticles.Clear();
-    }
-
-    public void EndMove()
-    {
-        _canPlay = false;
-        AudioManager.Instance.Stop("StartCar");
-        _isMove = false;
-
-        OnEndMove?.Invoke();
-    }
-
-    public void Resurrect()
-    {
-        _canPlay = true;
-        _isMove = true;
-        ResetCar();
-        AudioManager.Instance.SlowPlay("StartCar");
-    }
-
-    private void Move()
-    {
-        if (_isMobile)
-            MobileMove();
-        else
-            DesktopMove();
-
-        if (_verticalInput != 0)
-            AudioManager.Instance.ChangePitch("StartCar", 0.2f);
-        else
-            AudioManager.Instance.ChangePitch("StartCar", -1.5f);
-
-        _currentSpeed = _verticalInput * _speed;
-
-        _rigidbody.velocity += _rigidbody.transform.forward * _currentSpeed * Time.deltaTime;
-
-        _rigidbody.transform.Rotate(Vector3.up, _horizontalInput * _steeringAngle);
-
-        if (Input.GetKey(KeyCode.Space))
+        private void Move()
         {
-            _currentSpeed = Mathf.Lerp(_currentSpeed, 0, Time.deltaTime * 2);
+            if (_isMobile)
+                MobileMove();
+            else
+                DesktopMove();
+
+            if (_verticalInput != 0)
+                AudioManager.Instance.ChangePitch("StartCar", 0.2f);
+            else
+                AudioManager.Instance.ChangePitch("StartCar", -1.5f);
+
+            _currentSpeed = _verticalInput * _speed;
+
+            _rigidbody.velocity += _rigidbody.transform.forward * _currentSpeed * Time.deltaTime;
+
+            _rigidbody.transform.Rotate(Vector3.up, _horizontalInput * _steeringAngle);
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                _currentSpeed = Mathf.Lerp(_currentSpeed, 0, Time.deltaTime * 2);
+            }
+
+            for (int i = 0; i < _wheels.Length; i++)
+            {
+                _wheels[i].Rotate(Vector3.right * _currentSpeed * Time.deltaTime * _wheelRotationSpeed);
+            }
+
+            if (_currentSpeed != 0)
+            {
+                _wheelEffects[0].Play();
+                _wheelEffects[1].Play();
+            }
         }
 
-        for (int i = 0; i < _wheels.Length; i++)
+        private void DesktopMove()
         {
-            _wheels[i].Rotate(Vector3.right * _currentSpeed * Time.deltaTime * _wheelRotationSpeed);
+            _horizontalInput = Input.GetAxis("Horizontal");
+            _verticalInput = Input.GetAxis("Vertical");
         }
 
-        if (_currentSpeed != 0)
+        private void MobileMove()
+        {
+            if (_leftButton.IsHold)
+                _horizontalInput = -1f;
+            else if (_rightButton.IsHold)
+                _horizontalInput = 1f;
+            else
+                _horizontalInput = 0f;
+
+            if (_upButton.IsHold)
+                _verticalInput = 1f;
+            else if (_downButton.IsHold)
+                _verticalInput = -1f;
+            else
+                _verticalInput = 0f;
+        }
+
+        private void Crash()
+        {
+            if (_canPlay)
+            {
+                _canPlay = false;
+                EndMove();
+                _explotion.Play();
+            }
+        }
+
+        public void StartMove()
         {
             _wheelEffects[0].Play();
             _wheelEffects[1].Play();
+            _canPlay = true;
+            _isMove = true;
+            AudioManager.Instance.SlowPlay("StartCar");
         }
-    }
-
-    private void DesktopMove()
-    {
-        _horizontalInput = Input.GetAxis("Horizontal");
-        _verticalInput = Input.GetAxis("Vertical");
-    }
-
-    private void MobileMove()
-    {
-        if (_leftButton.IsHold)
-            _horizontalInput = -1f;
-        else if (_rightButton.IsHold)
-            _horizontalInput = 1f;
-        else
-            _horizontalInput = 0f;
-
-        if (_upButton.IsHold)
-            _verticalInput = 1f;
-        else if (_downButton.IsHold)
-            _verticalInput = -1f;
-        else
-            _verticalInput = 0f;
-    }
-
-    private void Crash()
-    {
-        if (_canPlay)
-        {
-            _canPlay = false;
-            EndMove();
-            _explotion.Play();
-        }
-    }
-
-    public void StartMove()
-    {
-        _wheelEffects[0].Play();
-        _wheelEffects[1].Play();
-        _canPlay = true;
-        _isMove = true;
-        AudioManager.Instance.SlowPlay("StartCar");
     }
 }
 

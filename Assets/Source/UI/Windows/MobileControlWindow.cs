@@ -1,2 +1,5 @@
-public class MobileControlWindow : Window
-{}
+namespace UI.Windows
+{
+    public class MobileControlWindow : Window
+    { }
+}

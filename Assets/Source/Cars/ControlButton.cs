@@ -1,17 +1,20 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ControlButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+namespace Cars
 {
-    public bool IsHold { get; private set; } = false;
-
-    public void OnPointerDown(PointerEventData eventData)
+    public class ControlButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        IsHold = true;
-    }
+        public bool IsHold { get; private set; } = false;
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        IsHold = false;
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            IsHold = true;
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            IsHold = false;
+        }
     }
 }

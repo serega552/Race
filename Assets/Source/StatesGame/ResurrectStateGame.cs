@@ -1,50 +1,56 @@
+using Cars;
+using Enemy;
+using ResurrectSystem;
 using UnityEngine;
 
-public class ResurrectStateGame
+namespace StatesGame
 {
-    private ResurrectMenu _resurrect;
-    private CarMovement _movement;
-    private Spawner _spawner;
-
-    public ResurrectStateGame(ResurrectMenu resurrect, CarMovement movement, Spawner spawner)
+    public class ResurrectStateGame
     {
-        _resurrect = resurrect;
-        _movement = movement;
-        _spawner = spawner;
-    }
+        private ResurrectMenu _resurrect;
+        private CarMovement _movement;
+        private Spawner _spawner;
 
-    public void ChangeCarMovement(CarMovement movement)
-    {
-        _movement.OnEndMove -= OpenResurrectWindow;
-        _movement = movement;
-        _movement.OnEndMove += OpenResurrectWindow;
-    }
+        public ResurrectStateGame(ResurrectMenu resurrect, CarMovement movement, Spawner spawner)
+        {
+            _resurrect = resurrect;
+            _movement = movement;
+            _spawner = spawner;
+        }
 
-    public void Enable()
-    {
-        _resurrect.OnResurrect += Resurrect;
-    }
+        public void ChangeCarMovement(CarMovement movement)
+        {
+            _movement.OnEndMove -= OpenResurrectWindow;
+            _movement = movement;
+            _movement.OnEndMove += OpenResurrectWindow;
+        }
 
-    public void Disable()
-    {
-        _resurrect.OnResurrect -= Resurrect;
-        _movement.OnEndMove -= OpenResurrectWindow;
-    }
+        public void Enable()
+        {
+            _resurrect.OnResurrect += Resurrect;
+        }
 
-    private void Resurrect()
-    {
-        _movement.Resurrect();
-        _spawner.ResetEnemy();
-        AudioManager.Instance.SlowUnPause("Music");
-        AudioManager.Instance.SlowUnPause("Sirena");
+        public void Disable()
+        {
+            _resurrect.OnResurrect -= Resurrect;
+            _movement.OnEndMove -= OpenResurrectWindow;
+        }
 
-        Time.timeScale = 1f;
-    }
+        private void Resurrect()
+        {
+            _movement.Resurrect();
+            _spawner.ResetEnemy();
+            AudioManager.Instance.SlowUnPause("Music");
+            AudioManager.Instance.SlowUnPause("Sirena");
 
-    private void OpenResurrectWindow()
-    {
-        _resurrect.OpenWindow();
-        AudioManager.Instance.SlowPause("Music");
-        AudioManager.Instance.SlowPause("Sirena");
+            Time.timeScale = 1f;
+        }
+
+        private void OpenResurrectWindow()
+        {
+            _resurrect.OpenWindow();
+            AudioManager.Instance.SlowPause("Music");
+            AudioManager.Instance.SlowPause("Sirena");
+        }
     }
 }

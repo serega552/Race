@@ -1,141 +1,147 @@
 using System;
+using Tasks.SO;
+using Tasks.Spawner;
 using TMPro;
+using UI.Windows;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
 
-public class TaskView : MonoBehaviour
+namespace Tasks
 {
-    [SerializeField] private Button _startExecution;
-    [SerializeField] private Button _takeReward;
-    [SerializeField] private TMP_Text _descriptionText;
-    [SerializeField] private TMP_Text _amountRewardText;
-
-    private ParticleSystem _takeRewardParticle;
-    private float _amountProgress;
-    private Task _task;
-    private Slider _amountCompleted;
-    private TaskWindow _window;
-
-    public event Action<TaskView> OnComplete;
-
-    public float AmountProgress => _amountProgress;
-    public int Id { get; private set; }
-
-    private void OnEnable()
+    public class TaskView : MonoBehaviour
     {
-        _takeReward.onClick.AddListener(TakeReward);
-        TaskCounter.OnExecute += ExecuteTask;
-    }
+        [SerializeField] private Button _startExecution;
+        [SerializeField] private Button _takeReward;
+        [SerializeField] private TMP_Text _descriptionText;
+        [SerializeField] private TMP_Text _amountRewardText;
 
-    private void OnDisable()
-    {
-        _startExecution.onClick.RemoveListener(_window.Close);
-        _takeReward.onClick.RemoveListener(TakeReward);
-        TaskCounter.OnExecute -= ExecuteTask;
-    }
+        private ParticleSystem _takeRewardParticle;
+        private float _amountProgress;
+        private Task _task;
+        private Slider _amountCompleted;
+        private TaskWindow _window;
 
-    public void Init()
-    {
-        _window = GetComponentInParent<TaskWindow>();
-        _startExecution.onClick.AddListener(_window.Close);
-        
-        _amountCompleted = GetComponentInChildren<Slider>();
-        _amountCompleted.minValue = 0;
-        _amountCompleted.maxValue = _task.AmountMaxCollect;
-        _startExecution.gameObject.SetActive(true);
+        public event Action<TaskView> OnComplete;
 
-        Invoke("UpdateUI", 0.1f);
-    }
+        public float AmountProgress => _amountProgress;
+        public int Id { get; private set; }
 
-    public void InitId(int id)
-    {
-        Id = id;
-    }
-
-    public void InitProgress(float amount)
-    {
-        _amountProgress = amount;
-        UpdateUI();
-
-        if (_amountCompleted.value >= _task.AmountMaxCollect)
-            CompleteTask();
-    }
-
-    public void GetTask(Task task)
-    {
-        _task = task;
-        _task.TurnOnTask();
-    }
-
-    public Task TakeTask()
-    {
-        return _task;
-    }
-
-    private void CompleteTask()
-    {
-        _startExecution.gameObject.SetActive(false);
-        _takeReward.gameObject.SetActive(true);
-        _task.TurnOffTask();
-    }
-
-    private void ExecuteTask(float amount, string name)
-    {
-        if (_task.TaskType == name)
+        private void OnEnable()
         {
-            if (name != TaskType.RecordDistance.ToString())
-                _amountProgress += amount;
-            else
-                _amountProgress = amount;
+            _takeReward.onClick.AddListener(TakeReward);
+            TaskCounter.OnExecute += ExecuteTask;
+        }
 
-            Save();
+        private void OnDisable()
+        {
+            _startExecution.onClick.RemoveListener(_window.Close);
+            _takeReward.onClick.RemoveListener(TakeReward);
+            TaskCounter.OnExecute -= ExecuteTask;
+        }
+
+        public void Init()
+        {
+            _window = GetComponentInParent<TaskWindow>();
+            _startExecution.onClick.AddListener(_window.Close);
+
+            _amountCompleted = GetComponentInChildren<Slider>();
+            _amountCompleted.minValue = 0;
+            _amountCompleted.maxValue = _task.AmountMaxCollect;
+            _startExecution.gameObject.SetActive(true);
+
+            Invoke("UpdateUI", 0.1f);
+        }
+
+        public void InitId(int id)
+        {
+            Id = id;
+        }
+
+        public void InitProgress(float amount)
+        {
+            _amountProgress = amount;
             UpdateUI();
 
             if (_amountCompleted.value >= _task.AmountMaxCollect)
                 CompleteTask();
         }
-    }
 
-    private void UpdateUI()
-    {
-        _amountRewardText.text = $"{_task.AmountReward}$";
-        _descriptionText.text = $"{Lean.Localization.LeanLocalization.GetTranslationText(_task.Description)}: {_task.AmountMaxCollect}";
-        _amountCompleted.value = _amountProgress;
-        _amountCompleted.value = _amountProgress;
-    }
+        public void GetTask(Task task)
+        {
+            _task = task;
+            _task.TurnOnTask();
+        }
 
-    private void TakeReward()
-    {
-        _task.RewardPlayer();
-        _takeReward.interactable = false;
-        _takeRewardParticle?.Play();
-        Invoke("Destroy", 1f);
+        public Task TakeTask()
+        {
+            return _task;
+        }
 
-        SaveDestroyTask();
-    }
+        private void CompleteTask()
+        {
+            _startExecution.gameObject.SetActive(false);
+            _takeReward.gameObject.SetActive(true);
+            _task.TurnOffTask();
+        }
 
-    public void Destroy()
-    {
-        OnComplete?.Invoke(this);
-        Destroy(gameObject);
-    }
+        private void ExecuteTask(float amount, string name)
+        {
+            if (_task.TaskType == name)
+            {
+                if (name != TaskType.RecordDistance.ToString())
+                    _amountProgress += amount;
+                else
+                    _amountProgress = amount;
 
-    private void SaveDestroyTask()
-    {
-        if (GetComponentInParent<DailyTaskSpawner>())
-            YandexGame.savesData.AmountDailyProgreses[Id] = -1;
+                Save();
+                UpdateUI();
 
-        YandexGame.SaveProgress();
-    }
+                if (_amountCompleted.value >= _task.AmountMaxCollect)
+                    CompleteTask();
+            }
+        }
 
-    private void Save()
-    {
-        YandexGame.SaveProgress();
+        private void UpdateUI()
+        {
+            _amountRewardText.text = $"{_task.AmountReward}$";
+            _descriptionText.text = $"{Lean.Localization.LeanLocalization.GetTranslationText(_task.Description)}: {_task.AmountMaxCollect}";
+            _amountCompleted.value = _amountProgress;
+            _amountCompleted.value = _amountProgress;
+        }
 
-        if (GetComponentInParent<DailyTaskSpawner>())
-            YandexGame.savesData.AmountDailyProgreses[Id] = _amountProgress;
+        private void TakeReward()
+        {
+            _task.RewardPlayer();
+            _takeReward.interactable = false;
+            _takeRewardParticle?.Play();
+            Invoke("Destroy", 1f);
 
-        YandexGame.SaveProgress();
+            SaveDestroyTask();
+        }
+
+        public void Destroy()
+        {
+            OnComplete?.Invoke(this);
+            Destroy(gameObject);
+        }
+
+        private void SaveDestroyTask()
+        {
+            if (GetComponentInParent<DailyTaskSpawner>())
+                YandexGame.savesData.AmountDailyProgreses[Id] = -1;
+
+            YandexGame.SaveProgress();
+        }
+
+        private void Save()
+        {
+            YandexGame.SaveProgress();
+
+            if (GetComponentInParent<DailyTaskSpawner>())
+                YandexGame.savesData.AmountDailyProgreses[Id] = _amountProgress;
+
+            YandexGame.SaveProgress();
+        }
     }
 }

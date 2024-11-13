@@ -1,83 +1,87 @@
+using Cars;
 using System;
 using UnityEngine;
 
-[RequireComponent (typeof(Rigidbody))]
-public class EnemyMovement : MonoBehaviour
+namespace Enemy
 {
-    [SerializeField] private float _speed;
-    [SerializeField] private float _steeringAngle = 4.0f;
-    [SerializeField] private CarMovement _carMovement;
-    [SerializeField] private Transform[] _wheels;
-    [SerializeField] private float _wheelRotationSpeed = 100.0f;
-
-    private float _currentSpeed;
-    private bool _isMoving = true;
-    private Rigidbody _rigidbody;
-
-    public event Action<Transform> OnCrash;
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    public class EnemyMovement : MonoBehaviour
     {
-        _rigidbody = GetComponent<Rigidbody>();
-    }
+        [SerializeField] private float _speed;
+        [SerializeField] private float _steeringAngle = 4.0f;
+        [SerializeField] private CarMovement _carMovement;
+        [SerializeField] private Transform[] _wheels;
+        [SerializeField] private float _wheelRotationSpeed = 100.0f;
 
-    private void FixedUpdate()
-    {
-        Move();
-    }
+        private float _currentSpeed;
+        private bool _isMoving = true;
+        private Rigidbody _rigidbody;
 
-    public void GetCarMovement(CarMovement carMovement)
-    {
-        _carMovement = carMovement;
-    }
+        public event Action<Transform> OnCrash;
 
-    public void Die()
-    {
-        _isMoving = false;
-        TurnOffCar();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.TryGetComponent(out WaterBlock block))
+        private void Awake()
         {
-            Debug.Log(1);
-            OnCrash?.Invoke(transform);
-            Die();
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
-        if (collision.collider.TryGetComponent(out EnemyMovement enemy))
+        private void FixedUpdate()
         {
-            OnCrash?.Invoke(transform);
-            Die();
-        } 
-    }
+            Move();
+        }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        
-    }
-
-    private void Move()
-    {
-        if (_isMoving)
+        public void GetCarMovement(CarMovement carMovement)
         {
-            _currentSpeed = _speed * Time.deltaTime;
-            _rigidbody.velocity += _rigidbody.transform.forward * _currentSpeed * Time.deltaTime;
+            _carMovement = carMovement;
+        }
 
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, (_carMovement.transform.position - transform.position), _steeringAngle, 0.0F); 
-            Quaternion rotation = Quaternion.LookRotation(newDir);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, _steeringAngle * Time.deltaTime);
+        public void Die()
+        {
+            _isMoving = false;
+            TurnOffCar();
+        }
 
-            for (int i = 0; i < _wheels.Length; i++)
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.collider.TryGetComponent(out WaterBlock block))
             {
-                _wheels[i].Rotate(Vector3.right * _currentSpeed * Time.deltaTime * _wheelRotationSpeed);
+                Debug.Log(1);
+                OnCrash?.Invoke(transform);
+                Die();
+            }
+
+            if (collision.collider.TryGetComponent(out EnemyMovement enemy))
+            {
+                OnCrash?.Invoke(transform);
+                Die();
             }
         }
-    }
 
-    private void TurnOffCar()
-    {
-        gameObject.SetActive(false);
+        private void OnCollisionStay(Collision collision)
+        {
+
+        }
+
+        private void Move()
+        {
+            if (_isMoving)
+            {
+                _currentSpeed = _speed * Time.deltaTime;
+                _rigidbody.velocity += _rigidbody.transform.forward * _currentSpeed * Time.deltaTime;
+
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, (_carMovement.transform.position - transform.position), _steeringAngle, 0.0F);
+                Quaternion rotation = Quaternion.LookRotation(newDir);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, _steeringAngle * Time.deltaTime);
+
+                for (int i = 0; i < _wheels.Length; i++)
+                {
+                    _wheels[i].Rotate(Vector3.right * _currentSpeed * Time.deltaTime * _wheelRotationSpeed);
+                }
+            }
+        }
+
+        private void TurnOffCar()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

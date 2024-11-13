@@ -1,22 +1,26 @@
+using Cars;
 using UnityEngine;
 
-public class Skin : Product
+namespace UI.Shop
 {
-    [SerializeField] private CarMovement _movement;
-    [SerializeField] private Sprite _carSprite;
-
-    public CarMovement GetView()
+    public class Skin : Product
     {
-        return _movement;
-    }
+        [SerializeField] private CarMovement _movement;
+        [SerializeField] private Sprite _carSprite;
 
-    public Sprite GetSprite()
-    {
-        return _carSprite;
-    }
+        public CarMovement GetView()
+        {
+            return _movement;
+        }
 
-    public void TurnOffSkin()
-    {
-        _movement.gameObject.SetActive(false);
+        public Sprite GetSprite()
+        {
+            return _carSprite;
+        }
+
+        public void TurnOffSkin()
+        {
+            _movement.gameObject.SetActive(false);
+        }
     }
 }

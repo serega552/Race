@@ -1,47 +1,53 @@
+using Cars;
+using Enemy;
+using UI.Shop;
 using UnityEngine;
 using YG;
 
-public class CarIniter : MonoBehaviour
+namespace Initers
 {
-    [SerializeField] private CameraMover _cameraMover;
-    [SerializeField] private Spawner _spawner;
-    [SerializeField] private SkinSelecter _skinSelecter;
-    [SerializeField] private ShopSkins _shopSkins;
-
-    private CarMovement _carMovement;
-
-    private void Awake()
+    public class CarIniter : MonoBehaviour
     {
-        if (YandexGame.SDKEnabled)
-            InitShop();
-    }
+        [SerializeField] private CameraMover _cameraMover;
+        [SerializeField] private Spawner _spawner;
+        [SerializeField] private SkinSelecter _skinSelecter;
+        [SerializeField] private ShopSkins _shopSkins;
 
-    private void OnEnable()
-    {
-        YandexGame.GetDataEvent += InitShop;
-    }
+        private CarMovement _carMovement;
 
-    private void OnDisable()
-    {
-        YandexGame.GetDataEvent -= InitShop;
-        _skinSelecter.OnChangingSkin -= Init;
-    }
+        private void Awake()
+        {
+            if (YandexGame.SDKEnabled)
+                InitShop();
+        }
 
-    public void Init(CarMovement carMovement)
-    {
-        Debug.Log(carMovement);
+        private void OnEnable()
+        {
+            YandexGame.GetDataEvent += InitShop;
+        }
 
-        _carMovement = carMovement;
+        private void OnDisable()
+        {
+            YandexGame.GetDataEvent -= InitShop;
+            _skinSelecter.OnChangingSkin -= Init;
+        }
 
-        _cameraMover.GetPlayerTransform(_carMovement.transform);
-        _spawner.Init(_carMovement);
+        public void Init(CarMovement carMovement)
+        {
+            Debug.Log(carMovement);
 
-        _carMovement.gameObject.SetActive(true);
-    }
+            _carMovement = carMovement;
 
-    private void InitShop()
-    {
-        _skinSelecter.OnChangingSkin += Init;
-        _shopSkins.Load();
+            _cameraMover.GetPlayerTransform(_carMovement.transform);
+            _spawner.Init(_carMovement);
+
+            _carMovement.gameObject.SetActive(true);
+        }
+
+        private void InitShop()
+        {
+            _skinSelecter.OnChangingSkin += Init;
+            _shopSkins.Load();
+        }
     }
 }

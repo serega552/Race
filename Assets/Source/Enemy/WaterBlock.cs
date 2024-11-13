@@ -1,4 +1,7 @@
 using UnityEngine;
 
-public class WaterBlock : MonoBehaviour
-{}
+namespace Enemy
+{
+    public class WaterBlock : MonoBehaviour
+    { }
+}

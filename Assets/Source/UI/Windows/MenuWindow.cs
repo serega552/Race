@@ -2,45 +2,48 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuWindow : Window
+namespace UI.Windows
 {
-    [SerializeField] private Button _startButton;
-
-    private bool _isMenuOpen = true;
-
-    public event Action OnStart;
-
-    public bool IsMenuOpen => _isMenuOpen;
-
-    private void Awake()
+    public class MenuWindow : Window
     {
-        OpenWithoutSound();
-    }
+        [SerializeField] private Button _startButton;
 
-    private void OnEnable()
-    {
-        _startButton.onClick.AddListener(StartGame);
-    }
+        private bool _isMenuOpen = true;
 
-    private void OnDisable()
-    {
-        _startButton.onClick.RemoveListener(StartGame);
-    }
+        public event Action OnStart;
 
-    public override void OpenWithoutSound()
-    {
-        base.OpenWithoutSound();
-        _isMenuOpen = true;
-    }
+        public bool IsMenuOpen => _isMenuOpen;
 
-    public override void CloseWithoutSound()
-    {
-        base.CloseWithoutSound();
-        _isMenuOpen = false;
-    }
+        private void Awake()
+        {
+            OpenWithoutSound();
+        }
 
-    private void StartGame()
-    {
-        OnStart?.Invoke();
+        private void OnEnable()
+        {
+            _startButton.onClick.AddListener(StartGame);
+        }
+
+        private void OnDisable()
+        {
+            _startButton.onClick.RemoveListener(StartGame);
+        }
+
+        public override void OpenWithoutSound()
+        {
+            base.OpenWithoutSound();
+            _isMenuOpen = true;
+        }
+
+        public override void CloseWithoutSound()
+        {
+            base.CloseWithoutSound();
+            _isMenuOpen = false;
+        }
+
+        private void StartGame()
+        {
+            OnStart?.Invoke();
+        }
     }
 }

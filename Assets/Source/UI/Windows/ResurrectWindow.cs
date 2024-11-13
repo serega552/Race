@@ -1,7 +1,10 @@
-public class ResurrectWindow : Window
+namespace UI.Windows
 {
-    private void Awake()
+    public class ResurrectWindow : Window
     {
-        CloseWithoutSound();
+        private void Awake()
+        {
+            CloseWithoutSound();
+        }
     }
 }

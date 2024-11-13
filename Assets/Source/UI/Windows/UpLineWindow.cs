@@ -1,7 +1,10 @@
-public class UpLineWindow : Window
+namespace UI.Windows
 {
-    private void Awake()
+    public class UpLineWindow : Window
     {
-        OpenWithoutSound();
+        private void Awake()
+        {
+            OpenWithoutSound();
+        }
     }
 }

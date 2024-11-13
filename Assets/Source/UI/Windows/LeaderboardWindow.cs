@@ -1,38 +1,41 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LeaderboardWindow : Window
+namespace UI.Windows
 {
-    [SerializeField] private Button _openButton;
-    [SerializeField] private Button _closeButton;
-    [SerializeField] private UpLineWindow _upLineWindow;
-
-    private void Awake()
+    public class LeaderboardWindow : Window
     {
-        CloseWithoutSound();
-    }
+        [SerializeField] private Button _openButton;
+        [SerializeField] private Button _closeButton;
+        [SerializeField] private UpLineWindow _upLineWindow;
 
-    private void OnEnable()
-    {
-        _openButton.onClick.AddListener(Open);
-        _closeButton.onClick.AddListener(Close);
-    }
+        private void Awake()
+        {
+            CloseWithoutSound();
+        }
 
-    private void OnDisable()
-    {
-        _openButton.onClick.RemoveListener(Open);
-        _closeButton.onClick.RemoveListener(Close);
-    }
+        private void OnEnable()
+        {
+            _openButton.onClick.AddListener(Open);
+            _closeButton.onClick.AddListener(Close);
+        }
 
-    public override void Open()
-    {
-        base.Open();
-        _upLineWindow.CloseWithoutSound();
-    }
+        private void OnDisable()
+        {
+            _openButton.onClick.RemoveListener(Open);
+            _closeButton.onClick.RemoveListener(Close);
+        }
 
-    public override void Close()
-    {
-        base.Close();
-        _upLineWindow.OpenWithoutSound();
+        public override void Open()
+        {
+            base.Open();
+            _upLineWindow.CloseWithoutSound();
+        }
+
+        public override void Close()
+        {
+            base.Close();
+            _upLineWindow.OpenWithoutSound();
+        }
     }
 }

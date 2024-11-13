@@ -1,75 +1,79 @@
+using Cars;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using YG;
 
-public class SkinSelecter : MonoBehaviour
+namespace UI.Shop
 {
-    [SerializeField] private Skin _firstSkin;
-
-    private Skin _selectedSkin;
-    private List<Skin> _boughtSkins = new List<Skin>();
-
-    public CarMovement Movement { get; private set; }
-
-    public event Action<CarMovement> OnChangingSkin;
-
-    public void InitFirstSkin()
+    public class SkinSelecter : MonoBehaviour
     {
-        _selectedSkin = _firstSkin;
-        _selectedSkin.Unlock();
-        _selectedSkin.ChangeStatus();
-        AddSkin(_selectedSkin);
-        InitSkin();
-    }
+        [SerializeField] private Skin _firstSkin;
 
-    public void AddSkin(Skin skin)
-    {
-        if (_boughtSkins.Contains(skin) == false)
+        private Skin _selectedSkin;
+        private List<Skin> _boughtSkins = new List<Skin>();
+
+        public CarMovement Movement { get; private set; }
+
+        public event Action<CarMovement> OnChangingSkin;
+
+        public void InitFirstSkin()
         {
-            _boughtSkins.Add(skin);
-        }
-    }
-
-    public void SelectSkin(Skin skin)
-    {
-        if (skin != _selectedSkin)
-        {
-            if(_selectedSkin != null)
-                _selectedSkin.ChangeStatus();
-
-            _selectedSkin = skin;
-
+            _selectedSkin = _firstSkin;
+            _selectedSkin.Unlock();
             _selectedSkin.ChangeStatus();
+            AddSkin(_selectedSkin);
             InitSkin();
         }
-    }
 
-    private void InitSkin()
-    {
-        foreach (Skin skin in _boughtSkins)
+        public void AddSkin(Skin skin)
         {
-            if (skin.IsSelected == false)
+            if (_boughtSkins.Contains(skin) == false)
             {
-                skin.TurnOffSkin();
+                _boughtSkins.Add(skin);
             }
         }
 
-        Movement = _selectedSkin.GetView();
-        OnChangingSkin?.Invoke(Movement);
-
-        Save();
-    }
-
-    private void Save()
-    {
-        for (int i = 0; i < _boughtSkins.Count; i++)
+        public void SelectSkin(Skin skin)
         {
-            if (YandexGame.savesData.BoughtSkins.Contains(_boughtSkins[i].Id) == false)
-                YandexGame.savesData.BoughtSkins.Add(_boughtSkins[i].Id);
+            if (skin != _selectedSkin)
+            {
+                if (_selectedSkin != null)
+                    _selectedSkin.ChangeStatus();
+
+                _selectedSkin = skin;
+
+                _selectedSkin.ChangeStatus();
+                InitSkin();
+            }
         }
 
-        YandexGame.savesData.SelectedSkin = _selectedSkin.Id;
-        YandexGame.SaveProgress();
+        private void InitSkin()
+        {
+            foreach (Skin skin in _boughtSkins)
+            {
+                if (skin.IsSelected == false)
+                {
+                    skin.TurnOffSkin();
+                }
+            }
+
+            Movement = _selectedSkin.GetView();
+            OnChangingSkin?.Invoke(Movement);
+
+            Save();
+        }
+
+        private void Save()
+        {
+            for (int i = 0; i < _boughtSkins.Count; i++)
+            {
+                if (YandexGame.savesData.BoughtSkins.Contains(_boughtSkins[i].Id) == false)
+                    YandexGame.savesData.BoughtSkins.Add(_boughtSkins[i].Id);
+            }
+
+            YandexGame.savesData.SelectedSkin = _selectedSkin.Id;
+            YandexGame.SaveProgress();
+        }
     }
 }
