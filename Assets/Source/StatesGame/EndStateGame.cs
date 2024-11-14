@@ -15,13 +15,14 @@ namespace StatesGame
     {
         private readonly EndGameWindow _endWindow;
         private readonly Spawner _spawner;
+        private readonly ScoreCounter _scoreCounter;
+        private readonly ScoreBank _scoreBank;
+        private readonly CameraMover _cameraMover;
+        private readonly ResurrectMenu _resurrectMenu;
+      
         private CarMovement _movement;
-        private ScoreCounter _scoreCounter;
-        private ScoreBank _scoreBank;
-        private CameraMover _cameraMover;
         private VideoAd _videoAd;
         private LeaderboardYG _leaderboardYG;
-        private ResurrectMenu _resurrectMenu;
 
         public EndStateGame(CarMovement movement, EndGameWindow end, Spawner spawner, ScoreCounter scoreCounter, ScoreBank scoreBank, CameraMover cameraMover, VideoAd videoAd, LeaderboardYG leaderboardYG, ResurrectMenu resurrect)
         {

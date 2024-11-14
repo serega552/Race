@@ -12,6 +12,8 @@ namespace Cars
 
     public class CarMovement : MonoBehaviour
     {
+        private readonly List<ParticleSystem> _waterParticles = new List<ParticleSystem>();
+        
         [SerializeField] private float _speed = 10.0f;
         [SerializeField] private float _steeringAngle = 4.0f;
         [SerializeField] private Transform[] _wheels;
@@ -23,7 +25,6 @@ namespace Cars
         [SerializeField] private ParticleSystem[] _wheelEffects;
         [SerializeField] private ParticleSystem _waterParticle;
 
-        private List<ParticleSystem> _waterParticles = new List<ParticleSystem>();
         private Vector3 _startPosition;
         private Vector3 _startSpawnPosition = new Vector3(0f, 0f, 0f);
         private Quaternion _startRotation = new Quaternion(0f, 0f, 0f, 0f);

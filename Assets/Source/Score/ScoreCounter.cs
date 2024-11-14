@@ -8,12 +8,13 @@ namespace Score
 {
     public class ScoreCounter : MonoBehaviour
     {
+        private readonly List<EnemyMovement> _enemies = new List<EnemyMovement>();
+        private readonly int _moneyForCrash = 5;
+        private readonly int _scoreForTime = 1;
+       
         [SerializeField] private TMP_Text _counter;
 
-        private List<EnemyMovement> _enemies = new List<EnemyMovement>();
         private int _score = 0;
-        private int _moneyForCrash = 5;
-        private int _scoreForTime = 1;
         private int _moneyForGame;
         private bool _isCounterWorking = false;
         private Coroutine _startTimeCoroutine;

@@ -6,15 +6,15 @@ namespace Tasks.Spawner
 {
     public abstract class TaskSpawner : MonoBehaviour
     {
+        private readonly List<TaskView> _activeTasks = new List<TaskView>();
+        private readonly Dictionary<int, float> _activeDailyId = new Dictionary<int, float>();
+        
         [SerializeField] private GameObject _prefabTask;
         [SerializeField] private Transform _contentTasks;
         [SerializeField] private List<Task> _tasks = new List<Task>();
         [SerializeField] private TaskTimeInspector _timeInspector;
 
         protected List<float> AmountProgreses = new List<float>();
-
-        private List<TaskView> _activeTasks = new List<TaskView>();
-        private Dictionary<int, float> _activeDailyId = new Dictionary<int, float>();
 
         public List<TaskView> ActiveTasks => _activeTasks;
         public TaskTimeInspector TaskInspector => _timeInspector;

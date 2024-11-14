@@ -6,10 +6,10 @@ namespace Tasks
 {
     public static class TaskCounter
     {
+        private readonly static Dictionary<string, bool> _tasks = new Dictionary<string, bool>();
+        private readonly static string[] _tasksArray = Enum.GetNames(typeof(TaskType));
+       
         public static event Action<float, string> OnExecute;
-
-        private static Dictionary<string, bool> _tasks = new Dictionary<string, bool>();
-        private static string[] _tasksArray = Enum.GetNames(typeof(TaskType));
 
         public static void Init()
         {

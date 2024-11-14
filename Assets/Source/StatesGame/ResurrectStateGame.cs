@@ -8,9 +8,10 @@ namespace StatesGame
 {
     public class ResurrectStateGame
     {
-        private ResurrectMenu _resurrect;
+        private readonly ResurrectMenu _resurrect;
+        private readonly Spawner _spawner;
+        
         private CarMovement _movement;
-        private Spawner _spawner;
 
         public ResurrectStateGame(ResurrectMenu resurrect, CarMovement movement, Spawner spawner)
         {

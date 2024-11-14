@@ -10,15 +10,16 @@ namespace UI.Windows
     {
         private readonly int OpenState = Animator.StringToHash("OpenEndWindowAnim");
         private readonly int IdleState = Animator.StringToHash("Idle");
+        private readonly WaitForSeconds _waitEndGame = new WaitForSeconds(0.005f);
 
         [SerializeField] private Button _closeEndWindow;
         [SerializeField] private MenuWindow _menuWindow;
         [SerializeField] private Button _rewardButton;
         [SerializeField] private UpLineWindow _upLine;
 
+        private float _value = 0;
         private ParticleSystem _rewardParticle;
         private HudWindow _hudWindow;
-        private WaitForSeconds _waitEndGame = new WaitForSeconds(0.005f);
         private Coroutine _openTimerCoroutine;
         private Animator _animator;
         private bool _isEndScreenOpen = false;
@@ -75,18 +76,17 @@ namespace UI.Windows
 
         private IEnumerator EndTime()
         {
-            float value = 0;
             _animator.Play(OpenState);
 
-            while (value <= 0.95f)
+            while (_value <= 0.95f)
             {
                 yield return _waitEndGame;
-                value += 0.01f;
-                ControlOpenWithoutSound(value);
+                _value += 0.01f;
+                ControlOpenWithoutSound(_value);
             }
 
             base.OpenWithoutSound();
-            value = 0;
+            _value = 0;
             StopCoroutine(_openTimerCoroutine);
         }
 

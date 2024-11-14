@@ -11,12 +11,13 @@ namespace Tasks
 {
     public class TaskView : MonoBehaviour
     {
+        private readonly ParticleSystem _takeRewardParticle;
+
         [SerializeField] private Button _startExecution;
         [SerializeField] private Button _takeReward;
         [SerializeField] private TMP_Text _descriptionText;
         [SerializeField] private TMP_Text _amountRewardText;
 
-        private ParticleSystem _takeRewardParticle;
         private float _amountProgress;
         private Task _task;
         private Slider _amountCompleted;

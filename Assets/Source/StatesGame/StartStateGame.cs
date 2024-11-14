@@ -9,14 +9,15 @@ namespace StatesGame
 {
     public class StartStateGame
     {
+        private readonly HudWindow _hudWindow;
+        private readonly MenuWindow _menuWindow;
+        private readonly Spawner _spawner;
+        private readonly Bank _bank;
+        private readonly ScoreCounter _scoreCounter;
+        private readonly UpLineWindow _upLineWindow;
+        private readonly CameraMover _cameraMover;
+       
         private CarMovement _movement;
-        private HudWindow _hudWindow;
-        private MenuWindow _menuWindow;
-        private Spawner _spawner;
-        private Bank _bank;
-        private ScoreCounter _scoreCounter;
-        private UpLineWindow _upLineWindow;
-        private CameraMover _cameraMover;
 
         public StartStateGame(CarMovement movement, HudWindow hud, MenuWindow menu, Spawner spawner, Bank bank, ScoreCounter scoreCounter, UpLineWindow upLineWindow, CameraMover cameraMover)
         {

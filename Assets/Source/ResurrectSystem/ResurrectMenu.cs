@@ -11,15 +11,16 @@ namespace ResurrectSystem
     {
         private readonly int ResurrectWIndowAnim = Animator.StringToHash("ResurrectWIndowAnim");
         private readonly int IdleState = Animator.StringToHash("Idle");
+        private readonly WaitForSeconds _waitTime = new WaitForSeconds(0.01f);
+        private readonly int _id = 6;
 
         [SerializeField] private Button _resurrectButton;
         [SerializeField] private Button _exitButton;
         [SerializeField] private MobileControlWindow _controlWindow;
 
         private ResurrectWindow _resurrectWindow;
-        private int _id = 6;
+        private float _value = 0;
         private Animator _animator;
-        private WaitForSeconds _waitTime = new WaitForSeconds(0.01f);
         private Coroutine _openTimerCoroutine;
         private bool _isPause;
 
@@ -48,6 +49,8 @@ namespace ResurrectSystem
 
         public void Resurrect()
         {
+            Debug.Log(2);
+
             OnResurrect?.Invoke();
             StopCoroutine(_openTimerCoroutine);
             _animator.Play(IdleState);
@@ -64,19 +67,18 @@ namespace ResurrectSystem
 
         private IEnumerator OpenWindowTimer()
         {
-            float value = 0;
             _animator.Play(ResurrectWIndowAnim);
 
-            while (value <= 0.95f)
+            while (_value <= 0.95f)
             {
                 yield return _waitTime;
-                value += 0.01f;
-                _resurrectWindow.ControlOpenWithoutSound(value);
+                _value += 0.01f;
+                _resurrectWindow.ControlOpenWithoutSound(_value);
             }
 
             _resurrectWindow.OpenWithoutSound();
             _isPause = true;
-            value = 0;
+            _value = 0;
             StopCoroutine(_openTimerCoroutine);
             Time.timeScale = 0f;
         }

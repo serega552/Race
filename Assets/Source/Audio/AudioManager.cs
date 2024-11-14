@@ -25,34 +25,34 @@ namespace Audio
 
             foreach (Sound sond in _sounds)
             {
-                sond.source = gameObject.AddComponent<AudioSource>();
-                sond.source.playOnAwake = false;
-                sond.source.clip = sond.clip;
-                sond.source.volume = sond.volume;
-                sond.source.pitch = sond.pitch;
-                sond.source.loop = sond.loop;
+                sond.Source = gameObject.AddComponent<AudioSource>();
+                sond.Source.playOnAwake = false;
+                sond.Source.clip = sond.Clip;
+                sond.Source.volume = sond.Volume;
+                sond.Source.pitch = sond.Pitch;
+                sond.Source.loop = sond.Loop;
             }
         }
 
         public void Play(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.name == sound);
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
             if (s != null)
-                s.source.Play();
+                s.Source.Play();
         }
 
         public void Stop(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.name == sound);
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
             if (s != null)
-                s.source.Stop();
+                s.Source.Stop();
         }
 
         public void SlowPause(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.name == sound);
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
             if (s != null)
                 StartCoroutine(PauseTime(s));
@@ -60,7 +60,7 @@ namespace Audio
 
         public void SlowUnPause(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.name == sound);
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
             if (s != null)
                 StartCoroutine(UnpauseTime(s));
@@ -68,7 +68,7 @@ namespace Audio
 
         public void SlowPlay(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.name == sound);
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
             if (s != null)
                 StartCoroutine(PlayTime(s));
@@ -76,87 +76,87 @@ namespace Audio
 
         public IEnumerator PauseTime(Sound sound)
         {
-            while (sound.source.volume > 0.02f)
+            while (sound.Source.volume > 0.02f)
             {
-                sound.source.volume -= 0.05f;
+                sound.Source.volume -= 0.05f;
                 yield return new WaitForSeconds(0.1f);
             }
 
-            sound.source.Pause();
+            sound.Source.Pause();
         }
 
         public IEnumerator UnpauseTime(Sound sound)
         {
-            sound.source.UnPause();
+            sound.Source.UnPause();
 
-            while (sound.source.volume < sound.volume)
+            while (sound.Source.volume < sound.Volume)
             {
-                sound.source.volume += 0.1f;
+                sound.Source.volume += 0.1f;
                 yield return new WaitForSeconds(0.1f);
             }
         }
 
         public IEnumerator PlayTime(Sound sound)
         {
-            sound.source.Stop();
-            sound.source.Play();
+            sound.Source.Stop();
+            sound.Source.Play();
 
-            while (sound.source.volume < sound.volume)
+            while (sound.Source.volume < sound.Volume)
             {
-                sound.source.volume += 0.1f;
+                sound.Source.volume += 0.1f;
                 yield return new WaitForSeconds(0.1f);
             }
         }
 
         public void Pause(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.name == sound);
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
             if (s != null)
-                s.source.Pause();
+                s.Source.Pause();
         }
 
         public void UnPause(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.name == sound);
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
             if (s != null)
-                s.source.UnPause();
+                s.Source.UnPause();
         }
 
         public void ChangePitch(string sound, float count)
         {
-            Sound s = Array.Find(_sounds, item => item.name == sound);
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
             if (s != null)
             {
-                s.source.pitch = Mathf.Clamp(s.pitch += count * Time.deltaTime, 0.8f, 2.5f);
-                if (s.source.pitch >= 2.5f)
-                    s.pitch = 2.5f;
-                else if (s.source.pitch <= 0.8f)
-                    s.pitch = 0.8f;
+                s.Source.pitch = Mathf.Clamp(s.Pitch += count * Time.deltaTime, 0.8f, 2.5f);
+                if (s.Source.pitch >= 2.5f)
+                    s.Pitch = 2.5f;
+                else if (s.Source.pitch <= 0.8f)
+                    s.Pitch = 0.8f;
             }
         }
 
         public void ResetPitch(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.name == sound);
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
             if (s != null)
             {
-                s.source.pitch = 1f;
-                s.pitch = 1f;
+                s.Source.pitch = 1f;
+                s.Pitch = 1f;
             }
         }
 
         public void ChangeValue(string sound, float value)
         {
-            Sound s = Array.Find(_sounds, item => item.name == sound);
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
             if (s != null)
             {
-                s.source.volume = value;
-                s.volume = value;
+                s.Source.volume = value;
+                s.Volume = value;
             }
         }
 
@@ -164,10 +164,10 @@ namespace Audio
         {
             foreach (var sound in _sounds)
             {
-                if (sound.name != "Music" && sound.name != "MenuMusic")
+                if (sound.Name != "Music" && sound.Name != "MenuMusic")
                 {
-                    sound.source.volume = value;
-                    sound.volume = value;
+                    sound.Source.volume = value;
+                    sound.Volume = value;
                 }
             }
         }

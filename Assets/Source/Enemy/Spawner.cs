@@ -9,6 +9,11 @@ namespace Enemy
 {
     public class Spawner : MonoBehaviour
     {
+        private readonly List<EnemyMovement> _enemies = new List<EnemyMovement>();
+        private readonly List<ParticleSystem> _crashParticles = new List<ParticleSystem>();
+        private readonly WaitForSeconds _waitStartSpawn = new WaitForSeconds(4f);
+        private readonly WaitForSeconds _waitSpawnEnemies = new WaitForSeconds(2.5f);
+
         [SerializeField] private Camera _camera;
         [SerializeField] private float _zPosition = 14f;
         [SerializeField] private GameObject _enemy;
@@ -17,13 +22,9 @@ namespace Enemy
         [SerializeField] private Transform[] _spawnPosition;
         [SerializeField] private ParticleSystem _crashParticle;
 
-        private List<ParticleSystem> _crashParticles = new List<ParticleSystem>();
         private Coroutine _startTimeSpawnCoroutine;
         private bool _canPlay = true;
         private CarMovement _movement;
-        private List<EnemyMovement> _enemies = new List<EnemyMovement>();
-        private WaitForSeconds _waitStartSpawn = new WaitForSeconds(4f);
-        private WaitForSeconds _waitSpawnEnemies = new WaitForSeconds(2.5f);
 
         public void Init(CarMovement movement)
         {
@@ -159,6 +160,7 @@ namespace Enemy
                     return false;
                 }
             }
+
             return false;
         }
 

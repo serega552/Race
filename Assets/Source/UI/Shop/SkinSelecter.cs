@@ -8,10 +8,11 @@ namespace UI.Shop
 {
     public class SkinSelecter : MonoBehaviour
     {
+        private readonly List<Skin> _boughtSkins = new List<Skin>();
+
         [SerializeField] private Skin _firstSkin;
 
         private Skin _selectedSkin;
-        private List<Skin> _boughtSkins = new List<Skin>();
 
         public CarMovement Movement { get; private set; }
 

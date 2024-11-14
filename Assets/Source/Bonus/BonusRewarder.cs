@@ -7,6 +7,8 @@ namespace Bonus
 {
     public class BonusRewarder : MonoBehaviour
     {
+        private readonly int _id = 7;
+        
         [SerializeField] private Button _rewardButton;
         [SerializeField] private Button _buyButton;
         [SerializeField] private int _coundAds;
@@ -14,7 +16,6 @@ namespace Bonus
         [SerializeField] private GameObject _completeText;
 
         private bool _isBonusUse;
-        private int _id = 7;
         private int _countWatched;
 
         public Button BuyButton => _buyButton;
