@@ -51,7 +51,7 @@ namespace Tasks
             _amountCompleted.maxValue = _task.AmountMaxCollect;
             _startExecution.gameObject.SetActive(true);
 
-            Invoke("UpdateUI", 0.1f);
+            Invoke(nameof(UpdateUI), 0.1f);
         }
 
         public void InitId(int id)
@@ -116,7 +116,7 @@ namespace Tasks
             _task.RewardPlayer();
             _takeReward.interactable = false;
             _takeRewardParticle?.Play();
-            Invoke("Destroy", 1f);
+            Invoke(nameof(Destroy), 1f);
 
             SaveDestroyTask();
         }

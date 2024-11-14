@@ -10,6 +10,9 @@ namespace Audio
 
         [SerializeField] private Sound[] _sounds;
 
+        private string _musicName = "Music";
+        private string _menuMusicName = "MenuMusic";
+
         private void Start()
         {
             if (Instance != null)
@@ -164,7 +167,7 @@ namespace Audio
         {
             foreach (var sound in _sounds)
             {
-                if (sound.Name != "Music" && sound.Name != "MenuMusic")
+                if (sound.Name != _musicName && sound.Name != _menuMusicName)
                 {
                     sound.Source.volume = value;
                     sound.Volume = value;

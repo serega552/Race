@@ -15137,7 +15137,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3176487, y: 0.09189758}
   m_AnchorMax: {x: 0.6817461, y: 0.8054488}
-  m_AnchoredPosition: {x: 0.4987793, y: -3.4597168}
+  m_AnchoredPosition: {x: 0.4987793, y: -3.4596558}
   m_SizeDelta: {x: -1.4799995, y: -0.22999954}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &526178661
@@ -31722,48 +31722,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sounds:
-  - volume: 0.24
-    pitch: 1
-    source: {fileID: 0}
-    name: StartCar
-    clip: {fileID: 8300000, guid: 3330aeff25aa3b6448848b71a1c1caf0, type: 3}
-    loop: 1
-  - volume: 0.47
-    pitch: 1
-    source: {fileID: 0}
-    name: Music
-    clip: {fileID: 8300000, guid: e74677d8454a67f429b09b20bec2000d, type: 3}
-    loop: 1
-  - volume: 0.53
-    pitch: 1
-    source: {fileID: 0}
-    name: MenuMusic
-    clip: {fileID: 8300000, guid: f571446be3d6a5847a214b630bfa44d1, type: 3}
-    loop: 1
-  - volume: 0.4
-    pitch: 1
-    source: {fileID: 0}
-    name: ClickOpen
-    clip: {fileID: 8300000, guid: b7e0a5c27b720014380c572678d54290, type: 3}
-    loop: 0
-  - volume: 0.4
-    pitch: 1
-    source: {fileID: 0}
-    name: ClickClose
-    clip: {fileID: 8300000, guid: 4cc4f76d9705bb34a935f0b48f2d60e4, type: 3}
-    loop: 0
-  - volume: 0.4
-    pitch: 1
-    source: {fileID: 0}
-    name: Buy
-    clip: {fileID: 8300000, guid: b1010438e09f41a449ea04f1be27eab2, type: 3}
-    loop: 0
-  - volume: 0.4
-    pitch: 1
-    source: {fileID: 0}
-    name: Sirena
-    clip: {fileID: 8300000, guid: c428e01f3af86c04eb37e041fd615cb3, type: 3}
-    loop: 1
+  - Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+    Name: Music
+    Clip: {fileID: 8300000, guid: e74677d8454a67f429b09b20bec2000d, type: 3}
+    Loop: 0
+  - Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+    Name: MenuMusic
+    Clip: {fileID: 8300000, guid: f571446be3d6a5847a214b630bfa44d1, type: 3}
+    Loop: 0
+  - Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+    Name: Buy
+    Clip: {fileID: 8300000, guid: b1010438e09f41a449ea04f1be27eab2, type: 3}
+    Loop: 0
+  - Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+    Name: ClickClose
+    Clip: {fileID: 8300000, guid: 4cc4f76d9705bb34a935f0b48f2d60e4, type: 3}
+    Loop: 0
+  - Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+    Name: ClickOpen
+    Clip: {fileID: 8300000, guid: b7e0a5c27b720014380c572678d54290, type: 3}
+    Loop: 0
+  - Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+    Name: StartCar
+    Clip: {fileID: 8300000, guid: 3330aeff25aa3b6448848b71a1c1caf0, type: 3}
+    Loop: 0
+  - Volume: 1
+    Pitch: 1
+    Source: {fileID: 0}
+    Name: Sirena
+    Clip: {fileID: 8300000, guid: c428e01f3af86c04eb37e041fd615cb3, type: 3}
+    Loop: 0
 --- !u!4 &1161634203
 Transform:
   m_ObjectHideFlags: 0
