@@ -34,8 +34,6 @@ namespace Initers
 
         public void Init(CarMovement carMovement)
         {
-            Debug.Log(carMovement);
-
             _carMovement = carMovement;
 
             _cameraMover.GetPlayerTransform(_carMovement.transform);
