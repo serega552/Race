@@ -121,7 +121,7 @@ namespace Tasks
             SaveDestroyTask();
         }
 
-        public void Destroy()
+        private void Destroy()
         {
             OnComplete?.Invoke(this);
             Destroy(gameObject);

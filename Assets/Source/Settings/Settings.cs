@@ -27,17 +27,6 @@ namespace SettingsGame
             _musicSlider.onValueChanged.RemoveListener(ChangeMusicValue);
         }
 
-        private void ChangeMusicValue(float value)
-        {
-            AudioManager.Instance.ChangeValue("Music", value);
-            AudioManager.Instance.ChangeValue("MenuMusic", value);
-        }
-
-        private void ChangeSoundValue(float value)
-        {
-            AudioManager.Instance.ChangeSounds(value);
-        }
-
         public void Save()
         {
             YandexGame.savesData.SoundValue = _soundSlider.value;
@@ -53,6 +42,17 @@ namespace SettingsGame
             AudioManager.Instance.ChangeSounds(_soundSlider.value);
             AudioManager.Instance.ChangeValue("Music", _musicSlider.value);
             AudioManager.Instance.ChangeValue("MenuMusic", _musicSlider.value);
+        }
+
+        private void ChangeMusicValue(float value)
+        {
+            AudioManager.Instance.ChangeValue("Music", value);
+            AudioManager.Instance.ChangeValue("MenuMusic", value);
+        }
+
+        private void ChangeSoundValue(float value)
+        {
+            AudioManager.Instance.ChangeSounds(value);
         }
     }
 }

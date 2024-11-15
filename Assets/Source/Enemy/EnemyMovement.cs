@@ -29,17 +29,6 @@ namespace Enemy
             Move();
         }
 
-        public void GetCarMovement(CarMovement carMovement)
-        {
-            _carMovement = carMovement;
-        }
-
-        public void Die()
-        {
-            _isMoving = false;
-            TurnOffCar();
-        }
-
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.collider.TryGetComponent(out WaterBlock block))
@@ -53,6 +42,17 @@ namespace Enemy
                 OnCrash?.Invoke(transform);
                 Die();
             }
+        }
+
+        public void GetCarMovement(CarMovement carMovement)
+        {
+            _carMovement = carMovement;
+        }
+
+        public void Die()
+        {
+            _isMoving = false;
+            TurnOffCar();
         }
 
         private void Move()

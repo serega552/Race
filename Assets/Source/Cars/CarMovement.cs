@@ -67,31 +67,6 @@ namespace Cars
             }
         }
 
-        private void CheckGround()
-        {
-            _startPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-            Ray ray = new Ray(_startPosition, transform.up * -1);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, 1f))
-            {
-                if (hit.collider.TryGetComponent(out Block block))
-                    _isMove = true;
-
-                if (hit.collider.TryGetComponent(out WaterBlock waterBlock) && _canPlay)
-                {
-                    var particle = Instantiate(_waterParticle, transform.position, waterBlock.transform.localRotation);
-                    _waterParticles.Add(particle);
-                    EndMove();
-                }
-            }
-            else
-            {
-                _isMove = false;
-            }
-
-            Debug.DrawRay(_startPosition, transform.up * -1 * 1f, Color.red);
-        }
-
         public void ResetCar()
         {
             _currentSpeed = 0;
@@ -117,6 +92,15 @@ namespace Cars
             _isMove = false;
 
             OnEndMove?.Invoke();
+        }
+
+        public void StartMove()
+        {
+            _wheelEffects[0].Play();
+            _wheelEffects[1].Play();
+            _canPlay = true;
+            _isMove = true;
+            AudioManager.Instance.SlowPlay("StartCar");
         }
 
         public void Resurrect()
@@ -195,13 +179,29 @@ namespace Cars
             }
         }
 
-        public void StartMove()
+        private void CheckGround()
         {
-            _wheelEffects[0].Play();
-            _wheelEffects[1].Play();
-            _canPlay = true;
-            _isMove = true;
-            AudioManager.Instance.SlowPlay("StartCar");
+            _startPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            Ray ray = new Ray(_startPosition, transform.up * -1);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 1f))
+            {
+                if (hit.collider.TryGetComponent(out Block block))
+                    _isMove = true;
+
+                if (hit.collider.TryGetComponent(out WaterBlock waterBlock) && _canPlay)
+                {
+                    var particle = Instantiate(_waterParticle, transform.position, waterBlock.transform.localRotation);
+                    _waterParticles.Add(particle);
+                    EndMove();
+                }
+            }
+            else
+            {
+                _isMove = false;
+            }
+
+            Debug.DrawRay(_startPosition, transform.up * -1 * 1f, Color.red);
         }
     }
 }
