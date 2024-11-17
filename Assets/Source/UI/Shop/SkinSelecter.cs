@@ -16,7 +16,7 @@ namespace UI.Shop
 
         public CarMovement Movement { get; private set; }
 
-        public event Action<CarMovement> OnChangingSkin;
+        public event Action<CarMovement> SKinChanging;
 
         public void InitFirstSkin()
         {
@@ -60,7 +60,7 @@ namespace UI.Shop
             }
 
             Movement = _selectedSkin.GetView();
-            OnChangingSkin?.Invoke(Movement);
+            ChangingSkin?.Invoke(Movement);
 
             Save();
         }

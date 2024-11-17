@@ -47,7 +47,7 @@ namespace Initers
 
         private void OnEnable()
         {
-            _skinSelecter.OnChangingSkin += RefreshInfo;
+            _skinSelecter.ChangingSkin += RefreshInfo;
 
             _resurrectStateGame.Enable();
             _startStateGame.Enable();
@@ -56,7 +56,7 @@ namespace Initers
 
         private void OnDisable()
         {
-            _skinSelecter.OnChangingSkin -= RefreshInfo;
+            _skinSelecter.ChangingSkin -= RefreshInfo;
 
             _resurrectStateGame.Disable();
             _startStateGame.Disable();

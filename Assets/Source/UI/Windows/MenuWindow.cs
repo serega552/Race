@@ -10,7 +10,7 @@ namespace UI.Windows
 
         private bool _isMenuOpen = true;
 
-        public event Action OnStart;
+        public event Action Starting;
 
         public bool IsMenuOpen => _isMenuOpen;
 
@@ -43,7 +43,7 @@ namespace UI.Windows
 
         private void StartGame()
         {
-            OnStart?.Invoke();
+            Starting?.Invoke();
         }
     }
 }

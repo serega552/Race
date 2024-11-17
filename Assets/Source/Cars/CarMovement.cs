@@ -40,7 +40,7 @@ namespace Cars
         private bool _isMobile = false;
         private Rigidbody _rigidbody;
 
-        public event Action OnEndMove;
+        public event Action EndMoving;
 
         private void Awake()
         {
@@ -94,7 +94,7 @@ namespace Cars
             _audioManager.Stop("StartCar");
             _isMove = false;
 
-            OnEndMove?.Invoke();
+            EndMoving?.Invoke();
         }
 
         public void StartMove()

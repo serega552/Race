@@ -26,8 +26,8 @@ namespace ResurrectSystem
 
         public bool IsPause => _isPause;
 
-        public event Action OnResurrect;
-        public event Action OnEndGame;
+        public event Action Resurrecting;
+        public event Action GameEnding;
 
         private void Awake()
         {
@@ -49,7 +49,7 @@ namespace ResurrectSystem
 
         public void Resurrect()
         {
-            OnResurrect?.Invoke();
+            Resurrecting?.Invoke();
             StopCoroutine(_openTimerCoroutine);
             _animator.Play(IdleState);
             _resurrectWindow.Close();
@@ -100,7 +100,7 @@ namespace ResurrectSystem
             _animator.Play(IdleState);
             _resurrectWindow.Close();
             _controlWindow.OpenWithoutSound();
-            OnEndGame?.Invoke();
+            GameEnding?.Invoke();
             _isPause = false;
             Time.timeScale = 1f;
         }

@@ -11,7 +11,7 @@ namespace Tasks
 {
     public class TaskView : MonoBehaviour
     {
-        private readonly ParticleSystem _takeRewardParticle;
+        private readonly ParticleSystem TakeRewardParticle;
 
         [SerializeField] private Button _startExecution;
         [SerializeField] private Button _takeReward;
@@ -23,7 +23,7 @@ namespace Tasks
         private Slider _amountCompleted;
         private TaskWindow _window;
 
-        public event Action<TaskView> OnComplete;
+        public event Action<TaskView> Completed;
 
         public float AmountProgress => _amountProgress;
         public int Id { get; private set; }
@@ -31,14 +31,14 @@ namespace Tasks
         private void OnEnable()
         {
             _takeReward.onClick.AddListener(TakeReward);
-            TaskCounter.OnExecute += ExecuteTask;
+            TaskCounter.Executing += ExecuteTask;
         }
 
         private void OnDisable()
         {
             _startExecution.onClick.RemoveListener(_window.Close);
             _takeReward.onClick.RemoveListener(TakeReward);
-            TaskCounter.OnExecute -= ExecuteTask;
+            TaskCounter.Executing -= ExecuteTask;
         }
 
         public void Init()
@@ -110,7 +110,7 @@ namespace Tasks
         {
             _task.RewardPlayer();
             _takeReward.interactable = false;
-            _takeRewardParticle?.Play();
+            TakeRewardParticle?.Play();
             Invoke(nameof(Destroy), 1f);
 
             SaveDestroyTask();
@@ -118,7 +118,7 @@ namespace Tasks
 
         private void Destroy()
         {
-            OnComplete?.Invoke(this);
+            Completed?.Invoke(this);
             Destroy(gameObject);
         }
 

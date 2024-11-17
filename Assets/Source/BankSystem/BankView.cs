@@ -17,12 +17,12 @@ namespace BankSystem
 
     private void OnEnable()
     {
-        _bank.OnUpdateText += UpdateText;
+        _bank.TextUpdating += UpdateText;
     }
 
     private void OnDisable()
     {
-        _bank.OnUpdateText -= UpdateText;
+        _bank.TextUpdating -= UpdateText;
     }
 
         public void UpdateText()

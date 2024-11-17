@@ -19,14 +19,14 @@ namespace UI.Shop
 
         private Button _showButton;
 
+        public event Action<Product> Selected;
+
         public bool IsBonusSkin => _isBonusSkin;
         public int Id => _id;
         public string Description => _descriptionTranslation;
         public bool IsSelected => _isSelected;
         public int Price => _price;
         public bool IsBought { get; private set; } = false;
-
-        public event Action<Product> OnSelected;
 
         private void Awake()
         {
@@ -48,7 +48,7 @@ namespace UI.Shop
 
         public void ShowInfo()
         {
-            OnSelected?.Invoke(this);
+            Selected?.Invoke(this);
             if (_isBonusSkin)
                 _priceText.text = Lean.Localization.LeanLocalization.GetTranslationText("Shop/BonusButton");
             else

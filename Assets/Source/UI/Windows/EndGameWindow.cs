@@ -10,7 +10,7 @@ namespace UI.Windows
     {
         private readonly int OpenState = Animator.StringToHash("OpenEndWindowAnim");
         private readonly int IdleState = Animator.StringToHash("Idle");
-        private readonly WaitForSeconds _waitEndGame = new WaitForSeconds(0.005f);
+        private readonly WaitForSeconds WaitEndGame = new WaitForSeconds(0.005f);
 
         [SerializeField] private Button _closeEndWindow;
         [SerializeField] private MenuWindow _menuWindow;
@@ -81,7 +81,7 @@ namespace UI.Windows
 
             while (_value <= 0.95f)
             {
-                yield return _waitEndGame;
+                yield return WaitEndGame;
                 _value += 0.01f;
                 ControlOpenWithoutSound(_value);
             }

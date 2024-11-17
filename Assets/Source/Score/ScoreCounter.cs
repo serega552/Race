@@ -51,7 +51,7 @@ namespace Score
         {
             foreach (EnemyMovement enemy in enemies)
             {
-                enemy.OnCrash -= AddMoneyCrash;
+                enemy.Crashing -= AddMoneyCrash;
             }
 
             _enemies.Clear();
@@ -59,7 +59,7 @@ namespace Score
             foreach (EnemyMovement enemy in enemies)
             {
                 _enemies.Add(enemy);
-                enemy.OnCrash += AddMoneyCrash;
+                enemy.Crashing += AddMoneyCrash;
             }
         }
 

@@ -17,7 +17,7 @@ namespace Enemy
         private bool _isMoving = true;
         private Rigidbody _rigidbody;
 
-        public event Action<Transform> OnCrash;
+        public event Action<Transform> Crashing;
 
         private void Awake()
         {
@@ -33,13 +33,13 @@ namespace Enemy
         {
             if (collision.collider.TryGetComponent(out WaterBlock block))
             {
-                OnCrash?.Invoke(transform);
+                Crashing?.Invoke(transform);
                 Die();
             }
 
             if (collision.collider.TryGetComponent(out EnemyMovement enemy))
             {
-                OnCrash?.Invoke(transform);
+                Crashing?.Invoke(transform);
                 Die();
             }
         }

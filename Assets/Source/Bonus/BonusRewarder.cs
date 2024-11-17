@@ -40,7 +40,7 @@ namespace Bonus
             YandexGame.GetDataEvent -= Load;
         }
 
-        public void GiveReward()
+        public void GetReward()
         {
             _countWatched++;
             Save();

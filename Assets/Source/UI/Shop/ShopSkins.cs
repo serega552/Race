@@ -31,7 +31,7 @@ namespace UI.Shop
 
             foreach (var skin in _skinsForSale)
             {
-                skin.OnSelected += ShowInfoProduct;
+                skin.Selected += ShowInfoProduct;
             }
         }
 
@@ -43,7 +43,7 @@ namespace UI.Shop
 
             foreach (var skin in _skinsForSale)
             {
-                skin.OnSelected -= ShowInfoProduct;
+                skin.Selected -= ShowInfoProduct;
             }
         }
 
@@ -82,9 +82,9 @@ namespace UI.Shop
 
         public override void TryBuyProduct()
         {
-            if (_selectedSkin.IsBonusSkin == false && BankMoney.TryTakeMoney(_selectedSkin.Price))
+            if (_selectedSkin.IsBonusSkin == false && BankMoney.TrySpendMoney(_selectedSkin.Price))
             {
-                BankMoney.TakeMoney(_selectedSkin.Price);
+                BankMoney.SpendMoney(_selectedSkin.Price);
                 BuyProduct();
             }
             else if (_selectedSkin.IsBonusSkin)

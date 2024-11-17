@@ -10,13 +10,11 @@ namespace UI.Windows
         [SerializeField] protected AudioManager AudioManager;
         [SerializeField] private CanvasGroup _canvasGroup;
 
-        private ParticleSystem _effectButtonClick;
         private Animator _animator;
 
         private void Start()
         {
             _animator = GetComponent<Animator>();
-            _effectButtonClick = GetComponentInChildren<ParticleSystem>();
         }
 
         public virtual void Open()
@@ -24,8 +22,7 @@ namespace UI.Windows
             if (_animator != null)
                 _animator.SetTrigger("open");
 
-            AudioManager.Play("ClickOpen");
-            _effectButtonClick?.Play();
+            AudioManager.Play("ClickOpen"); 
             _canvasGroup.blocksRaycasts = true;
             _canvasGroup.interactable = true;
             _canvasGroup.alpha = 1f;

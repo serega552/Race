@@ -9,12 +9,12 @@ namespace BankSystem
 {
     public class Bank : MonoBehaviour
     {
+        private readonly int _multiplyMoneyForAd = 2;
+
         [SerializeField] private AudioManager _audioManager;
 
-        private int _multiplyMoneyForAd = 2;
-
-        public event Action OnBuy;
-        public event Action OnUpdateText;
+        public event Action Buying;
+        public event Action TextUpdating;
 
         public int Money { get; private set; }
         public int MoneyForGame { get; private set; }
@@ -28,29 +28,29 @@ namespace BankSystem
         private void OnEnable()
         {
             YandexGame.GetDataEvent += Load;
-            AwardGiver.OnReward += GiveReward;
+            AwardGiver.OnReward += GetReward;
         }
 
         private void OnDisable()
         {
             YandexGame.GetDataEvent -= Load;
-            AwardGiver.OnReward -= GiveReward;
+            AwardGiver.OnReward -= GetReward;
         }
 
-        public void TakeMoney(int money)
+        public void SpendMoney(int money)
         {
-            if (TryTakeMoney(money))
+            if (TrySpendMoney(money))
             {
                 Money -= money;
                 _audioManager.Play("Buy");
-                OnBuy?.Invoke();
-                OnUpdateText?.Invoke();
+                Buying?.Invoke();
+                TextUpdating?.Invoke();
 
                 Save();
             }
         }
 
-        public bool TryTakeMoney(int value)
+        public bool TrySpendMoney(int value)
         {
             if (Money >= value)
                 return true;
@@ -58,40 +58,40 @@ namespace BankSystem
                 return false;
         }
 
-        public void GiveMoney(int money)
+        public void GetMoney(int money)
         {
             Money += money;
-            OnUpdateText?.Invoke();
+            TextUpdating?.Invoke();
 
             Save();
         }
 
-        public void GiveMoneyForGame(int money)
+        public void GetMoneyForGame(int money)
         {
             MoneyForGame += money;
-            GiveMoney(money);
+            GetMoney(money);
 
             TaskCounter.IncereaseProgress(money, TaskType.CollectMoney.ToString());
-            OnUpdateText?.Invoke();
+            TextUpdating?.Invoke();
         }
 
         public void ResetMoneyForGame()
         {
             MoneyForGame = 0;
-            OnUpdateText?.Invoke();
+            TextUpdating?.Invoke();
         }
 
         public void MoneyMultiplyAd()
         {
-            GiveMoney(MoneyForGame);
+            GetMoney(MoneyForGame);
             MoneyForGame *= _multiplyMoneyForAd;
-            OnUpdateText?.Invoke();
+            TextUpdating?.Invoke();
         }
 
-        private void GiveReward(string name, int amount)
+        private void GetReward(string name, int amount)
         {
             if (name == ResourceType.Money.ToString())
-                GiveMoney(amount);
+                GetMoney(amount);
         }
 
         private void Save()
@@ -103,7 +103,7 @@ namespace BankSystem
         private void Load()
         {
             Money = YandexGame.savesData.Money;
-            OnUpdateText?.Invoke();
+            TextUpdating?.Invoke();
         }
     }
 }

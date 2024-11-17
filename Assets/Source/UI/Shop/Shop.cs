@@ -15,8 +15,6 @@ namespace UI.Shop
         [SerializeField] private Button _selectButton;
         [SerializeField] private TMP_Text _description;
 
-        public event Action OnChangingSkin;
-
         public Bank BankMoney => _bank;
         public Image PlaceSkin => _placeSkin;
         public Button BuyButton => _buyButton;

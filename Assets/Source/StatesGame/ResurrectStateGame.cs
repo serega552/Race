@@ -24,20 +24,20 @@ namespace StatesGame
 
         public void ChangeCarMovement(CarMovement movement)
         {
-            _movement.OnEndMove -= OpenResurrectWindow;
+            _movement.EndMoving -= OpenResurrectWindow;
             _movement = movement;
-            _movement.OnEndMove += OpenResurrectWindow;
+            _movement.EndMoving += OpenResurrectWindow;
         }
 
         public void Enable()
         {
-            _resurrect.OnResurrect += Resurrect;
+            _resurrect.Resurrecting += Resurrect;
         }
 
         public void Disable()
         {
-            _resurrect.OnResurrect -= Resurrect;
-            _movement.OnEndMove -= OpenResurrectWindow;
+            _resurrect.Resurrecting -= Resurrect;
+            _movement.EndMoving -= OpenResurrectWindow;
         }
 
         private void Resurrect()

@@ -8,7 +8,7 @@ namespace Tasks
     {
         private int _startDailyTime;
 
-        public event Action OnGoneDailyTime;
+        public event Action DailyTimeGoned;
 
         public void Load()
         {
@@ -20,7 +20,7 @@ namespace Tasks
             if (_startDailyTime != DateTime.Now.Day)
             {
                 _startDailyTime = DateTime.Now.Day;
-                OnGoneDailyTime?.Invoke();
+                DailyTimeGoned?.Invoke();
                 Save();
             }
         }

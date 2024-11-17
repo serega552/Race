@@ -29,14 +29,14 @@ namespace Initers
         private void OnDisable()
         {
             YandexGame.GetDataEvent -= InitShop;
-            _skinSelecter.OnChangingSkin -= Init;
+            _skinSelecter.ChangingSkin -= Init;
         }
 
         public void Init(CarMovement carMovement)
         {
             _carMovement = carMovement;
 
-            _cameraMover.GetPlayerTransform(_carMovement.transform);
+            _cameraMover.ChangePlayerTransform(_carMovement.transform);
             _spawner.Init(_carMovement);
 
             _carMovement.gameObject.SetActive(true);
@@ -44,7 +44,7 @@ namespace Initers
 
         private void InitShop()
         {
-            _skinSelecter.OnChangingSkin += Init;
+            _skinSelecter.ChangingSkin += Init;
             _shopSkins.Load();
         }
     }

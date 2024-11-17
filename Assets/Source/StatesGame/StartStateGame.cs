@@ -56,12 +56,12 @@ namespace StatesGame
 
         public void Enable()
         {
-            _menuWindow.OnStart += Start;
+            _menuWindow.Starting += Start;
         }
 
         public void Disable()
         {
-            _menuWindow.OnStart -= Start;
+            _menuWindow.Starting -= Start;
         }
     }
 }

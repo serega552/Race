@@ -29,7 +29,7 @@ namespace Tasks.Spawner
         {
             foreach (var task in _activeTasks)
             {
-                task.OnComplete -= DestroyTask;
+                task.Completed -= DestroyTask;
             }
         }
 
@@ -50,7 +50,7 @@ namespace Tasks.Spawner
 
             foreach (var task in _activeTasks)
             {
-                task.OnComplete += DestroyTask;
+                task.Completed += DestroyTask;
             }
 
             Load();

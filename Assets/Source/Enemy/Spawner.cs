@@ -102,7 +102,7 @@ namespace Enemy
             EnemyMovement enemy1 = enemy.GetComponent<EnemyMovement>();
             _enemies.Add(enemy1);
 
-            enemy1.OnCrash += SpawnCrashParticle;
+            enemy1.Crashing += SpawnCrashParticle;
             _scoreCounter.AddEnemies(_enemies);
         }
 
@@ -110,7 +110,7 @@ namespace Enemy
         {
             for (int i = 0; i < _enemies.Count; i++)
             {
-                _enemies[i].OnCrash -= SpawnCrashParticle;
+                _enemies[i].Crashing -= SpawnCrashParticle;
                 Destroy(_enemies[i].gameObject);
             }
 
@@ -129,7 +129,7 @@ namespace Enemy
             {
                 if (_enemies[i].gameObject.activeSelf == false)
                 {
-                    _enemies[i].OnCrash -= SpawnCrashParticle;
+                    _enemies[i].Crashing -= SpawnCrashParticle;
                     Destroy(_enemies[i].gameObject);
                     _enemies.Remove(_enemies[i]);
                 }

@@ -40,16 +40,16 @@ namespace Ads
             switch(id)
             {
                 case 1:
-                    _bank.GiveMoney(_reward);
+                    _bank.GetMoney(_reward);
                     break;
                 case 2:
-                    _bank.GiveMoney(_reward * _minRewardMultiply);
+                    _bank.GetMoney(_reward * _minRewardMultiply);
                     break;
                 case 3:
-                    _bank.GiveMoney(_reward * _midleRewardMultiply);
+                    _bank.GetMoney(_reward * _midleRewardMultiply);
                     break;
                 case 4:
-                    _bank.GiveMoney(_reward * _maxRewardMultiply);
+                    _bank.GetMoney(_reward * _maxRewardMultiply);
                     break;
                 case 5:
                     _bank.MoneyMultiplyAd();
@@ -58,7 +58,7 @@ namespace Ads
                     _resurrectMenu.Resurrect();
                     break;
                 case 7:
-                    _bonusRewarder.GiveReward();
+                    _bonusRewarder.GetReward();
                     break;
             }
         }

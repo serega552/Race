@@ -45,7 +45,7 @@ namespace Initers
 
         private void ConvertToMoney()
         {
-            _bank.GiveMoneyForGame(_score + _scoreCounter.MoneyForGame);
+            _bank.GetMoneyForGame(_score + _scoreCounter.MoneyForGame);
         }
 
         private void UpdateUI()

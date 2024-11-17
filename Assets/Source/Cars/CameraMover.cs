@@ -54,7 +54,7 @@ namespace Cars
             SetStartPosition();
         }
 
-        public void GetPlayerTransform(Transform transform)
+        public void ChangePlayerTransform(Transform transform)
         {
             _car = transform;
         }
@@ -62,18 +62,18 @@ namespace Cars
         public void ControlCamera()
         {
             if (_isMobile)
-                MobileControl();
+                InputMobile();
             else
-                DesktopControl();
+                InputDesktop();
         }
 
-        private void DesktopControl()
+        private void InputDesktop()
         {
             _horizontalInput = Input.GetAxis("Horizontal");
             _verticalInput = Input.GetAxis("Vertical");
         }
 
-        private void MobileControl()
+        private void InputMobile()
         {
             if (_leftButton.IsHold)
                 _horizontalInput = -1f;

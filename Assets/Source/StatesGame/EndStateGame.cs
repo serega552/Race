@@ -44,12 +44,12 @@ namespace StatesGame
 
         public void Enable()
         {
-            _resurrectMenu.OnEndGame += End;
+            _resurrectMenu.GameEnding += End;
         }
 
         public void Disable()
         {
-            _resurrectMenu.OnEndGame -= End;
+            _resurrectMenu.GameEnding -= End;
         }
 
         public void ChangeCarMovement(CarMovement movement)
