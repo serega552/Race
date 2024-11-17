@@ -9,6 +9,10 @@ namespace BankSystem
 {
     public class Bank : MonoBehaviour
     {
+        [SerializeField] private AudioManager _audioManager;
+
+        private int _multiplyMoneyForAd = 2;
+
         public event Action OnBuy;
         public event Action OnUpdateText;
 
@@ -38,7 +42,7 @@ namespace BankSystem
             if (TryTakeMoney(money))
             {
                 Money -= money;
-                AudioManager.Instance.Play("Buy");
+                _audioManager.Play("Buy");
                 OnBuy?.Invoke();
                 OnUpdateText?.Invoke();
 
@@ -80,19 +84,14 @@ namespace BankSystem
         public void MoneyMultiplyAd()
         {
             GiveMoney(MoneyForGame);
-            MoneyForGame *= 2;
+            MoneyForGame *= _multiplyMoneyForAd;
             OnUpdateText?.Invoke();
         }
 
         private void GiveReward(string name, int amount)
         {
-            Debug.Log(1);
-
             if (name == ResourceType.Money.ToString())
-            {
-                Debug.Log(2);
                 GiveMoney(amount);
-            }
         }
 
         private void Save()

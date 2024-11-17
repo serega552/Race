@@ -19,12 +19,14 @@ namespace StatesGame
         private readonly ScoreBank _scoreBank;
         private readonly CameraMover _cameraMover;
         private readonly ResurrectMenu _resurrectMenu;
-      
+        private readonly AudioManager _audioManager;
+
         private CarMovement _movement;
         private VideoAd _videoAd;
         private LeaderboardYG _leaderboardYG;
 
-        public EndStateGame(CarMovement movement, EndGameWindow end, Spawner spawner, ScoreCounter scoreCounter, ScoreBank scoreBank, CameraMover cameraMover, VideoAd videoAd, LeaderboardYG leaderboardYG, ResurrectMenu resurrect)
+        public EndStateGame(CarMovement movement, EndGameWindow end, Spawner spawner, ScoreCounter scoreCounter,
+            ScoreBank scoreBank, CameraMover cameraMover, VideoAd videoAd, LeaderboardYG leaderboardYG, ResurrectMenu resurrect, AudioManager audioManager)
         {
             _movement = movement;
             _endWindow = end;
@@ -35,6 +37,7 @@ namespace StatesGame
             _videoAd = videoAd;
             _leaderboardYG = leaderboardYG;
             _resurrectMenu = resurrect;
+            _audioManager = audioManager;
         }
 
         public event Action OnEndGame;
@@ -67,8 +70,8 @@ namespace StatesGame
             _leaderboardYG.NewScore(Convert.ToInt32(YandexGame.savesData.RecordScore));
             _leaderboardYG.UpdateLB();
 
-            AudioManager.Instance.SlowPause("Music");
-            AudioManager.Instance.Stop("Sirena");
+            _audioManager.Pause("Music");
+            _audioManager.Stop("Sirena");
         }
     }
 }

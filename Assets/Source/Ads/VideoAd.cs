@@ -13,6 +13,11 @@ namespace Ads
         [SerializeField] private ResurrectMenu _resurrectMenu;
         [SerializeField] private BonusRewarder _bonusRewarder;
 
+        private int _reward = 200;
+        private int _minRewardMultiply = 3;
+        private int _midleRewardMultiply = 5;
+        private int _maxRewardMultiply = 8;
+
         private void OnEnable()
         {
             YandexGame.GetDataEvent += RefreshAdButtons;
@@ -32,20 +37,30 @@ namespace Ads
 
         private void Rewarded(int id)
         {
-            if (id == 1)
-                _bank.GiveMoney(200);
-            else if (id == 2)
-                _bank.GiveMoney(200 * 3);
-            else if (id == 3)
-                _bank.GiveMoney(200 * 5);
-            else if (id == 4)
-                _bank.GiveMoney(200 * 8);
-            else if (id == 5)
-                _bank.MoneyMultiplyAd();
-            else if (id == 6)
-                _resurrectMenu.Resurrect();
-            else if (id == 7)
-                _bonusRewarder.GiveReward();
+            switch(id)
+            {
+                case 1:
+                    _bank.GiveMoney(_reward);
+                    break;
+                case 2:
+                    _bank.GiveMoney(_reward * _minRewardMultiply);
+                    break;
+                case 3:
+                    _bank.GiveMoney(_reward * _midleRewardMultiply);
+                    break;
+                case 4:
+                    _bank.GiveMoney(_reward * _maxRewardMultiply);
+                    break;
+                case 5:
+                    _bank.MoneyMultiplyAd();
+                    break;
+                case 6:
+                    _resurrectMenu.Resurrect();
+                    break;
+                case 7:
+                    _bonusRewarder.GiveReward();
+                    break;
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ namespace SettingsGame
     {
         [SerializeField] private Slider _soundSlider;
         [SerializeField] private Slider _musicSlider;
+        [SerializeField] private AudioManager _audioManager;
 
         private void Start()
         {
@@ -39,20 +40,20 @@ namespace SettingsGame
             _soundSlider.value = YandexGame.savesData.SoundValue;
             _musicSlider.value = YandexGame.savesData.MusicValue;
 
-            AudioManager.Instance.ChangeSounds(_soundSlider.value);
-            AudioManager.Instance.ChangeValue("Music", _musicSlider.value);
-            AudioManager.Instance.ChangeValue("MenuMusic", _musicSlider.value);
+            _audioManager.ChangeSounds(_soundSlider.value);
+            _audioManager.ChangeMusicSound("Music", _musicSlider.value);
+            _audioManager.ChangeMusicSound("MenuMusic", _musicSlider.value);
         }
 
         private void ChangeMusicValue(float value)
         {
-            AudioManager.Instance.ChangeValue("Music", value);
-            AudioManager.Instance.ChangeValue("MenuMusic", value);
+            _audioManager.ChangeMusicSound("Music", value);
+            _audioManager.ChangeMusicSound("MenuMusic", value);
         }
 
         private void ChangeSoundValue(float value)
         {
-            AudioManager.Instance.ChangeSounds(value);
+            _audioManager.ChangeSounds(value);
         }
     }
 }

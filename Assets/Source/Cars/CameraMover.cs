@@ -21,6 +21,9 @@ namespace Cars
         private float _verticalInput;
         private float _horizontalInput;
         private bool _isMobile = false;
+        private float _camRotationX = 42f;
+        private float _camRotationZ = 358f;
+        private float _camPositionVerticalMultiply = 2;
 
         private void Start()
         {
@@ -43,11 +46,6 @@ namespace Cars
             _animator.cullingMode = AnimatorCullingMode.CullCompletely;
             transform.rotation = _rotation;
             _isMove = true;
-        }
-
-        public void ResetCameraPosition()
-        {
-            SetStartPosition();
         }
 
         public void EndMove()
@@ -107,10 +105,10 @@ namespace Cars
                 Quaternion newCamRotation = _rotation;
 
                 if (_horizontalInput != 0)
-                    newCamRotation = Quaternion.Euler(42f, _rotation.y + _horizontalInput, 358f);
+                    newCamRotation = Quaternion.Euler(_camRotationX, _rotation.y + _horizontalInput, _camRotationZ);
 
                 if (_verticalInput != 0)
-                    newCamPosition = new Vector3(_car.position.x + _offSet.x, _car.position.y + _offSet.y + _verticalInput * 2, _car.position.z + _offSet.z + -_verticalInput * 2);
+                    newCamPosition = new Vector3(_car.position.x + _offSet.x, _car.position.y + _offSet.y + _verticalInput * _camPositionVerticalMultiply, _car.position.z + _offSet.z + -_verticalInput * _camPositionVerticalMultiply);
 
                 transform.position = Vector3.Lerp(transform.position, newCamPosition, _speed * Time.deltaTime);
                 transform.rotation = Quaternion.Lerp(transform.rotation, newCamRotation, _speed * Time.deltaTime);

@@ -24,9 +24,12 @@ namespace Cars
         [SerializeField] private ControlButton _downButton;
         [SerializeField] private ParticleSystem[] _wheelEffects;
         [SerializeField] private ParticleSystem _waterParticle;
+        [SerializeField] private AudioManager _audioManager;
 
         private Vector3 _startPosition;
-        private Vector3 _startSpawnPosition = new Vector3(0f, 0f, 0f);
+        private float _startPositionSumY = 0.5f;
+        private float _maxDistanceRay = 1f;
+        private Vector3 _startSpawnPosition = Vector3.zero;
         private Quaternion _startRotation = new Quaternion(0f, 0f, 0f, 0f);
         private bool _isMove = false;
         private bool _canPlay = false;
@@ -88,7 +91,7 @@ namespace Cars
         public void EndMove()
         {
             _canPlay = false;
-            AudioManager.Instance.Stop("StartCar");
+            _audioManager.Stop("StartCar");
             _isMove = false;
 
             OnEndMove?.Invoke();
@@ -100,7 +103,7 @@ namespace Cars
             _wheelEffects[1].Play();
             _canPlay = true;
             _isMove = true;
-            AudioManager.Instance.SlowPlay("StartCar");
+            _audioManager.Play("StartCar");
         }
 
         public void Resurrect()
@@ -108,7 +111,7 @@ namespace Cars
             _canPlay = true;
             _isMove = true;
             ResetCar();
-            AudioManager.Instance.SlowPlay("StartCar");
+            _audioManager.Play("StartCar");
         }
 
         private void Move()
@@ -119,9 +122,9 @@ namespace Cars
                 DesktopMove();
 
             if (_verticalInput != 0)
-                AudioManager.Instance.ChangePitch("StartCar", 0.2f);
+                _audioManager.ChangePitch("StartCar", 0.2f);
             else
-                AudioManager.Instance.ChangePitch("StartCar", -1.5f);
+                _audioManager.ChangePitch("StartCar", -1.5f);
 
             _currentSpeed = _verticalInput * _speed;
 
@@ -181,10 +184,10 @@ namespace Cars
 
         private void CheckGround()
         {
-            _startPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            _startPosition = new Vector3(transform.position.x, transform.position.y + _startPositionSumY, transform.position.z);
             Ray ray = new Ray(_startPosition, transform.up * -1);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 1f))
+            if (Physics.Raycast(ray, out RaycastHit hit, _maxDistanceRay))
             {
                 if (hit.collider.TryGetComponent(out Block block))
                     _isMove = true;
@@ -200,8 +203,6 @@ namespace Cars
             {
                 _isMove = false;
             }
-
-            Debug.DrawRay(_startPosition, transform.up * -1 * 1f, Color.red);
         }
     }
 }

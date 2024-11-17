@@ -74,11 +74,6 @@ namespace Tasks
             _task.TurnOnTask();
         }
 
-        public Task TakeTask()
-        {
-            return _task;
-        }
-
         private void CompleteTask()
         {
             _startExecution.gameObject.SetActive(false);

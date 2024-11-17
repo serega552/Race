@@ -7,6 +7,7 @@ namespace UI.Windows
 
     public class Window : MonoBehaviour
     {
+        [SerializeField] protected AudioManager AudioManager;
         [SerializeField] private CanvasGroup _canvasGroup;
 
         private ParticleSystem _effectButtonClick;
@@ -23,7 +24,7 @@ namespace UI.Windows
             if (_animator != null)
                 _animator.SetTrigger("open");
 
-            AudioManager.Instance.Play("ClickOpen");
+            AudioManager.Play("ClickOpen");
             _effectButtonClick?.Play();
             _canvasGroup.blocksRaycasts = true;
             _canvasGroup.interactable = true;
@@ -32,7 +33,7 @@ namespace UI.Windows
 
         public virtual void Close()
         {
-            AudioManager.Instance.Play("ClickClose");
+            AudioManager.Play("ClickClose");
             _canvasGroup.interactable = false;
             _canvasGroup.blocksRaycasts = false;
             _canvasGroup.alpha = 0f;

@@ -20,6 +20,11 @@ namespace Ads
         private int _id;
         private int _countWatch = 0;
         private int _maxCountWatch = 3;
+        private int _minChance = 20;
+        private int _maxChance = 30;
+        private int _minRewardMultiply = 3;
+        private int _midleRewardMultiply = 5;
+        private int _maxRewardMultiply = 8;
 
         private void Awake()
         {
@@ -41,29 +46,26 @@ namespace Ads
             int chance = Random.Range(0, 100);
             int money = YandexGame.savesData.Money;
 
-            if (money <= _moneyTight && chance <= 30 && _countWatch <= _maxCountWatch)
+            if (money <= _moneyTight && chance <= _maxChance && _countWatch <= _maxCountWatch)
             {
                 _id = 1;
-                RefreshAmountPrice(_rewardMoney);
-                _rewardButton.gameObject.SetActive(true);
+                RefreshAmountPrice(1);
             }
-            else if (money <= _moneyNormal && chance <= 20 && _countWatch <= _maxCountWatch)
+            else if (money <= _moneyNormal && chance <= _minChance && _countWatch <= _maxCountWatch)
             {
                 _id = 2;
-                RefreshAmountPrice(_rewardMoney * 3);
-                _rewardButton.gameObject.SetActive(true);
+                RefreshAmountPrice(_minRewardMultiply);
             }
-            else if (money <= _muchMoney && chance <= 20 && _countWatch <= _maxCountWatch)
+            else if (money <= _muchMoney && chance <= _minChance && _countWatch <= _maxCountWatch)
             {
                 _id = 3;
-                RefreshAmountPrice(_rewardMoney * 5);
-                _rewardButton.gameObject.SetActive(true);
+                RefreshAmountPrice(_midleRewardMultiply);
+                
             }
-            else if (money >= _muchMoney && chance <= 20 && _countWatch <= _maxCountWatch)
+            else if (money >= _muchMoney && chance <= _minChance && _countWatch <= _maxCountWatch)
             {
                 _id = 4;
-                RefreshAmountPrice(_rewardMoney * 8);
-                _rewardButton.gameObject.SetActive(true);
+                RefreshAmountPrice(_maxRewardMultiply);
             }
             else
             {
@@ -71,10 +73,11 @@ namespace Ads
             }
         }
 
-        private void RefreshAmountPrice(int amount)
+        private void RefreshAmountPrice(int multiPly)
         {
-            _amountReward = amount;
+            _amountReward = _rewardMoney * multiPly;
             _amountRewardText.text = $"+{_amountReward}$";
+            _rewardButton.gameObject.SetActive(true);
         }
 
         private void OnButtonClick()

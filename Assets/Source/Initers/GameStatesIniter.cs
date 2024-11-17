@@ -29,6 +29,7 @@ namespace Initers
         [SerializeField] private VideoAd _videoAd;
         [SerializeField] private LeaderboardYG _leaderboardYG;
         [SerializeField] private ResurrectMenu _resurrectMenu;
+        [SerializeField] private AudioManager _audioManager;
 
         private ResurrectStateGame _resurrectStateGame;
         private StartStateGame _startStateGame;
@@ -36,7 +37,7 @@ namespace Initers
 
         private void Start()
         {
-            AudioManager.Instance.SlowPlay("MenuMusic");
+            _audioManager.Play("MenuMusic");
         }
 
         private void Awake()
@@ -66,9 +67,9 @@ namespace Initers
         {
             _carMovement = carMovement;
 
-            _endStateGame = new EndStateGame(_carMovement, _endGameWindow, _spawner, _scoreCounter, _scoreBank, _camera, _videoAd, _leaderboardYG, _resurrectMenu);
-            _resurrectStateGame = new ResurrectStateGame(_resurrectMenu, _carMovement, _spawner);
-            _startStateGame = new StartStateGame(_carMovement, _hudWindow, _menuWindow, _spawner, _bank, _scoreCounter, _upLineWindow, _camera);
+            _endStateGame = new EndStateGame(_carMovement, _endGameWindow, _spawner, _scoreCounter, _scoreBank, _camera, _videoAd, _leaderboardYG, _resurrectMenu, _audioManager);
+            _resurrectStateGame = new ResurrectStateGame(_resurrectMenu, _carMovement, _spawner, _audioManager);
+            _startStateGame = new StartStateGame(_carMovement, _hudWindow, _menuWindow, _spawner, _bank, _scoreCounter, _upLineWindow, _camera, _audioManager);
         }
 
         private void RefreshInfo(CarMovement movement)

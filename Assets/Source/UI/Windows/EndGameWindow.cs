@@ -18,6 +18,7 @@ namespace UI.Windows
         [SerializeField] private UpLineWindow _upLine;
 
         private float _value = 0;
+        private int _chance = 20;
         private ParticleSystem _rewardParticle;
         private HudWindow _hudWindow;
         private Coroutine _openTimerCoroutine;
@@ -61,7 +62,7 @@ namespace UI.Windows
         {
             int chance = Random.Range(0, 100);
 
-            if (chance <= 20)
+            if (chance <= _chance)
                 _rewardButton.gameObject.SetActive(true);
             else
                 _rewardButton.gameObject.SetActive(false);
@@ -100,7 +101,7 @@ namespace UI.Windows
             _hudWindow.CloseWithoutSound();
             _menuWindow.OpenWithoutSound();
             _upLine.OpenWithoutSound();
-            AudioManager.Instance.SlowPlay("MenuMusic");
+            AudioManager.Play("MenuMusic");
         }
     }
 }

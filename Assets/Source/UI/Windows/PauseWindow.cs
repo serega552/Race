@@ -47,9 +47,9 @@ namespace UI.Windows
             base.Open();
             _upLineWindow.OpenWithoutSound();
             Time.timeScale = 0f;
-            AudioManager.Instance.Pause("Music");
-            AudioManager.Instance.Pause("StartCar");
-            AudioManager.Instance.Pause("Sirena");
+            AudioManager.Pause("Music");
+            AudioManager.Pause("StartCar");
+            AudioManager.Pause("Sirena");
         }
 
         public override void Close()
@@ -57,9 +57,9 @@ namespace UI.Windows
             base.Close();
             _upLineWindow.CloseWithoutSound();
             Time.timeScale = 1f;
-            AudioManager.Instance.UnPause("Music");
-            AudioManager.Instance.UnPause("StartCar");
-            AudioManager.Instance.UnPause("Sirena");
+            AudioManager.UnPause("Music");
+            AudioManager.UnPause("StartCar");
+            AudioManager.UnPause("Sirena");
         }
 
         private void TogglePause()

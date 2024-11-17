@@ -1,6 +1,7 @@
 using Blocks;
 using Cars;
 using Score;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,13 +16,16 @@ namespace Enemy
         private readonly WaitForSeconds _waitSpawnEnemies = new WaitForSeconds(2.5f);
 
         [SerializeField] private Camera _camera;
-        [SerializeField] private float _zPosition = 14f;
         [SerializeField] private GameObject _enemy;
         [SerializeField] private GameObject _container;
         [SerializeField] private ScoreCounter _scoreCounter;
         [SerializeField] private Transform[] _spawnPosition;
         [SerializeField] private ParticleSystem _crashParticle;
 
+        private float _minPosition = -10f;
+        private float _maxPosition = 10f;
+        private float _zPosition = 14f;
+        private float _radius = 0.5f;
         private Coroutine _startTimeSpawnCoroutine;
         private bool _canPlay = true;
         private CarMovement _movement;
@@ -51,60 +55,55 @@ namespace Enemy
 
         public void SpawnCar()
         {
-            Vector3 positionInGlobalSpace = new Vector3(0, 0, 0);
+            Vector3 positionInGlobalSpace = Vector3.zero;
 
             var screenEdges = new Vector3[]
             {
-        new Vector3(-10f, -10f, _zPosition),
-        new Vector3(10f, -10f, _zPosition),
+        new Vector3(-_minPosition, -_minPosition, _zPosition),
+        new Vector3(_minPosition, -_minPosition, _zPosition),
 
-        new Vector3(-10f, 10f, _zPosition),
-        new Vector3(10f, 10f, _zPosition),
+        new Vector3(-_minPosition, _maxPosition, _zPosition),
+        new Vector3(_maxPosition, _maxPosition, _zPosition),
 
-        new Vector3(10f, -10f, _zPosition),
-        new Vector3(-10f, -10f, _zPosition),
+        new Vector3(_maxPosition, -_minPosition, _zPosition),
+        new Vector3(-_minPosition, -_minPosition, _zPosition),
             };
 
-            int random = Random.Range(1, screenEdges.Length);
+            int random = UnityEngine.Random.Range(1, screenEdges.Length);
 
             positionInGlobalSpace = _camera.ViewportToWorldPoint(screenEdges[random]);
             positionInGlobalSpace = new Vector3(positionInGlobalSpace.x, 0, positionInGlobalSpace.z);
 
             if (CheckCollision(positionInGlobalSpace))
             {
-                var enemy = Instantiate(_enemy);
-
-                enemy.GetComponent<EnemyMovement>().GetCarMovement(_movement);
-                enemy.transform.SetParent(_container.transform);
-                enemy.transform.position = positionInGlobalSpace;
-                enemy.name = screenEdges[random].ToString();
-                EnemyMovement enemy1 = enemy.GetComponent<EnemyMovement>();
-                _enemies.Add(enemy1);
-
-                enemy1.OnCrash += SpawnCrashParticle;
-                _scoreCounter.AddEnemies(_enemies);
+                Spawn(positionInGlobalSpace, screenEdges, random);
             }
             else
             {
-                int random2 = Random.Range(0, _spawnPosition.Length);
+                int random2 = UnityEngine.Random.Range(0, _spawnPosition.Length);
                 positionInGlobalSpace = _spawnPosition[random2].position;
                 positionInGlobalSpace = new Vector3(positionInGlobalSpace.x, 0, positionInGlobalSpace.z);
 
-                var enemy = Instantiate(_enemy);
-
-                enemy.GetComponent<EnemyMovement>().GetCarMovement(_movement);
-                enemy.transform.SetParent(_container.transform);
-                enemy.transform.position = positionInGlobalSpace;
-                enemy.name = screenEdges[random].ToString();
-                EnemyMovement enemy1 = enemy.GetComponent<EnemyMovement>();
-                _enemies.Add(enemy1);
-
-                enemy1.OnCrash += SpawnCrashParticle;
-                _scoreCounter.AddEnemies(_enemies);
+                Spawn(positionInGlobalSpace, screenEdges, random);
             }
 
             if (_enemies.Count > 10)
                 DestroyEnemyInGame();
+        }
+
+        private void Spawn(Vector3 positionInGlobalSpace, Vector3[] screenEdges, int random)
+        {
+            var enemy = Instantiate(_enemy);
+
+            enemy.GetComponent<EnemyMovement>().GetCarMovement(_movement);
+            enemy.transform.SetParent(_container.transform);
+            enemy.transform.position = positionInGlobalSpace;
+            enemy.name = screenEdges[random].ToString();
+            EnemyMovement enemy1 = enemy.GetComponent<EnemyMovement>();
+            _enemies.Add(enemy1);
+
+            enemy1.OnCrash += SpawnCrashParticle;
+            _scoreCounter.AddEnemies(_enemies);
         }
 
         public void DestroyEnemy()
@@ -147,7 +146,7 @@ namespace Enemy
 
         private bool CheckCollision(Vector3 position)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(position, 0.5f);
+            Collider[] hitColliders = Physics.OverlapSphere(position, _radius);
             foreach (var hitCollider in hitColliders)
             {
                 if (hitCollider.gameObject.GetComponent<Block>())

@@ -10,14 +10,16 @@ namespace StatesGame
     {
         private readonly ResurrectMenu _resurrect;
         private readonly Spawner _spawner;
+        private readonly AudioManager _audioManager;
         
         private CarMovement _movement;
 
-        public ResurrectStateGame(ResurrectMenu resurrect, CarMovement movement, Spawner spawner)
+        public ResurrectStateGame(ResurrectMenu resurrect, CarMovement movement, Spawner spawner, AudioManager audioManager)
         {
             _resurrect = resurrect;
             _movement = movement;
             _spawner = spawner;
+            _audioManager = audioManager;
         }
 
         public void ChangeCarMovement(CarMovement movement)
@@ -42,8 +44,8 @@ namespace StatesGame
         {
             _movement.Resurrect();
             _spawner.ResetEnemy();
-            AudioManager.Instance.SlowUnPause("Music");
-            AudioManager.Instance.SlowUnPause("Sirena");
+            _audioManager.UnPause("Music");
+            _audioManager.UnPause("Sirena");
 
             Time.timeScale = 1f;
         }
@@ -51,8 +53,8 @@ namespace StatesGame
         private void OpenResurrectWindow()
         {
             _resurrect.OpenWindow();
-            AudioManager.Instance.SlowPause("Music");
-            AudioManager.Instance.SlowPause("Sirena");
+            _audioManager.Pause("Music");
+            _audioManager.Pause("Sirena");
         }
     }
 }

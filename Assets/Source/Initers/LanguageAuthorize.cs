@@ -5,23 +5,26 @@ namespace Initers
 {
     public class LanguageAuthorize : MonoBehaviour
     {
+        const string Ru = "ru";
+        const string En = "en";
+        const string Tr = "tr";
+
         public void Start()
         {
-            if (YandexGame.EnvironmentData.language == "ru")
+            switch (YandexGame.EnvironmentData.language)
             {
-                Lean.Localization.LeanLocalization.SetCurrentLanguageAll("Russian");
-            }
-            else if (YandexGame.EnvironmentData.language == "en")
-            {
-                Lean.Localization.LeanLocalization.SetCurrentLanguageAll("English");
-            }
-            else if (YandexGame.EnvironmentData.language == "tr")
-            {
-                Lean.Localization.LeanLocalization.SetCurrentLanguageAll("Turkish");
-            }
-            else
-            {
-                Lean.Localization.LeanLocalization.SetCurrentLanguageAll("English");
+                case Ru:
+                    Lean.Localization.LeanLocalization.SetCurrentLanguageAll("Russian");
+                    break;
+                case En:
+                    Lean.Localization.LeanLocalization.SetCurrentLanguageAll("English");
+                    break;
+                case Tr:
+                    Lean.Localization.LeanLocalization.SetCurrentLanguageAll("Turkish");
+                    break;
+                default:
+                    Lean.Localization.LeanLocalization.SetCurrentLanguageAll("English");
+                    break;
             }
         }
     }
