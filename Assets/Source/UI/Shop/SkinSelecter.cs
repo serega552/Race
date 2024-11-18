@@ -60,7 +60,7 @@ namespace UI.Shop
             }
 
             Movement = _selectedSkin.GetView();
-            ChangingSkin?.Invoke(Movement);
+            SKinChanging?.Invoke(Movement);
 
             Save();
         }

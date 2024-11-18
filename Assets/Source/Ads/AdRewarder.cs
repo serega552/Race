@@ -6,18 +6,18 @@ using YG;
 
 namespace Ads 
 {
-    public class MoneyRewardButton : MonoBehaviour
+    public class AdRewarder : MonoBehaviour
     {
         [SerializeField] private Bank _bank;
         [SerializeField] private TMP_Text _amountRewardText;
         [SerializeField] private Button _rewardButton;
 
         private int _amountReward;
+        private int _id;
         private int _moneyTight = 150;
         private int _moneyNormal = 1500;
         private int _muchMoney = 3000;
         private int _rewardMoney = 200;
-        private int _id;
         private int _countWatch = 0;
         private int _maxCountWatch = 3;
         private int _minChance = 20;

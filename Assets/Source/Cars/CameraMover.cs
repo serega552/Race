@@ -5,15 +5,12 @@ namespace Cars
 {
     public class CameraMover : MonoBehaviour
     {
-        private readonly int MenuState = Animator.StringToHash("MenuCamera");
+        private readonly int _menuState = Animator.StringToHash("MenuCamera");
 
-        [SerializeField] private ControlButton _leftButton;
-        [SerializeField] private ControlButton _rightButton;
-        [SerializeField] private ControlButton _upButton;
-        [SerializeField] private ControlButton _downButton;
         [SerializeField] private Vector3 _offSet;
         [SerializeField] private Quaternion _rotation;
         [SerializeField] private float _speed = 5f;
+        [SerializeField] private PlayerInput.PlayerInput _playerInput;
 
         private Animator _animator;
         private Transform _car;
@@ -61,39 +58,15 @@ namespace Cars
 
         public void ControlCamera()
         {
-            if (_isMobile)
-                InputMobile();
-            else
-                InputDesktop();
-        }
-
-        private void InputDesktop()
-        {
-            _horizontalInput = Input.GetAxis("Horizontal");
-            _verticalInput = Input.GetAxis("Vertical");
-        }
-
-        private void InputMobile()
-        {
-            if (_leftButton.IsHold)
-                _horizontalInput = -1f;
-            else if (_rightButton.IsHold)
-                _horizontalInput = 1f;
-            else
-                _horizontalInput = 0f;
-
-            if (_upButton.IsHold)
-                _verticalInput = 1f;
-            else if (_downButton.IsHold)
-                _verticalInput = -1f;
-            else
-                _verticalInput = 0f;
+            _playerInput.UseCurrentInput();
+            _horizontalInput = _playerInput.HorizonInput;
+            _verticalInput = _playerInput.VerticalInput;
         }
 
         private void SetStartPosition()
         {
             _animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
-            _animator.Play(MenuState);
+            _animator.Play(_menuState);
         }
 
         private void Move()

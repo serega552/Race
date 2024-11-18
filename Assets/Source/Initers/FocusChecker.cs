@@ -5,7 +5,7 @@ using ResurrectSystem;
 
 namespace Initers
 {
-    public class TestFocus : MonoBehaviour
+    public class FocusChecker : MonoBehaviour
     {
         [SerializeField] private PauseWindow _pause;
         [SerializeField] private ResurrectMenu _resurrectMenu;

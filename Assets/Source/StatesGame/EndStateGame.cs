@@ -16,17 +16,26 @@ namespace StatesGame
         private readonly EndGameWindow _endWindow;
         private readonly Spawner _spawner;
         private readonly ScoreCounter _scoreCounter;
-        private readonly ScoreBank _scoreBank;
+        private readonly ScoreUpdater _scoreBank;
         private readonly CameraMover _cameraMover;
         private readonly ResurrectMenu _resurrectMenu;
-        private readonly AudioManager _audioManager;
+        private readonly SoundSwitcher _audioManager;
 
         private CarMovement _movement;
         private VideoAd _videoAd;
         private LeaderboardYG _leaderboardYG;
 
-        public EndStateGame(CarMovement movement, EndGameWindow end, Spawner spawner, ScoreCounter scoreCounter,
-            ScoreBank scoreBank, CameraMover cameraMover, VideoAd videoAd, LeaderboardYG leaderboardYG, ResurrectMenu resurrect, AudioManager audioManager)
+        public EndStateGame(
+            CarMovement movement,
+            EndGameWindow end,
+            Spawner spawner,
+            ScoreCounter scoreCounter,
+            ScoreUpdater scoreBank,
+            CameraMover cameraMover,
+            VideoAd videoAd,
+            LeaderboardYG leaderboardYG,
+            ResurrectMenu resurrect,
+            SoundSwitcher audioManager)
         {
             _movement = movement;
             _endWindow = end;

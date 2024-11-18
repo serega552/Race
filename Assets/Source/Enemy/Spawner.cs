@@ -1,7 +1,6 @@
 using Blocks;
 using Cars;
 using Score;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +20,7 @@ namespace Enemy
         [SerializeField] private ScoreCounter _scoreCounter;
         [SerializeField] private Transform[] _spawnPosition;
         [SerializeField] private ParticleSystem _crashParticle;
+        [SerializeField] private EnemiesFactory.EnemiesFactory _enemyFactory;
 
         private float _minPosition = -10f;
         private float _maxPosition = 10f;
@@ -93,9 +93,9 @@ namespace Enemy
 
         private void Spawn(Vector3 positionInGlobalSpace, Vector3[] screenEdges, int random)
         {
-            var enemy = Instantiate(_enemy);
+            var enemy = _enemyFactory.CreateEnemy();
 
-            enemy.GetComponent<EnemyMovement>().GetCarMovement(_movement);
+            enemy.GetComponent<EnemyMovement>().ChangeCarMovement(_movement);
             enemy.transform.SetParent(_container.transform);
             enemy.transform.position = positionInGlobalSpace;
             enemy.name = screenEdges[random].ToString();

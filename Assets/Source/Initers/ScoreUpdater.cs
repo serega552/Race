@@ -9,7 +9,7 @@ using YG;
 
 namespace Initers
 {
-    public class ScoreBank : MonoBehaviour
+    public class ScoreUpdater : MonoBehaviour
     {
         [SerializeField] private List<TMP_Text> _scoreTexts = new List<TMP_Text>();
         [SerializeField] private TMP_Text _scoreForGame;

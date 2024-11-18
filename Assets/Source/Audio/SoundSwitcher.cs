@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace Audio
 {
-    public class AudioManager : MonoBehaviour
+    public class SoundSwitcher : MonoBehaviour
     {
-        private readonly WaitForSeconds _pauseWait = new WaitForSeconds(0.1f);
-
         [SerializeField] private Sound[] _sounds;
 
         private string _musicName = "Music";

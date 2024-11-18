@@ -16,11 +16,19 @@ namespace StatesGame
         private readonly ScoreCounter _scoreCounter;
         private readonly UpLineWindow _upLineWindow;
         private readonly CameraMover _cameraMover;
-        private readonly AudioManager _audioManager;
+        private readonly SoundSwitcher _audioManager;
        
         private CarMovement _movement;
 
-        public StartStateGame(CarMovement movement, HudWindow hud, MenuWindow menu, Spawner spawner, Bank bank, ScoreCounter scoreCounter, UpLineWindow upLineWindow, CameraMover cameraMover, AudioManager audio)
+        public StartStateGame(CarMovement movement,
+            HudWindow hud,
+            MenuWindow menu,
+            Spawner spawner,
+            Bank bank,
+            ScoreCounter scoreCounter,
+            UpLineWindow upLineWindow,
+            CameraMover cameraMover,
+            SoundSwitcher audio)
         {
             _movement = movement;
             _hudWindow = hud;

@@ -34,25 +34,25 @@ namespace Enemy
             if (collision.collider.TryGetComponent(out WaterBlock block))
             {
                 Crashing?.Invoke(transform);
-                Die();
+                UnMove();
             }
 
             if (collision.collider.TryGetComponent(out EnemyMovement enemy))
             {
                 Crashing?.Invoke(transform);
-                Die();
+                UnMove();
             }
         }
 
-        public void GetCarMovement(CarMovement carMovement)
+        public void ChangeCarMovement(CarMovement carMovement)
         {
             _carMovement = carMovement;
         }
 
-        public void Die()
+        public void UnMove()
         {
             _isMoving = false;
-            TurnOffCar();
+            gameObject.SetActive(false);
         }
 
         private void Move()
@@ -71,11 +71,6 @@ namespace Enemy
                     _wheels[i].Rotate(Vector3.right * _currentSpeed * Time.deltaTime * _wheelRotationSpeed);
                 }
             }
-        }
-
-        private void TurnOffCar()
-        {
-            gameObject.SetActive(false);
         }
     }
 }

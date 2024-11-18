@@ -11,7 +11,7 @@ namespace BankSystem
     {
         private readonly int _multiplyMoneyForAd = 2;
 
-        [SerializeField] private AudioManager _audioManager;
+        [SerializeField] private SoundSwitcher _audioManager;
 
         public event Action Buying;
         public event Action TextUpdating;
@@ -28,13 +28,13 @@ namespace BankSystem
         private void OnEnable()
         {
             YandexGame.GetDataEvent += Load;
-            AwardGiver.OnReward += GetReward;
+            AwardGiver.Rewarding += GetReward;
         }
 
         private void OnDisable()
         {
             YandexGame.GetDataEvent -= Load;
-            AwardGiver.OnReward -= GetReward;
+            AwardGiver.Rewarding -= GetReward;
         }
 
         public void SpendMoney(int money)

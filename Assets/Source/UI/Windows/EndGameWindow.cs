@@ -1,4 +1,3 @@
-using Audio;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,9 +7,7 @@ namespace UI.Windows
 {
     public class EndGameWindow : Window
     {
-        private readonly int OpenState = Animator.StringToHash("OpenEndWindowAnim");
-        private readonly int IdleState = Animator.StringToHash("Idle");
-        private readonly WaitForSeconds WaitEndGame = new WaitForSeconds(0.005f);
+        private readonly WaitForSeconds _waitEndGame = new WaitForSeconds(0.005f);
 
         [SerializeField] private Button _closeEndWindow;
         [SerializeField] private MenuWindow _menuWindow;
@@ -22,15 +19,9 @@ namespace UI.Windows
         private ParticleSystem _rewardParticle;
         private HudWindow _hudWindow;
         private Coroutine _openTimerCoroutine;
-        private Animator _animator;
         private bool _isEndScreenOpen = false;
 
         public bool IsEndScreenOpen => _isEndScreenOpen;
-
-        private void Start()
-        {
-            _animator = GetComponent<Animator>();
-        }
 
         private void Awake()
         {
@@ -77,11 +68,9 @@ namespace UI.Windows
 
         private IEnumerator EndTime()
         {
-            _animator.Play(OpenState);
-
             while (_value <= 0.95f)
             {
-                yield return WaitEndGame;
+                yield return _waitEndGame;
                 _value += 0.01f;
                 ControlOpenWithoutSound(_value);
             }
@@ -95,7 +84,6 @@ namespace UI.Windows
         {
             StopCoroutine(_openTimerCoroutine);
             _isEndScreenOpen = false;
-            _animator.Play(IdleState);
             YandexGame.FullscreenShow();
             CloseWithoutSound();
             _hudWindow.CloseWithoutSound();

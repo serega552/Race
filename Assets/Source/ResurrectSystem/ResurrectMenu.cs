@@ -9,8 +9,8 @@ namespace ResurrectSystem
 {
     public class ResurrectMenu : MonoBehaviour
     {
-        private readonly int ResurrectWIndowAnim = Animator.StringToHash("ResurrectWIndowAnim");
-        private readonly int IdleState = Animator.StringToHash("Idle");
+        private readonly int _resurrectWIndowAnim = Animator.StringToHash("ResurrectWIndowAnim");
+        private readonly int _idleState = Animator.StringToHash("Idle");
         private readonly WaitForSeconds _waitTime = new WaitForSeconds(0.01f);
         private readonly int _id = 6;
 
@@ -51,7 +51,7 @@ namespace ResurrectSystem
         {
             Resurrecting?.Invoke();
             StopCoroutine(_openTimerCoroutine);
-            _animator.Play(IdleState);
+            _animator.Play(_idleState);
             _resurrectWindow.Close();
             _controlWindow.OpenWithoutSound();
             _isPause = false;
@@ -65,7 +65,7 @@ namespace ResurrectSystem
 
         private IEnumerator OpenWindowTimer()
         {
-            _animator.Play(ResurrectWIndowAnim);
+            _animator.Play(_resurrectWIndowAnim);
 
             while (_value <= 0.95f)
             {
@@ -97,7 +97,7 @@ namespace ResurrectSystem
         {
             StopCoroutine(_openTimerCoroutine);
 
-            _animator.Play(IdleState);
+            _animator.Play(_idleState);
             _resurrectWindow.Close();
             _controlWindow.OpenWithoutSound();
             GameEnding?.Invoke();

@@ -7,21 +7,11 @@ namespace UI.Windows
 
     public class Window : MonoBehaviour
     {
-        [SerializeField] protected AudioManager AudioManager;
+        [SerializeField] protected SoundSwitcher AudioManager;
         [SerializeField] private CanvasGroup _canvasGroup;
-
-        private Animator _animator;
-
-        private void Start()
-        {
-            _animator = GetComponent<Animator>();
-        }
 
         public virtual void Open()
         {
-            if (_animator != null)
-                _animator.SetTrigger("open");
-
             AudioManager.Play("ClickOpen"); 
             _canvasGroup.blocksRaycasts = true;
             _canvasGroup.interactable = true;

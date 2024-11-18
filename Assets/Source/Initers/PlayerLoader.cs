@@ -6,7 +6,7 @@ using YG;
 
 namespace Initers
 {
-    public class CarIniter : MonoBehaviour
+    public class PlayerLoader : MonoBehaviour
     {
         [SerializeField] private CameraMover _cameraMover;
         [SerializeField] private Spawner _spawner;
@@ -18,18 +18,18 @@ namespace Initers
         private void Awake()
         {
             if (YandexGame.SDKEnabled)
-                InitShop();
+                InitPlayer();
         }
 
         private void OnEnable()
         {
-            YandexGame.GetDataEvent += InitShop;
+            YandexGame.GetDataEvent += InitPlayer;
         }
 
         private void OnDisable()
         {
-            YandexGame.GetDataEvent -= InitShop;
-            _skinSelecter.ChangingSkin -= Init;
+            YandexGame.GetDataEvent -= InitPlayer;
+            _skinSelecter.SKinChanging -= Init;
         }
 
         public void Init(CarMovement carMovement)
@@ -42,9 +42,9 @@ namespace Initers
             _carMovement.gameObject.SetActive(true);
         }
 
-        private void InitShop()
+        private void InitPlayer()
         {
-            _skinSelecter.ChangingSkin += Init;
+            _skinSelecter.SKinChanging += Init;
             _shopSkins.Load();
         }
     }

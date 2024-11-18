@@ -9,7 +9,7 @@ namespace Ads
     public class VideoAd : MonoBehaviour
     {
         [SerializeField] private Bank _bank;
-        [SerializeField] private MoneyRewardButton _moneyReward;
+        [SerializeField] private AdRewarder _moneyReward;
         [SerializeField] private ResurrectMenu _resurrectMenu;
         [SerializeField] private BonusRewarder _bonusRewarder;
 

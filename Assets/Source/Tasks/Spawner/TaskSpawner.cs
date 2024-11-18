@@ -1,22 +1,24 @@
 using System.Collections.Generic;
 using Tasks.SO;
+using Tasks.TaskFactory;
 using UnityEngine;
 
 namespace Tasks.Spawner
 {
     public abstract class TaskSpawner : MonoBehaviour
     {
-        private readonly List<TaskView> _activeTasks = new List<TaskView>();
+        private readonly List<TaskView> _tasksActive = new List<TaskView>();
         private readonly Dictionary<int, float> _activeDailyId = new Dictionary<int, float>();
         
         [SerializeField] private GameObject _prefabTask;
         [SerializeField] private Transform _contentTasks;
         [SerializeField] private List<Task> _tasks = new List<Task>();
         [SerializeField] private TaskTimeInspector _timeInspector;
+        [SerializeField] private  DefaultTasksFactory _defaultTasksFactory;
 
         protected List<float> AmountProgreses = new List<float>();
 
-        public List<TaskView> ActiveTasks => _activeTasks;
+        public List<TaskView> ActiveTasks => _tasksActive;
         public TaskTimeInspector TaskInspector => _timeInspector;
 
         private void Awake()
@@ -27,7 +29,7 @@ namespace Tasks.Spawner
 
         private void OnDisable()
         {
-            foreach (var task in _activeTasks)
+            foreach (var task in _tasksActive)
             {
                 task.Completed -= DestroyTask;
             }
@@ -37,18 +39,18 @@ namespace Tasks.Spawner
         {
             for (int i = 0; i < _tasks.Count; i++)
             {
-                GameObject gameObject = Instantiate(_prefabTask, _contentTasks, false);
-                TaskView taskView = gameObject.GetComponent<TaskView>();
+                TaskView taskView = _defaultTasksFactory.CreateTask();
+
                 taskView.transform.SetParent(_contentTasks);
                 taskView.GetTask(_tasks[i]);
                 taskView.Init();
                 taskView.InitId(i);
                 taskView.gameObject.SetActive(true);
-                _activeTasks.Add(taskView);
+                _tasksActive.Add(taskView);
                 Save();
             }
 
-            foreach (var task in _activeTasks)
+            foreach (var task in _tasksActive)
             {
                 task.Completed += DestroyTask;
             }
@@ -60,12 +62,12 @@ namespace Tasks.Spawner
         {
             _activeDailyId.Clear();
 
-            foreach (var task in _activeTasks)
+            foreach (var task in _tasksActive)
             {
                 Destroy(task.gameObject);
             }
 
-            _activeTasks.Clear();
+            _tasksActive.Clear();
 
             SpawnTasks();
         }
@@ -74,16 +76,16 @@ namespace Tasks.Spawner
 
         public virtual void Load()
         {
-            for (int i = 0; i < _activeTasks.Count; i++)
+            for (int i = 0; i < _tasksActive.Count; i++)
             {
-                _activeTasks[i].InitProgress(AmountProgreses[i]);
+                _tasksActive[i].InitProgress(AmountProgreses[i]);
             }
 
-            for (int i = 0; i < _activeTasks.Count; i++)
+            for (int i = 0; i < _tasksActive.Count; i++)
             {
                 if (AmountProgreses[i] == -1)
                 {
-                    _activeTasks[i].gameObject.SetActive(false);
+                    _tasksActive[i].gameObject.SetActive(false);
                 }
             }
         }

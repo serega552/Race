@@ -11,7 +11,7 @@ namespace Tasks
 {
     public class TaskView : MonoBehaviour
     {
-        private readonly ParticleSystem TakeRewardParticle;
+        private readonly ParticleSystem _takeRewardParticle;
 
         [SerializeField] private Button _startExecution;
         [SerializeField] private Button _takeReward;
@@ -110,7 +110,7 @@ namespace Tasks
         {
             _task.RewardPlayer();
             _takeReward.interactable = false;
-            TakeRewardParticle?.Play();
+            _takeRewardParticle?.Play();
             Invoke(nameof(Destroy), 1f);
 
             SaveDestroyTask();

@@ -9,7 +9,6 @@ using YG;
 namespace Cars
 {
     [RequireComponent(typeof(Rigidbody))]
-
     public class CarMovement : MonoBehaviour
     {
         private readonly List<ParticleSystem> _waterParticles = new List<ParticleSystem>();
@@ -18,13 +17,10 @@ namespace Cars
         [SerializeField] private float _steeringAngle = 4.0f;
         [SerializeField] private Transform[] _wheels;
         [SerializeField] private float _wheelRotationSpeed = 100.0f;
-        [SerializeField] private ControlButton _leftButton;
-        [SerializeField] private ControlButton _rightButton;
-        [SerializeField] private ControlButton _upButton;
-        [SerializeField] private ControlButton _downButton;
         [SerializeField] private ParticleSystem[] _wheelEffects;
         [SerializeField] private ParticleSystem _waterParticle;
-        [SerializeField] private AudioManager _audioManager;
+        [SerializeField] private SoundSwitcher _audioManager;
+        [SerializeField] private PlayerInput.PlayerInput _playerInput;
 
         private Vector3 _startPosition;
         private float _startPositionSumY = 0.5f;
@@ -65,7 +61,7 @@ namespace Cars
         {
             if (collision.collider.TryGetComponent(out EnemyMovement enemy) && _canPlay)
             {
-                enemy.Die();
+                enemy.UnMove();
                 Crash();
             }
         }
@@ -116,10 +112,9 @@ namespace Cars
 
         private void Move()
         {
-            if (_isMobile)
-                MobileMove();
-            else
-                DesktopMove();
+            _playerInput.UseCurrentInput();
+            _horizontalInput = _playerInput.HorizonInput;
+            _verticalInput = _playerInput.VerticalInput;
 
             if (_verticalInput != 0)
                 _audioManager.ChangePitch("StartCar", 0.2f);
@@ -147,29 +142,6 @@ namespace Cars
                 _wheelEffects[0].Play();
                 _wheelEffects[1].Play();
             }
-        }
-
-        private void DesktopMove()
-        {
-            _horizontalInput = Input.GetAxis("Horizontal");
-            _verticalInput = Input.GetAxis("Vertical");
-        }
-
-        private void MobileMove()
-        {
-            if (_leftButton.IsHold)
-                _horizontalInput = -1f;
-            else if (_rightButton.IsHold)
-                _horizontalInput = 1f;
-            else
-                _horizontalInput = 0f;
-
-            if (_upButton.IsHold)
-                _verticalInput = 1f;
-            else if (_downButton.IsHold)
-                _verticalInput = -1f;
-            else
-                _verticalInput = 0f;
         }
 
         private void Crash()

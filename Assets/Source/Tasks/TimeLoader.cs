@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Tasks
 {
-    public class TimeIniter : MonoBehaviour
+    public class TimeLoader : MonoBehaviour
     {
         [SerializeField] private TaskTimeInspector _taskInspector;
 

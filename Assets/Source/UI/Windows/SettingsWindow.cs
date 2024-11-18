@@ -9,14 +9,14 @@ namespace UI.Windows
         [SerializeField] private Button _openSettingsButton;
         [SerializeField] private Button _closeButton;
 
-        private Settings _settings;
+        private VolumeAdjustment _settings;
         private bool _isSettingsOpen = false;
 
         public bool IsSettingsOpen => _isSettingsOpen;
 
         private void Awake()
         {
-            _settings = GetComponent<Settings>();
+            _settings = GetComponent<VolumeAdjustment>();
             CloseWithoutSound();
         }
 

@@ -5,11 +5,11 @@ using YG;
 
 namespace SettingsGame
 {
-    public class Settings : MonoBehaviour
+    public class VolumeAdjustment : MonoBehaviour
     {
         [SerializeField] private Slider _soundSlider;
         [SerializeField] private Slider _musicSlider;
-        [SerializeField] private AudioManager _audioManager;
+        [SerializeField] private SoundSwitcher _audioManager;
 
         private void Start()
         {
