@@ -8,6 +8,7 @@ namespace UI.Windows
     public class EndGameWindow : Window
     {
         private readonly WaitForSeconds _waitEndGame = new WaitForSeconds(0.005f);
+        private readonly int _chance = 20;
 
         [SerializeField] private Button _closeEndWindow;
         [SerializeField] private MenuWindow _menuWindow;
@@ -15,7 +16,6 @@ namespace UI.Windows
         [SerializeField] private UpLineWindow _upLine;
 
         private float _value = 0;
-        private int _chance = 20;
         private ParticleSystem _rewardParticle;
         private HudWindow _hudWindow;
         private Coroutine _openTimerCoroutine;

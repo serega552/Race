@@ -7,10 +7,10 @@ namespace Audio
     {
         [SerializeField] private Sound[] _sounds;
 
-        private string _musicName = "Music";
-        private string _menuMusicName = "MenuMusic";
-        private float _minPitch = 0.8f;
-        private float _maxPitch = 2.5f;
+        private readonly string _musicName = "Music";
+        private readonly string _menuMusicName = "MenuMusic";
+        private readonly float _minPitch = 0.8f;
+        private readonly float _maxPitch = 2.5f;
 
         private void Start()
         {

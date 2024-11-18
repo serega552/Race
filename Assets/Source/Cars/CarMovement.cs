@@ -12,6 +12,8 @@ namespace Cars
     public class CarMovement : MonoBehaviour
     {
         private readonly List<ParticleSystem> _waterParticles = new List<ParticleSystem>();
+        private readonly float _startPositionSumY = 0.5f;
+        private readonly float _maxDistanceRay = 1f;
         
         [SerializeField] private float _speed = 10.0f;
         [SerializeField] private float _steeringAngle = 4.0f;
@@ -23,8 +25,6 @@ namespace Cars
         [SerializeField] private PlayerInput.PlayerInput _playerInput;
 
         private Vector3 _startPosition;
-        private float _startPositionSumY = 0.5f;
-        private float _maxDistanceRay = 1f;
         private Vector3 _startSpawnPosition = Vector3.zero;
         private Quaternion _startRotation = new Quaternion(0f, 0f, 0f, 0f);
         private bool _isMove = false;

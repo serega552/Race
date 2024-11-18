@@ -8,15 +8,15 @@ namespace Ads
 {
     public class VideoAd : MonoBehaviour
     {
+        private readonly int _reward = 200;
+        private readonly int _minRewardMultiply = 3;
+        private readonly int _midleRewardMultiply = 5;
+        private readonly int _maxRewardMultiply = 8;
+
         [SerializeField] private Bank _bank;
         [SerializeField] private AdRewarder _moneyReward;
         [SerializeField] private ResurrectMenu _resurrectMenu;
         [SerializeField] private BonusRewarder _bonusRewarder;
-
-        private int _reward = 200;
-        private int _minRewardMultiply = 3;
-        private int _midleRewardMultiply = 5;
-        private int _maxRewardMultiply = 8;
 
         private void OnEnable()
         {

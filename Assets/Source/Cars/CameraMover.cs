@@ -6,6 +6,9 @@ namespace Cars
     public class CameraMover : MonoBehaviour
     {
         private readonly int _menuState = Animator.StringToHash("MenuCamera");
+        private readonly float _camRotationX = 42f;
+        private readonly float _camRotationZ = 358f;
+        private readonly float _camPositionVerticalMultiply = 2;
 
         [SerializeField] private Vector3 _offSet;
         [SerializeField] private Quaternion _rotation;
@@ -18,9 +21,6 @@ namespace Cars
         private float _verticalInput;
         private float _horizontalInput;
         private bool _isMobile = false;
-        private float _camRotationX = 42f;
-        private float _camRotationZ = 358f;
-        private float _camPositionVerticalMultiply = 2;
 
         private void Start()
         {

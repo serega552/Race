@@ -12,6 +12,11 @@ namespace Enemy
         private readonly List<EnemyMovement> _enemies = new List<EnemyMovement>();
         private readonly List<ParticleSystem> _crashParticles = new List<ParticleSystem>();
         private readonly WaitForSeconds _waitStartSpawn = new WaitForSeconds(4f);
+        private readonly int _maxEnemies = 10;
+        private readonly float _minPosition = -10f;
+        private readonly float _maxPosition = 10f;
+        private readonly float _zPosition = 14f;
+        private readonly float _radius = 0.5f;
         private readonly WaitForSeconds _waitSpawnEnemies = new WaitForSeconds(2.5f);
 
         [SerializeField] private Camera _camera;
@@ -21,12 +26,6 @@ namespace Enemy
         [SerializeField] private Transform[] _spawnPosition;
         [SerializeField] private ParticleSystem _crashParticle;
         [SerializeField] private EnemiesFactory.EnemiesFactory _enemyFactory;
-
-        private int _maxEnemies = 10;
-        private float _minPosition = -10f;
-        private float _maxPosition = 10f;
-        private float _zPosition = 14f;
-        private float _radius = 0.5f;
         private Coroutine _startTimeSpawnCoroutine;
         private bool _canPlay = true;
         private CarMovement _movement;
