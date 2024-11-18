@@ -20,7 +20,8 @@ namespace StatesGame
        
         private CarMovement _movement;
 
-        public StartStateGame(CarMovement movement,
+        public StartStateGame(
+            CarMovement movement,
             HudWindow hud,
             MenuWindow menu,
             Spawner spawner,

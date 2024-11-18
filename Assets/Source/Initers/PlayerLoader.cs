@@ -18,21 +18,21 @@ namespace Initers
         private void Awake()
         {
             if (YandexGame.SDKEnabled)
-                InitPlayer();
+                LoadPlayer();
         }
 
         private void OnEnable()
         {
-            YandexGame.GetDataEvent += InitPlayer;
+            YandexGame.GetDataEvent += LoadPlayer;
         }
 
         private void OnDisable()
         {
-            YandexGame.GetDataEvent -= InitPlayer;
-            _skinSelecter.SKinChanging -= Init;
+            YandexGame.GetDataEvent -= LoadPlayer;
+            _skinSelecter.SKinChanging -= Load;
         }
 
-        public void Init(CarMovement carMovement)
+        public void Load(CarMovement carMovement)
         {
             _carMovement = carMovement;
 
@@ -42,9 +42,9 @@ namespace Initers
             _carMovement.gameObject.SetActive(true);
         }
 
-        private void InitPlayer()
+        private void LoadPlayer()
         {
-            _skinSelecter.SKinChanging += Init;
+            _skinSelecter.SKinChanging += Load;
             _shopSkins.Load();
         }
     }

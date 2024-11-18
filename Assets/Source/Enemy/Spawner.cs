@@ -22,6 +22,7 @@ namespace Enemy
         [SerializeField] private ParticleSystem _crashParticle;
         [SerializeField] private EnemiesFactory.EnemiesFactory _enemyFactory;
 
+        private int _maxEnemies = 10;
         private float _minPosition = -10f;
         private float _maxPosition = 10f;
         private float _zPosition = 14f;
@@ -87,7 +88,7 @@ namespace Enemy
                 Spawn(positionInGlobalSpace, screenEdges, random);
             }
 
-            if (_enemies.Count > 10)
+            if (_enemies.Count > _maxEnemies)
                 DestroyEnemyInGame();
         }
 
