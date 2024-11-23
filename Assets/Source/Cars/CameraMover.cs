@@ -1,5 +1,5 @@
+using PlayerInputSystem;
 using UnityEngine;
-using YG;
 
 namespace Cars
 {
@@ -13,24 +13,18 @@ namespace Cars
         [SerializeField] private Vector3 _offSet;
         [SerializeField] private Quaternion _rotation;
         [SerializeField] private float _speed = 5f;
-        [SerializeField] private PlayerInput.PlayerInput _playerInput;
+        [SerializeField] private PlayerInput _playerInput;
 
         private Animator _animator;
         private Transform _car;
         private bool _isMove = false;
         private float _verticalInput;
         private float _horizontalInput;
-        private bool _isMobile = false;
 
         private void Start()
         {
             _animator = GetComponent<Animator>();
             SetStartPosition();
-        }
-
-        private void Awake()
-        {
-            _isMobile = YandexGame.EnvironmentData.isMobile;
         }
 
         private void FixedUpdate()
@@ -74,14 +68,27 @@ namespace Cars
             if (_isMove)
             {
                 ControlCamera();
-                Vector3 newCamPosition = new Vector3(_car.position.x + _offSet.x, _car.position.y + _offSet.y, _car.position.z + _offSet.z);
+                Vector3 newCamPosition = new Vector3(
+                    _car.position.x + _offSet.x,
+                    _car.position.y + _offSet.y,
+                    _car.position.z + _offSet.z);
                 Quaternion newCamRotation = _rotation;
 
                 if (_horizontalInput != 0)
-                    newCamRotation = Quaternion.Euler(_camRotationX, _rotation.y + _horizontalInput, _camRotationZ);
+                {
+                    newCamRotation = Quaternion.Euler(
+                        _camRotationX,
+                        _rotation.y + _horizontalInput,
+                        _camRotationZ);
+                }
 
                 if (_verticalInput != 0)
-                    newCamPosition = new Vector3(_car.position.x + _offSet.x, _car.position.y + _offSet.y + _verticalInput * _camPositionVerticalMultiply, _car.position.z + _offSet.z + -_verticalInput * _camPositionVerticalMultiply);
+                {
+                    newCamPosition = new Vector3(
+                        _car.position.x + _offSet.x,
+                        _car.position.y + _offSet.y + _verticalInput * _camPositionVerticalMultiply,
+                        _car.position.z + _offSet.z + -_verticalInput * _camPositionVerticalMultiply);
+                }
 
                 transform.position = Vector3.Lerp(transform.position, newCamPosition, _speed * Time.deltaTime);
                 transform.rotation = Quaternion.Lerp(transform.rotation, newCamRotation, _speed * Time.deltaTime);

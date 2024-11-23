@@ -2,7 +2,7 @@ using Cars;
 using UnityEngine;
 using YG;
 
-namespace PlayerInput
+namespace PlayerInputSystem
 {
     public class PlayerInput : MonoBehaviour
     {

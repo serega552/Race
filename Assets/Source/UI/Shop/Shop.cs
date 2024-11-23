@@ -1,6 +1,4 @@
 using BankSystem;
-using Cars;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +14,6 @@ namespace UI.Shop
         [SerializeField] private TMP_Text _description;
 
         public Bank BankMoney => _bank;
-        public Image PlaceSkin => _placeSkin;
         public Button BuyButton => _buyButton;
         public Button SelectButton => _selectButton;
         public TMP_Text Description => _description;

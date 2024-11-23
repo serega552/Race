@@ -14,7 +14,11 @@ namespace StatesGame
         
         private CarMovement _movement;
 
-        public ResurrectStateGame(ResurrectMenu resurrect, CarMovement movement, Spawner spawner, SoundSwitcher audioManager)
+        public ResurrectStateGame(
+            ResurrectMenu resurrect,
+            CarMovement movement,
+            Spawner spawner,
+            SoundSwitcher audioManager)
         {
             _resurrectMenu = resurrect;
             _movement = movement;

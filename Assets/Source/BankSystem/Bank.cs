@@ -52,10 +52,7 @@ namespace BankSystem
 
         public bool TrySpendMoney(int value)
         {
-            if (Money >= value)
-                return true;
-            else
-                return false;
+            return Money >= value;
         }
 
         public void GetMoney(int money)

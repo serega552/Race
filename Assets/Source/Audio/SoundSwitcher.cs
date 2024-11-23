@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Audio
@@ -27,35 +28,31 @@ namespace Audio
 
         public void Play(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.Name == sound);
-
+            Sound s = FindSound(sound);
             s?.Source.Play();
         }
 
         public void Stop(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.Name == sound);
-
+            Sound s = FindSound(sound);
             s?.Source.Stop();
         }
 
         public void Pause(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.Name == sound);
-
+            Sound s = FindSound(sound);
             s?.Source.Pause();
         }
 
         public void UnPause(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.Name == sound);
-
+            Sound s = FindSound(sound);
             s?.Source.UnPause();
         }
 
         public void ChangePitch(string sound, float count)
         {
-            Sound s = Array.Find(_sounds, item => item.Name == sound);
+            Sound s = FindSound(sound);
 
             if (s != null)
             {
@@ -69,13 +66,10 @@ namespace Audio
 
         public void ChangeMusicSound(string sound, float value)
         {
-            Sound s = Array.Find(_sounds, item => item.Name == sound);
+            Sound s = FindSound(sound);
 
             if (s != null)
-            {
-                s.Source.volume = value;
-                s.Volume = value;
-            }
+                ChangeVolumeSound(s, value);
         }
 
         public void ChangeSounds(float value)
@@ -83,11 +77,19 @@ namespace Audio
             foreach (var sound in _sounds)
             {
                 if (sound.Name != _musicName && sound.Name != _menuMusicName)
-                {
-                    sound.Source.volume = value;
-                    sound.Volume = value;
-                }
+                    ChangeVolumeSound(sound, value);
             }
+        }
+
+        private void ChangeVolumeSound(Sound sound, float value)
+        {
+            sound.Source.volume = value;
+            sound.Volume = value;
+        }
+
+        private Sound FindSound(string soundName)
+        {
+            return Array.Find(_sounds, item => item.Name == soundName);
         }
     }
 }

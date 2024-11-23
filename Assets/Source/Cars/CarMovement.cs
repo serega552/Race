@@ -1,10 +1,10 @@
 using Audio;
 using Blocks;
 using Enemy;
+using PlayerInputSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using YG;
 
 namespace Cars
 {
@@ -22,7 +22,7 @@ namespace Cars
         [SerializeField] private ParticleSystem[] _wheelEffects;
         [SerializeField] private ParticleSystem _waterParticle;
         [SerializeField] private SoundSwitcher _audioManager;
-        [SerializeField] private PlayerInput.PlayerInput _playerInput;
+        [SerializeField] private PlayerInput _playerInput;
 
         private Vector3 _startPosition;
         private Vector3 _startSpawnPosition = Vector3.zero;
@@ -33,7 +33,6 @@ namespace Cars
         private ParticleSystem _explotion;
         private float _verticalInput;
         private float _horizontalInput;
-        private bool _isMobile = false;
         private Rigidbody _rigidbody;
 
         public event Action EndMoving;
@@ -44,8 +43,6 @@ namespace Cars
 
             _rigidbody = GetComponent<Rigidbody>();
             _explotion = GetComponentInChildren<ParticleSystem>();
-
-            _isMobile = YandexGame.EnvironmentData.isMobile;
         }
 
         private void FixedUpdate()
@@ -127,6 +124,8 @@ namespace Cars
 
             _rigidbody.transform.Rotate(Vector3.up, _horizontalInput * _steeringAngle);
 
+            Vector3 rotateWheel = Vector3.right * _currentSpeed * Time.deltaTime * _wheelRotationSpeed;
+
             if (Input.GetKey(KeyCode.Space))
             {
                 _currentSpeed = Mathf.Lerp(_currentSpeed, 0, Time.deltaTime * 2);
@@ -134,13 +133,15 @@ namespace Cars
 
             for (int i = 0; i < _wheels.Length; i++)
             {
-                _wheels[i].Rotate(Vector3.right * _currentSpeed * Time.deltaTime * _wheelRotationSpeed);
+                _wheels[i].Rotate(rotateWheel);
             }
 
             if (_currentSpeed != 0)
             {
-                _wheelEffects[0].Play();
-                _wheelEffects[1].Play();
+                foreach (var effect in _wheelEffects)
+                {
+                    effect.Play();
+                }
             }
         }
 

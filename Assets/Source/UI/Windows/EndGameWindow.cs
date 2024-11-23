@@ -52,11 +52,7 @@ namespace UI.Windows
         private void RefreshAdButton()
         {
             int chance = Random.Range(0, 100);
-
-            if (chance <= _chance)
-                _rewardButton.gameObject.SetActive(true);
-            else
-                _rewardButton.gameObject.SetActive(false);
+            _rewardButton.gameObject.SetActive(chance <= _chance);
         }
 
         private void RewardAd()

@@ -1,5 +1,6 @@
 using BankSystem;
 using Bonus;
+using IdNumbers;
 using ResurrectSystem;
 using UnityEngine;
 using YG;
@@ -39,25 +40,25 @@ namespace Ads
         {
             switch(id)
             {
-                case 1:
+                case (int)Ids.One:
                     _bank.GetMoney(_reward);
                     break;
-                case 2:
+                case (int)Ids.Two:
                     _bank.GetMoney(_reward * _minRewardMultiply);
                     break;
-                case 3:
+                case (int)Ids.Three:
                     _bank.GetMoney(_reward * _midleRewardMultiply);
                     break;
-                case 4:
+                case (int)Ids.Four:
                     _bank.GetMoney(_reward * _maxRewardMultiply);
                     break;
-                case 5:
+                case (int)Ids.Five:
                     _bank.MoneyMultiplyAd();
                     break;
-                case 6:
+                case (int)Ids.Six:
                     _resurrectMenu.Resurrect();
                     break;
-                case 7:
+                case (int)Ids.Seven:
                     _bonusRewarder.GetReward();
                     break;
             }

@@ -1,10 +1,11 @@
 using BankSystem;
+using IdNumbers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
 
-namespace Ads 
+namespace Ads
 {
     public class AdRewarder : MonoBehaviour
     {
@@ -13,8 +14,7 @@ namespace Ads
         private readonly int _muchMoney = 3000;
         private readonly int _rewardMoney = 200;
         private readonly int _maxCountWatch = 3;
-        private readonly int _minChance = 20;
-        private readonly int _maxChance = 30;
+        private readonly int _chance = 30;
         private readonly int _minRewardMultiply = 3;
         private readonly int _midleRewardMultiply = 5;
         private readonly int _maxRewardMultiply = 8;
@@ -47,26 +47,29 @@ namespace Ads
             int chance = Random.Range(0, 100);
             int money = YandexGame.savesData.Money;
 
-            if (money <= _moneyTight && chance <= _maxChance && _countWatch <= _maxCountWatch)
+            if (_countWatch <= _maxCountWatch && chance <= _chance)
             {
-                _id = 1;
-                RefreshAmountPrice(1);
-            }
-            else if (money <= _moneyNormal && chance <= _minChance && _countWatch <= _maxCountWatch)
-            {
-                _id = 2;
-                RefreshAmountPrice(_minRewardMultiply);
-            }
-            else if (money <= _muchMoney && chance <= _minChance && _countWatch <= _maxCountWatch)
-            {
-                _id = 3;
-                RefreshAmountPrice(_midleRewardMultiply);
-                
-            }
-            else if (money >= _muchMoney && chance <= _minChance && _countWatch <= _maxCountWatch)
-            {
-                _id = 4;
-                RefreshAmountPrice(_maxRewardMultiply);
+                if (money <= _moneyTight)
+                {
+                    _id = (int)Ids.One;
+                    RefreshAmountPrice(1);
+                }
+                else if (money <= _moneyNormal)
+                {
+                    _id = (int)Ids.Two; ;
+                    RefreshAmountPrice(_minRewardMultiply);
+                }
+                else if (money <= _muchMoney)
+                {
+                    _id = (int)Ids.Three; ;
+                    RefreshAmountPrice(_midleRewardMultiply);
+
+                }
+                else if (money >= _muchMoney)
+                {
+                    _id = (int)Ids.Four; ;
+                    RefreshAmountPrice(_maxRewardMultiply);
+                }
             }
             else
             {

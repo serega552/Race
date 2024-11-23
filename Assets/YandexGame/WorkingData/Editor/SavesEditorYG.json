@@ -1,5 +1,5 @@
 {
-    "idSave": 175,
+    "idSave": 191,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
@@ -9,18 +9,18 @@
         8,
         4
     ],
-    "SelectedSkin": 8,
+    "SelectedSkin": 4,
     "MusicValue": 0.7682868242263794,
     "SoundValue": 0.8355336785316467,
     "CountWatchedBonusAd": 5,
     "IsBonusUse": true,
     "AmountDailyProgreses": [
-        9.0,
-        9.0,
-        9.0,
-        9.0,
-        9.0,
-        9.0
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
     ],
-    "StartDailyTime": 18
+    "StartDailyTime": 23
 }

@@ -26,7 +26,7 @@ namespace UI.Windows
 
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.Escape) && _resurrectMenu.IsPause == false && _menu.IsMenuOpen == false && _endScreen.IsEndScreenOpen == false && _settings.IsSettingsOpen == false)
+            if (Input.GetKeyUp(KeyCode.Escape) && CheckOpenWindows())
                 TogglePause();
         }
 
@@ -60,6 +60,17 @@ namespace UI.Windows
             AudioManager.UnPause("Music");
             AudioManager.UnPause("StartCar");
             AudioManager.UnPause("Sirena");
+        }
+
+        private bool CheckOpenWindows()
+        {
+            return (
+                !_resurrectMenu.IsPause &&
+                !_menu.IsMenuOpen &&
+                !_endScreen.IsEndScreenOpen &&
+                !_settings.IsSettingsOpen) ?
+                true :
+                false;
         }
 
         private void TogglePause()
