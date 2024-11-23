@@ -1,9 +1,9 @@
 {
-    "idSave": 191,
+    "idSave": 226,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
-    "Money": 134,
+    "Money": 150,
     "RecordScore": 29,
     "BoughtSkins": [
         8,
@@ -15,12 +15,12 @@
     "CountWatchedBonusAd": 5,
     "IsBonusUse": true,
     "AmountDailyProgreses": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        16.0,
+        16.0,
+        6.0,
+        6.0,
+        6.0,
+        16.0
     ],
     "StartDailyTime": 23
 }

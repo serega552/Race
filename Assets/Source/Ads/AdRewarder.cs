@@ -18,6 +18,7 @@ namespace Ads
         private readonly int _minRewardMultiply = 3;
         private readonly int _midleRewardMultiply = 5;
         private readonly int _maxRewardMultiply = 8;
+        private readonly int _maxChance = 100;
 
         [SerializeField] private Bank _bank;
         [SerializeField] private TMP_Text _amountRewardText;
@@ -44,7 +45,7 @@ namespace Ads
 
         public void RefreshAmountButton()
         {
-            int chance = Random.Range(0, 100);
+            int chance = Random.Range(0, _maxChance);
             int money = YandexGame.savesData.Money;
 
             if (_countWatch <= _maxCountWatch && chance <= _chance)
